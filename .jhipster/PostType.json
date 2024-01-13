@@ -1,0 +1,25 @@
+{
+  "applications": "*",
+  "changelogDate": "20240113091720",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "post_type",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PostType",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

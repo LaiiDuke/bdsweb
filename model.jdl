@@ -1,5 +1,5 @@
 //luu them thong tin nguoi dung
-entity UserDetail {
+entity UserInfo {
     name String
     phone String required
 }
@@ -28,6 +28,7 @@ entity Post {
     price Long required
     square Long
     status PostStatus
+    hash String
 }
 
 entity Province {
@@ -44,6 +45,7 @@ entity Ward {
 
 entity Street {
     name String required
+    status PostStatus
 }
 
 entity Image {
@@ -54,21 +56,19 @@ entity Image {
 
 entity Config {
     code String required unique
-    name String
     value String required
     description String
-    isDefault Boolean
 }
 
 relationship OneToOne {
-    UserDetail{user} to User{detail}
+    UserInfo{user} to User{info}
 }
 
 relationship OneToMany {
     Province{districts} to District{province}
-    District{districts} to Ward{province}
-    Ward{districts} to Street{province}
-    District{districts} to Street{province}
+    District{wards} to Ward{district}
+    Ward{streets} to Street{ward}
+    District{streets} to Street{district}
     Post{images} to Image
 }
 

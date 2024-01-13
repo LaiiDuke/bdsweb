@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20240113091726",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "street",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "PostStatus",
+      "fieldValues": "WAITING,VERIFIED,REJECTED"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Street",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "ward",
+      "otherEntityRelationshipName": "streets",
+      "relationshipName": "ward",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "district",
+      "otherEntityRelationshipName": "streets",
+      "relationshipName": "district",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
