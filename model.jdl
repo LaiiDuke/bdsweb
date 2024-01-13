@@ -1,0 +1,90 @@
+//luu them thong tin nguoi dung
+entity UserDetail {
+    name String
+    phone String required
+}
+
+//loai bai dang
+entity PostType {
+    name String required
+    description String
+}
+
+// loai bat dong san
+entity Category {
+    name String required
+    description String
+}
+
+//status cua bai dang
+enum PostStatus {
+    WAITING, VERIFIED, REJECTED
+}
+
+// bai dang
+entity Post {
+    title String required maxlength(200)
+    content TextBlob
+    price Long required
+    square Long
+    status PostStatus
+}
+
+entity Province {
+    name String required
+}
+
+entity District {
+    name String required
+}
+
+entity Ward {
+    name String required
+}
+
+entity Street {
+    name String required
+}
+
+entity Image {
+    data ImageBlob
+    url String
+}
+
+
+entity Config {
+    code String required unique
+    name String
+    value String required
+    description String
+    isDefault Boolean
+}
+
+relationship OneToOne {
+    UserDetail{user} to User{detail}
+}
+
+relationship OneToMany {
+    Province{districts} to District{province}
+    District{districts} to Ward{province}
+    Ward{districts} to Street{province}
+    District{districts} to Street{province}
+    Post{images} to Image
+}
+
+relationship ManyToOne {
+    Post{type} to PostType
+    Post{category} to Category
+    Post{user} to User
+}
+
+// Set pagination options
+paginate all with pagination
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
