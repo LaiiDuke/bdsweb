@@ -32,9 +32,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/bdsweb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password: LaiVanDuc1011@
+    url: jdbc:mysql://ec2-18-136-204-148.ap-southeast-1.compute.amazonaws.com:3306/bdsweb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: dbuser
+    password: password
     hikari:
       poolName: Hikari
       auto-commit: false
