@@ -18,6 +18,18 @@ import { ICategory } from '@/shared/model/category.model';
 
 import UserService from '@/entities/user/user.service';
 
+import ProvinceService from '@/entities/province/province.service';
+import { IProvince } from '@/shared/model/province.model';
+
+import DistrictService from '@/entities/district/district.service';
+import { IDistrict } from '@/shared/model/district.model';
+
+import WardService from '@/entities/ward/ward.service';
+import { IWard } from '@/shared/model/ward.model';
+
+import StreetService from '@/entities/street/street.service';
+import { IStreet } from '@/shared/model/street.model';
+
 import { IPost, Post } from '@/shared/model/post.model';
 import PostService from './post.service';
 import { PostStatus } from '@/shared/model/enumerations/post-status.model';
@@ -34,7 +46,25 @@ const validations: any = {
       numeric,
     },
     square: {},
+    address: {},
+    googleMapsLocation: {},
+    width: {},
+    length: {},
+    direction: {},
+    distance: {},
+    legal: {},
+    numberOfFloors: {},
+    numberOfBedroom: {},
+    hasKitchen: {},
+    hasDinningRoom: {},
+    hasRooftop: {},
+    hasGarage: {},
+    isVip: {},
+    postingTime: {},
+    expiredTime: {},
+    brokerageFees: {},
     status: {},
+    star: {},
     hash: {},
   },
 };
@@ -63,6 +93,22 @@ export default class PostUpdate extends mixins(JhiDataUtils) {
   @Inject('userService') private userService: () => UserService;
 
   public users: Array<any> = [];
+
+  @Inject('provinceService') private provinceService: () => ProvinceService;
+
+  public provinces: IProvince[] = [];
+
+  @Inject('districtService') private districtService: () => DistrictService;
+
+  public districts: IDistrict[] = [];
+
+  @Inject('wardService') private wardService: () => WardService;
+
+  public wards: IWard[] = [];
+
+  @Inject('streetService') private streetService: () => StreetService;
+
+  public streets: IStreet[] = [];
   public postStatusValues: string[] = Object.keys(PostStatus);
   public isSaving = false;
   public currentLanguage = '';
@@ -165,6 +211,26 @@ export default class PostUpdate extends mixins(JhiDataUtils) {
       .retrieve()
       .then(res => {
         this.users = res.data;
+      });
+    this.provinceService()
+      .retrieve()
+      .then(res => {
+        this.provinces = res.data;
+      });
+    this.districtService()
+      .retrieve()
+      .then(res => {
+        this.districts = res.data;
+      });
+    this.wardService()
+      .retrieve()
+      .then(res => {
+        this.wards = res.data;
+      });
+    this.streetService()
+      .retrieve()
+      .then(res => {
+        this.streets = res.data;
       });
   }
 }

@@ -68,6 +68,242 @@
             />
           </div>
           <div class="form-group">
+            <label class="form-control-label" for="post-address">Address</label>
+            <input
+              type="text"
+              class="form-control"
+              name="address"
+              id="post-address"
+              data-cy="address"
+              :class="{ valid: !$v.post.address.$invalid, invalid: $v.post.address.$invalid }"
+              v-model="$v.post.address.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-googleMapsLocation">Google Maps Location</label>
+            <input
+              type="text"
+              class="form-control"
+              name="googleMapsLocation"
+              id="post-googleMapsLocation"
+              data-cy="googleMapsLocation"
+              :class="{ valid: !$v.post.googleMapsLocation.$invalid, invalid: $v.post.googleMapsLocation.$invalid }"
+              v-model="$v.post.googleMapsLocation.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-width">Width</label>
+            <input
+              type="number"
+              class="form-control"
+              name="width"
+              id="post-width"
+              data-cy="width"
+              :class="{ valid: !$v.post.width.$invalid, invalid: $v.post.width.$invalid }"
+              v-model.number="$v.post.width.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-length">Length</label>
+            <input
+              type="number"
+              class="form-control"
+              name="length"
+              id="post-length"
+              data-cy="length"
+              :class="{ valid: !$v.post.length.$invalid, invalid: $v.post.length.$invalid }"
+              v-model.number="$v.post.length.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-direction">Direction</label>
+            <input
+              type="text"
+              class="form-control"
+              name="direction"
+              id="post-direction"
+              data-cy="direction"
+              :class="{ valid: !$v.post.direction.$invalid, invalid: $v.post.direction.$invalid }"
+              v-model="$v.post.direction.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-distance">Distance</label>
+            <input
+              type="text"
+              class="form-control"
+              name="distance"
+              id="post-distance"
+              data-cy="distance"
+              :class="{ valid: !$v.post.distance.$invalid, invalid: $v.post.distance.$invalid }"
+              v-model="$v.post.distance.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-legal">Legal</label>
+            <input
+              type="text"
+              class="form-control"
+              name="legal"
+              id="post-legal"
+              data-cy="legal"
+              :class="{ valid: !$v.post.legal.$invalid, invalid: $v.post.legal.$invalid }"
+              v-model="$v.post.legal.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-numberOfFloors">Number Of Floors</label>
+            <input
+              type="number"
+              class="form-control"
+              name="numberOfFloors"
+              id="post-numberOfFloors"
+              data-cy="numberOfFloors"
+              :class="{ valid: !$v.post.numberOfFloors.$invalid, invalid: $v.post.numberOfFloors.$invalid }"
+              v-model.number="$v.post.numberOfFloors.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-numberOfBedroom">Number Of Bedroom</label>
+            <input
+              type="number"
+              class="form-control"
+              name="numberOfBedroom"
+              id="post-numberOfBedroom"
+              data-cy="numberOfBedroom"
+              :class="{ valid: !$v.post.numberOfBedroom.$invalid, invalid: $v.post.numberOfBedroom.$invalid }"
+              v-model.number="$v.post.numberOfBedroom.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-hasKitchen">Has Kitchen</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="hasKitchen"
+              id="post-hasKitchen"
+              data-cy="hasKitchen"
+              :class="{ valid: !$v.post.hasKitchen.$invalid, invalid: $v.post.hasKitchen.$invalid }"
+              v-model="$v.post.hasKitchen.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-hasDinningRoom">Has Dinning Room</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="hasDinningRoom"
+              id="post-hasDinningRoom"
+              data-cy="hasDinningRoom"
+              :class="{ valid: !$v.post.hasDinningRoom.$invalid, invalid: $v.post.hasDinningRoom.$invalid }"
+              v-model="$v.post.hasDinningRoom.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-hasRooftop">Has Rooftop</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="hasRooftop"
+              id="post-hasRooftop"
+              data-cy="hasRooftop"
+              :class="{ valid: !$v.post.hasRooftop.$invalid, invalid: $v.post.hasRooftop.$invalid }"
+              v-model="$v.post.hasRooftop.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-hasGarage">Has Garage</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="hasGarage"
+              id="post-hasGarage"
+              data-cy="hasGarage"
+              :class="{ valid: !$v.post.hasGarage.$invalid, invalid: $v.post.hasGarage.$invalid }"
+              v-model="$v.post.hasGarage.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-isVip">Is Vip</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="isVip"
+              id="post-isVip"
+              data-cy="isVip"
+              :class="{ valid: !$v.post.isVip.$invalid, invalid: $v.post.isVip.$invalid }"
+              v-model="$v.post.isVip.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-postingTime">Posting Time</label>
+            <b-input-group class="mb-3">
+              <b-input-group-prepend>
+                <b-form-datepicker
+                  aria-controls="post-postingTime"
+                  v-model="$v.post.postingTime.$model"
+                  name="postingTime"
+                  class="form-control"
+                  :locale="currentLanguage"
+                  button-only
+                  today-button
+                  reset-button
+                  close-button
+                >
+                </b-form-datepicker>
+              </b-input-group-prepend>
+              <b-form-input
+                id="post-postingTime"
+                data-cy="postingTime"
+                type="text"
+                class="form-control"
+                name="postingTime"
+                :class="{ valid: !$v.post.postingTime.$invalid, invalid: $v.post.postingTime.$invalid }"
+                v-model="$v.post.postingTime.$model"
+              />
+            </b-input-group>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-expiredTime">Expired Time</label>
+            <b-input-group class="mb-3">
+              <b-input-group-prepend>
+                <b-form-datepicker
+                  aria-controls="post-expiredTime"
+                  v-model="$v.post.expiredTime.$model"
+                  name="expiredTime"
+                  class="form-control"
+                  :locale="currentLanguage"
+                  button-only
+                  today-button
+                  reset-button
+                  close-button
+                >
+                </b-form-datepicker>
+              </b-input-group-prepend>
+              <b-form-input
+                id="post-expiredTime"
+                data-cy="expiredTime"
+                type="text"
+                class="form-control"
+                name="expiredTime"
+                :class="{ valid: !$v.post.expiredTime.$invalid, invalid: $v.post.expiredTime.$invalid }"
+                v-model="$v.post.expiredTime.$model"
+              />
+            </b-input-group>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-brokerageFees">Brokerage Fees</label>
+            <input
+              type="number"
+              class="form-control"
+              name="brokerageFees"
+              id="post-brokerageFees"
+              data-cy="brokerageFees"
+              :class="{ valid: !$v.post.brokerageFees.$invalid, invalid: $v.post.brokerageFees.$invalid }"
+              v-model.number="$v.post.brokerageFees.$model"
+            />
+          </div>
+          <div class="form-group">
             <label class="form-control-label" for="post-status">Status</label>
             <select
               class="form-control"
@@ -79,6 +315,18 @@
             >
               <option v-for="postStatus in postStatusValues" :key="postStatus" v-bind:value="postStatus">{{ postStatus }}</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-star">Star</label>
+            <input
+              type="number"
+              class="form-control"
+              name="star"
+              id="post-star"
+              data-cy="star"
+              :class="{ valid: !$v.post.star.$invalid, invalid: $v.post.star.$invalid }"
+              v-model.number="$v.post.star.$model"
+            />
           </div>
           <div class="form-group">
             <label class="form-control-label" for="post-hash">Hash</label>
@@ -128,6 +376,58 @@
                 :key="userOption.id"
               >
                 {{ userOption.id }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-province">Province</label>
+            <select class="form-control" id="post-province" data-cy="province" name="province" v-model="post.province">
+              <option v-bind:value="null"></option>
+              <option
+                v-bind:value="post.province && provinceOption.id === post.province.id ? post.province : provinceOption"
+                v-for="provinceOption in provinces"
+                :key="provinceOption.id"
+              >
+                {{ provinceOption.id }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-district">District</label>
+            <select class="form-control" id="post-district" data-cy="district" name="district" v-model="post.district">
+              <option v-bind:value="null"></option>
+              <option
+                v-bind:value="post.district && districtOption.id === post.district.id ? post.district : districtOption"
+                v-for="districtOption in districts"
+                :key="districtOption.id"
+              >
+                {{ districtOption.id }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-ward">Ward</label>
+            <select class="form-control" id="post-ward" data-cy="ward" name="ward" v-model="post.ward">
+              <option v-bind:value="null"></option>
+              <option
+                v-bind:value="post.ward && wardOption.id === post.ward.id ? post.ward : wardOption"
+                v-for="wardOption in wards"
+                :key="wardOption.id"
+              >
+                {{ wardOption.id }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="post-street">Street</label>
+            <select class="form-control" id="post-street" data-cy="street" name="street" v-model="post.street">
+              <option v-bind:value="null"></option>
+              <option
+                v-bind:value="post.street && streetOption.id === post.street.id ? post.street : streetOption"
+                v-for="streetOption in streets"
+                :key="streetOption.id"
+              >
+                {{ streetOption.id }}
               </option>
             </select>
           </div>

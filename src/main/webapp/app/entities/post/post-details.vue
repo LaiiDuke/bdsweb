@@ -29,10 +29,118 @@
             <span>{{ post.square }}</span>
           </dd>
           <dt>
+            <span>Address</span>
+          </dt>
+          <dd>
+            <span>{{ post.address }}</span>
+          </dd>
+          <dt>
+            <span>Google Maps Location</span>
+          </dt>
+          <dd>
+            <span>{{ post.googleMapsLocation }}</span>
+          </dd>
+          <dt>
+            <span>Width</span>
+          </dt>
+          <dd>
+            <span>{{ post.width }}</span>
+          </dd>
+          <dt>
+            <span>Length</span>
+          </dt>
+          <dd>
+            <span>{{ post.length }}</span>
+          </dd>
+          <dt>
+            <span>Direction</span>
+          </dt>
+          <dd>
+            <span>{{ post.direction }}</span>
+          </dd>
+          <dt>
+            <span>Distance</span>
+          </dt>
+          <dd>
+            <span>{{ post.distance }}</span>
+          </dd>
+          <dt>
+            <span>Legal</span>
+          </dt>
+          <dd>
+            <span>{{ post.legal }}</span>
+          </dd>
+          <dt>
+            <span>Number Of Floors</span>
+          </dt>
+          <dd>
+            <span>{{ post.numberOfFloors }}</span>
+          </dd>
+          <dt>
+            <span>Number Of Bedroom</span>
+          </dt>
+          <dd>
+            <span>{{ post.numberOfBedroom }}</span>
+          </dd>
+          <dt>
+            <span>Has Kitchen</span>
+          </dt>
+          <dd>
+            <span>{{ post.hasKitchen }}</span>
+          </dd>
+          <dt>
+            <span>Has Dinning Room</span>
+          </dt>
+          <dd>
+            <span>{{ post.hasDinningRoom }}</span>
+          </dd>
+          <dt>
+            <span>Has Rooftop</span>
+          </dt>
+          <dd>
+            <span>{{ post.hasRooftop }}</span>
+          </dd>
+          <dt>
+            <span>Has Garage</span>
+          </dt>
+          <dd>
+            <span>{{ post.hasGarage }}</span>
+          </dd>
+          <dt>
+            <span>Is Vip</span>
+          </dt>
+          <dd>
+            <span>{{ post.isVip }}</span>
+          </dd>
+          <dt>
+            <span>Posting Time</span>
+          </dt>
+          <dd>
+            <span>{{ post.postingTime }}</span>
+          </dd>
+          <dt>
+            <span>Expired Time</span>
+          </dt>
+          <dd>
+            <span>{{ post.expiredTime }}</span>
+          </dd>
+          <dt>
+            <span>Brokerage Fees</span>
+          </dt>
+          <dd>
+            <span>{{ post.brokerageFees }}</span>
+          </dd>
+          <dt>
             <span>Status</span>
           </dt>
           <dd>
             <span>{{ post.status }}</span>
+          </dd>
+          <dt>
+            <span>Star</span>
+          </dt>
+          <dd>
+            <span>{{ post.star }}</span>
           </dd>
           <dt>
             <span>Hash</span>
@@ -61,6 +169,38 @@
           </dt>
           <dd>
             {{ post.user ? post.user.id : '' }}
+          </dd>
+          <dt>
+            <span>Province</span>
+          </dt>
+          <dd>
+            <div v-if="post.province">
+              <router-link :to="{ name: 'ProvinceView', params: { provinceId: post.province.id } }">{{ post.province.id }}</router-link>
+            </div>
+          </dd>
+          <dt>
+            <span>District</span>
+          </dt>
+          <dd>
+            <div v-if="post.district">
+              <router-link :to="{ name: 'DistrictView', params: { districtId: post.district.id } }">{{ post.district.id }}</router-link>
+            </div>
+          </dd>
+          <dt>
+            <span>Ward</span>
+          </dt>
+          <dd>
+            <div v-if="post.ward">
+              <router-link :to="{ name: 'WardView', params: { wardId: post.ward.id } }">{{ post.ward.id }}</router-link>
+            </div>
+          </dd>
+          <dt>
+            <span>Street</span>
+          </dt>
+          <dd>
+            <div v-if="post.street">
+              <router-link :to="{ name: 'StreetView', params: { streetId: post.street.id } }">{{ post.street.id }}</router-link>
+            </div>
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

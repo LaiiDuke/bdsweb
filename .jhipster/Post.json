@@ -26,9 +26,81 @@
       "fieldType": "Long"
     },
     {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "googleMapsLocation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "width",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "length",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "direction",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "distance",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "legal",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numberOfFloors",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "numberOfBedroom",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "hasKitchen",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "hasDinningRoom",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "hasRooftop",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "hasGarage",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isVip",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "postingTime",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "expiredTime",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "brokerageFees",
+      "fieldType": "Double"
+    },
+    {
       "fieldName": "status",
       "fieldType": "PostStatus",
       "fieldValues": "WAITING,VERIFIED,REJECTED"
+    },
+    {
+      "fieldName": "star",
+      "fieldType": "Double"
     },
     {
       "fieldName": "hash",
@@ -60,6 +132,26 @@
     {
       "otherEntityName": "user",
       "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "province",
+      "relationshipName": "province",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "district",
+      "relationshipName": "district",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ward",
+      "relationshipName": "ward",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "street",
+      "relationshipName": "street",
       "relationshipType": "many-to-one"
     }
   ],

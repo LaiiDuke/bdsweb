@@ -30,7 +30,7 @@ public class Image implements Serializable {
     private String url;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "images", "type", "category", "user" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "type", "category", "user", "province", "district", "ward", "street" }, allowSetters = true)
     private Post post;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

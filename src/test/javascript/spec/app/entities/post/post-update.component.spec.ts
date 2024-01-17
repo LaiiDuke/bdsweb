@@ -16,6 +16,14 @@ import PostTypeService from '@/entities/post-type/post-type.service';
 import CategoryService from '@/entities/category/category.service';
 
 import UserService from '@/entities/user/user.service';
+
+import ProvinceService from '@/entities/province/province.service';
+
+import DistrictService from '@/entities/district/district.service';
+
+import WardService from '@/entities/ward/ward.service';
+
+import StreetService from '@/entities/street/street.service';
 import AlertService from '@/shared/alert/alert.service';
 
 const localVue = createLocalVue();
@@ -64,6 +72,26 @@ describe('Component Tests', () => {
             } as any),
 
           userService: () => new UserService(),
+
+          provinceService: () =>
+            sinon.createStubInstance<ProvinceService>(ProvinceService, {
+              retrieve: sinon.stub().resolves({}),
+            } as any),
+
+          districtService: () =>
+            sinon.createStubInstance<DistrictService>(DistrictService, {
+              retrieve: sinon.stub().resolves({}),
+            } as any),
+
+          wardService: () =>
+            sinon.createStubInstance<WardService>(WardService, {
+              retrieve: sinon.stub().resolves({}),
+            } as any),
+
+          streetService: () =>
+            sinon.createStubInstance<StreetService>(StreetService, {
+              retrieve: sinon.stub().resolves({}),
+            } as any),
         },
       });
       comp = wrapper.vm;

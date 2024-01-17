@@ -25,5 +25,29 @@
                                  constraintName="fk_post__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="province_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__province_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="province"/>
+
+        <addForeignKeyConstraint baseColumnNames="district_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__district_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="district"/>
+
+        <addForeignKeyConstraint baseColumnNames="ward_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__ward_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ward"/>
+
+        <addForeignKeyConstraint baseColumnNames="street_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__street_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="street"/>
     </changeSet>
 </databaseChangeLog>

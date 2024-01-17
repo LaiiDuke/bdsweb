@@ -27,7 +27,25 @@ entity Post {
     content TextBlob
     price Long required
     square Long
+    address String
+    googleMapsLocation String
+    width Double
+    length Double
+    direction String //huong dong, tay, nam bac, dong nam, ...
+    distance String
+    legal String
+    numberOfFloors Long
+    numberOfBedroom Long
+    hasKitchen Boolean
+    hasDinningRoom Boolean
+    hasRooftop Boolean
+    hasGarage Boolean
+    isVip Boolean
+    postingTime LocalDate
+    expiredTime LocalDate
+    brokerageFees Double
     status PostStatus
+    star Double
     hash String
 }
 
@@ -76,6 +94,10 @@ relationship ManyToOne {
     Post{type} to PostType
     Post{category} to Category
     Post{user} to User
+    Post{province} to Province
+    Post{district} to District
+    Post{ward} to Ward
+    Post{street} to Street
 }
 
 // Set pagination options

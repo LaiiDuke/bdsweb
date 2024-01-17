@@ -11,6 +11,8 @@ import com.duke.bds.domain.enumeration.PostStatus;
 import com.duke.bds.repository.PostRepository;
 import com.duke.bds.service.dto.PostDTO;
 import com.duke.bds.service.mapper.PostMapper;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -45,8 +47,62 @@ class PostResourceIT {
     private static final Long DEFAULT_SQUARE = 1L;
     private static final Long UPDATED_SQUARE = 2L;
 
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
+    private static final String DEFAULT_GOOGLE_MAPS_LOCATION = "AAAAAAAAAA";
+    private static final String UPDATED_GOOGLE_MAPS_LOCATION = "BBBBBBBBBB";
+
+    private static final Double DEFAULT_WIDTH = 1D;
+    private static final Double UPDATED_WIDTH = 2D;
+
+    private static final Double DEFAULT_LENGTH = 1D;
+    private static final Double UPDATED_LENGTH = 2D;
+
+    private static final String DEFAULT_DIRECTION = "AAAAAAAAAA";
+    private static final String UPDATED_DIRECTION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DISTANCE = "AAAAAAAAAA";
+    private static final String UPDATED_DISTANCE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LEGAL = "AAAAAAAAAA";
+    private static final String UPDATED_LEGAL = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_NUMBER_OF_FLOORS = 1L;
+    private static final Long UPDATED_NUMBER_OF_FLOORS = 2L;
+
+    private static final Long DEFAULT_NUMBER_OF_BEDROOM = 1L;
+    private static final Long UPDATED_NUMBER_OF_BEDROOM = 2L;
+
+    private static final Boolean DEFAULT_HAS_KITCHEN = false;
+    private static final Boolean UPDATED_HAS_KITCHEN = true;
+
+    private static final Boolean DEFAULT_HAS_DINNING_ROOM = false;
+    private static final Boolean UPDATED_HAS_DINNING_ROOM = true;
+
+    private static final Boolean DEFAULT_HAS_ROOFTOP = false;
+    private static final Boolean UPDATED_HAS_ROOFTOP = true;
+
+    private static final Boolean DEFAULT_HAS_GARAGE = false;
+    private static final Boolean UPDATED_HAS_GARAGE = true;
+
+    private static final Boolean DEFAULT_IS_VIP = false;
+    private static final Boolean UPDATED_IS_VIP = true;
+
+    private static final LocalDate DEFAULT_POSTING_TIME = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_POSTING_TIME = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_EXPIRED_TIME = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_EXPIRED_TIME = LocalDate.now(ZoneId.systemDefault());
+
+    private static final Double DEFAULT_BROKERAGE_FEES = 1D;
+    private static final Double UPDATED_BROKERAGE_FEES = 2D;
+
     private static final PostStatus DEFAULT_STATUS = PostStatus.WAITING;
     private static final PostStatus UPDATED_STATUS = PostStatus.VERIFIED;
+
+    private static final Double DEFAULT_STAR = 1D;
+    private static final Double UPDATED_STAR = 2D;
 
     private static final String DEFAULT_HASH = "AAAAAAAAAA";
     private static final String UPDATED_HASH = "BBBBBBBBBB";
@@ -83,7 +139,25 @@ class PostResourceIT {
             .content(DEFAULT_CONTENT)
             .price(DEFAULT_PRICE)
             .square(DEFAULT_SQUARE)
+            .address(DEFAULT_ADDRESS)
+            .googleMapsLocation(DEFAULT_GOOGLE_MAPS_LOCATION)
+            .width(DEFAULT_WIDTH)
+            .length(DEFAULT_LENGTH)
+            .direction(DEFAULT_DIRECTION)
+            .distance(DEFAULT_DISTANCE)
+            .legal(DEFAULT_LEGAL)
+            .numberOfFloors(DEFAULT_NUMBER_OF_FLOORS)
+            .numberOfBedroom(DEFAULT_NUMBER_OF_BEDROOM)
+            .hasKitchen(DEFAULT_HAS_KITCHEN)
+            .hasDinningRoom(DEFAULT_HAS_DINNING_ROOM)
+            .hasRooftop(DEFAULT_HAS_ROOFTOP)
+            .hasGarage(DEFAULT_HAS_GARAGE)
+            .isVip(DEFAULT_IS_VIP)
+            .postingTime(DEFAULT_POSTING_TIME)
+            .expiredTime(DEFAULT_EXPIRED_TIME)
+            .brokerageFees(DEFAULT_BROKERAGE_FEES)
             .status(DEFAULT_STATUS)
+            .star(DEFAULT_STAR)
             .hash(DEFAULT_HASH);
         return post;
     }
@@ -100,7 +174,25 @@ class PostResourceIT {
             .content(UPDATED_CONTENT)
             .price(UPDATED_PRICE)
             .square(UPDATED_SQUARE)
+            .address(UPDATED_ADDRESS)
+            .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
+            .width(UPDATED_WIDTH)
+            .length(UPDATED_LENGTH)
+            .direction(UPDATED_DIRECTION)
+            .distance(UPDATED_DISTANCE)
+            .legal(UPDATED_LEGAL)
+            .numberOfFloors(UPDATED_NUMBER_OF_FLOORS)
+            .numberOfBedroom(UPDATED_NUMBER_OF_BEDROOM)
+            .hasKitchen(UPDATED_HAS_KITCHEN)
+            .hasDinningRoom(UPDATED_HAS_DINNING_ROOM)
+            .hasRooftop(UPDATED_HAS_ROOFTOP)
+            .hasGarage(UPDATED_HAS_GARAGE)
+            .isVip(UPDATED_IS_VIP)
+            .postingTime(UPDATED_POSTING_TIME)
+            .expiredTime(UPDATED_EXPIRED_TIME)
+            .brokerageFees(UPDATED_BROKERAGE_FEES)
             .status(UPDATED_STATUS)
+            .star(UPDATED_STAR)
             .hash(UPDATED_HASH);
         return post;
     }
@@ -128,7 +220,25 @@ class PostResourceIT {
         assertThat(testPost.getContent()).isEqualTo(DEFAULT_CONTENT);
         assertThat(testPost.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(DEFAULT_SQUARE);
+        assertThat(testPost.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testPost.getGoogleMapsLocation()).isEqualTo(DEFAULT_GOOGLE_MAPS_LOCATION);
+        assertThat(testPost.getWidth()).isEqualTo(DEFAULT_WIDTH);
+        assertThat(testPost.getLength()).isEqualTo(DEFAULT_LENGTH);
+        assertThat(testPost.getDirection()).isEqualTo(DEFAULT_DIRECTION);
+        assertThat(testPost.getDistance()).isEqualTo(DEFAULT_DISTANCE);
+        assertThat(testPost.getLegal()).isEqualTo(DEFAULT_LEGAL);
+        assertThat(testPost.getNumberOfFloors()).isEqualTo(DEFAULT_NUMBER_OF_FLOORS);
+        assertThat(testPost.getNumberOfBedroom()).isEqualTo(DEFAULT_NUMBER_OF_BEDROOM);
+        assertThat(testPost.getHasKitchen()).isEqualTo(DEFAULT_HAS_KITCHEN);
+        assertThat(testPost.getHasDinningRoom()).isEqualTo(DEFAULT_HAS_DINNING_ROOM);
+        assertThat(testPost.getHasRooftop()).isEqualTo(DEFAULT_HAS_ROOFTOP);
+        assertThat(testPost.getHasGarage()).isEqualTo(DEFAULT_HAS_GARAGE);
+        assertThat(testPost.getIsVip()).isEqualTo(DEFAULT_IS_VIP);
+        assertThat(testPost.getPostingTime()).isEqualTo(DEFAULT_POSTING_TIME);
+        assertThat(testPost.getExpiredTime()).isEqualTo(DEFAULT_EXPIRED_TIME);
+        assertThat(testPost.getBrokerageFees()).isEqualTo(DEFAULT_BROKERAGE_FEES);
         assertThat(testPost.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testPost.getStar()).isEqualTo(DEFAULT_STAR);
         assertThat(testPost.getHash()).isEqualTo(DEFAULT_HASH);
     }
 
@@ -203,7 +313,25 @@ class PostResourceIT {
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.intValue())))
             .andExpect(jsonPath("$.[*].square").value(hasItem(DEFAULT_SQUARE.intValue())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].googleMapsLocation").value(hasItem(DEFAULT_GOOGLE_MAPS_LOCATION)))
+            .andExpect(jsonPath("$.[*].width").value(hasItem(DEFAULT_WIDTH.doubleValue())))
+            .andExpect(jsonPath("$.[*].length").value(hasItem(DEFAULT_LENGTH.doubleValue())))
+            .andExpect(jsonPath("$.[*].direction").value(hasItem(DEFAULT_DIRECTION)))
+            .andExpect(jsonPath("$.[*].distance").value(hasItem(DEFAULT_DISTANCE)))
+            .andExpect(jsonPath("$.[*].legal").value(hasItem(DEFAULT_LEGAL)))
+            .andExpect(jsonPath("$.[*].numberOfFloors").value(hasItem(DEFAULT_NUMBER_OF_FLOORS.intValue())))
+            .andExpect(jsonPath("$.[*].numberOfBedroom").value(hasItem(DEFAULT_NUMBER_OF_BEDROOM.intValue())))
+            .andExpect(jsonPath("$.[*].hasKitchen").value(hasItem(DEFAULT_HAS_KITCHEN.booleanValue())))
+            .andExpect(jsonPath("$.[*].hasDinningRoom").value(hasItem(DEFAULT_HAS_DINNING_ROOM.booleanValue())))
+            .andExpect(jsonPath("$.[*].hasRooftop").value(hasItem(DEFAULT_HAS_ROOFTOP.booleanValue())))
+            .andExpect(jsonPath("$.[*].hasGarage").value(hasItem(DEFAULT_HAS_GARAGE.booleanValue())))
+            .andExpect(jsonPath("$.[*].isVip").value(hasItem(DEFAULT_IS_VIP.booleanValue())))
+            .andExpect(jsonPath("$.[*].postingTime").value(hasItem(DEFAULT_POSTING_TIME.toString())))
+            .andExpect(jsonPath("$.[*].expiredTime").value(hasItem(DEFAULT_EXPIRED_TIME.toString())))
+            .andExpect(jsonPath("$.[*].brokerageFees").value(hasItem(DEFAULT_BROKERAGE_FEES.doubleValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].star").value(hasItem(DEFAULT_STAR.doubleValue())))
             .andExpect(jsonPath("$.[*].hash").value(hasItem(DEFAULT_HASH)));
     }
 
@@ -223,7 +351,25 @@ class PostResourceIT {
             .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.intValue()))
             .andExpect(jsonPath("$.square").value(DEFAULT_SQUARE.intValue()))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
+            .andExpect(jsonPath("$.googleMapsLocation").value(DEFAULT_GOOGLE_MAPS_LOCATION))
+            .andExpect(jsonPath("$.width").value(DEFAULT_WIDTH.doubleValue()))
+            .andExpect(jsonPath("$.length").value(DEFAULT_LENGTH.doubleValue()))
+            .andExpect(jsonPath("$.direction").value(DEFAULT_DIRECTION))
+            .andExpect(jsonPath("$.distance").value(DEFAULT_DISTANCE))
+            .andExpect(jsonPath("$.legal").value(DEFAULT_LEGAL))
+            .andExpect(jsonPath("$.numberOfFloors").value(DEFAULT_NUMBER_OF_FLOORS.intValue()))
+            .andExpect(jsonPath("$.numberOfBedroom").value(DEFAULT_NUMBER_OF_BEDROOM.intValue()))
+            .andExpect(jsonPath("$.hasKitchen").value(DEFAULT_HAS_KITCHEN.booleanValue()))
+            .andExpect(jsonPath("$.hasDinningRoom").value(DEFAULT_HAS_DINNING_ROOM.booleanValue()))
+            .andExpect(jsonPath("$.hasRooftop").value(DEFAULT_HAS_ROOFTOP.booleanValue()))
+            .andExpect(jsonPath("$.hasGarage").value(DEFAULT_HAS_GARAGE.booleanValue()))
+            .andExpect(jsonPath("$.isVip").value(DEFAULT_IS_VIP.booleanValue()))
+            .andExpect(jsonPath("$.postingTime").value(DEFAULT_POSTING_TIME.toString()))
+            .andExpect(jsonPath("$.expiredTime").value(DEFAULT_EXPIRED_TIME.toString()))
+            .andExpect(jsonPath("$.brokerageFees").value(DEFAULT_BROKERAGE_FEES.doubleValue()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.star").value(DEFAULT_STAR.doubleValue()))
             .andExpect(jsonPath("$.hash").value(DEFAULT_HASH));
     }
 
@@ -251,7 +397,25 @@ class PostResourceIT {
             .content(UPDATED_CONTENT)
             .price(UPDATED_PRICE)
             .square(UPDATED_SQUARE)
+            .address(UPDATED_ADDRESS)
+            .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
+            .width(UPDATED_WIDTH)
+            .length(UPDATED_LENGTH)
+            .direction(UPDATED_DIRECTION)
+            .distance(UPDATED_DISTANCE)
+            .legal(UPDATED_LEGAL)
+            .numberOfFloors(UPDATED_NUMBER_OF_FLOORS)
+            .numberOfBedroom(UPDATED_NUMBER_OF_BEDROOM)
+            .hasKitchen(UPDATED_HAS_KITCHEN)
+            .hasDinningRoom(UPDATED_HAS_DINNING_ROOM)
+            .hasRooftop(UPDATED_HAS_ROOFTOP)
+            .hasGarage(UPDATED_HAS_GARAGE)
+            .isVip(UPDATED_IS_VIP)
+            .postingTime(UPDATED_POSTING_TIME)
+            .expiredTime(UPDATED_EXPIRED_TIME)
+            .brokerageFees(UPDATED_BROKERAGE_FEES)
             .status(UPDATED_STATUS)
+            .star(UPDATED_STAR)
             .hash(UPDATED_HASH);
         PostDTO postDTO = postMapper.toDto(updatedPost);
 
@@ -271,7 +435,25 @@ class PostResourceIT {
         assertThat(testPost.getContent()).isEqualTo(UPDATED_CONTENT);
         assertThat(testPost.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(UPDATED_SQUARE);
+        assertThat(testPost.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testPost.getGoogleMapsLocation()).isEqualTo(UPDATED_GOOGLE_MAPS_LOCATION);
+        assertThat(testPost.getWidth()).isEqualTo(UPDATED_WIDTH);
+        assertThat(testPost.getLength()).isEqualTo(UPDATED_LENGTH);
+        assertThat(testPost.getDirection()).isEqualTo(UPDATED_DIRECTION);
+        assertThat(testPost.getDistance()).isEqualTo(UPDATED_DISTANCE);
+        assertThat(testPost.getLegal()).isEqualTo(UPDATED_LEGAL);
+        assertThat(testPost.getNumberOfFloors()).isEqualTo(UPDATED_NUMBER_OF_FLOORS);
+        assertThat(testPost.getNumberOfBedroom()).isEqualTo(UPDATED_NUMBER_OF_BEDROOM);
+        assertThat(testPost.getHasKitchen()).isEqualTo(UPDATED_HAS_KITCHEN);
+        assertThat(testPost.getHasDinningRoom()).isEqualTo(UPDATED_HAS_DINNING_ROOM);
+        assertThat(testPost.getHasRooftop()).isEqualTo(UPDATED_HAS_ROOFTOP);
+        assertThat(testPost.getHasGarage()).isEqualTo(UPDATED_HAS_GARAGE);
+        assertThat(testPost.getIsVip()).isEqualTo(UPDATED_IS_VIP);
+        assertThat(testPost.getPostingTime()).isEqualTo(UPDATED_POSTING_TIME);
+        assertThat(testPost.getExpiredTime()).isEqualTo(UPDATED_EXPIRED_TIME);
+        assertThat(testPost.getBrokerageFees()).isEqualTo(UPDATED_BROKERAGE_FEES);
         assertThat(testPost.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPost.getStar()).isEqualTo(UPDATED_STAR);
         assertThat(testPost.getHash()).isEqualTo(UPDATED_HASH);
     }
 
@@ -352,7 +534,15 @@ class PostResourceIT {
         Post partialUpdatedPost = new Post();
         partialUpdatedPost.setId(post.getId());
 
-        partialUpdatedPost.square(UPDATED_SQUARE).hash(UPDATED_HASH);
+        partialUpdatedPost
+            .square(UPDATED_SQUARE)
+            .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
+            .width(UPDATED_WIDTH)
+            .length(UPDATED_LENGTH)
+            .hasDinningRoom(UPDATED_HAS_DINNING_ROOM)
+            .hasRooftop(UPDATED_HAS_ROOFTOP)
+            .expiredTime(UPDATED_EXPIRED_TIME)
+            .star(UPDATED_STAR);
 
         restPostMockMvc
             .perform(
@@ -370,8 +560,26 @@ class PostResourceIT {
         assertThat(testPost.getContent()).isEqualTo(DEFAULT_CONTENT);
         assertThat(testPost.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(UPDATED_SQUARE);
+        assertThat(testPost.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testPost.getGoogleMapsLocation()).isEqualTo(UPDATED_GOOGLE_MAPS_LOCATION);
+        assertThat(testPost.getWidth()).isEqualTo(UPDATED_WIDTH);
+        assertThat(testPost.getLength()).isEqualTo(UPDATED_LENGTH);
+        assertThat(testPost.getDirection()).isEqualTo(DEFAULT_DIRECTION);
+        assertThat(testPost.getDistance()).isEqualTo(DEFAULT_DISTANCE);
+        assertThat(testPost.getLegal()).isEqualTo(DEFAULT_LEGAL);
+        assertThat(testPost.getNumberOfFloors()).isEqualTo(DEFAULT_NUMBER_OF_FLOORS);
+        assertThat(testPost.getNumberOfBedroom()).isEqualTo(DEFAULT_NUMBER_OF_BEDROOM);
+        assertThat(testPost.getHasKitchen()).isEqualTo(DEFAULT_HAS_KITCHEN);
+        assertThat(testPost.getHasDinningRoom()).isEqualTo(UPDATED_HAS_DINNING_ROOM);
+        assertThat(testPost.getHasRooftop()).isEqualTo(UPDATED_HAS_ROOFTOP);
+        assertThat(testPost.getHasGarage()).isEqualTo(DEFAULT_HAS_GARAGE);
+        assertThat(testPost.getIsVip()).isEqualTo(DEFAULT_IS_VIP);
+        assertThat(testPost.getPostingTime()).isEqualTo(DEFAULT_POSTING_TIME);
+        assertThat(testPost.getExpiredTime()).isEqualTo(UPDATED_EXPIRED_TIME);
+        assertThat(testPost.getBrokerageFees()).isEqualTo(DEFAULT_BROKERAGE_FEES);
         assertThat(testPost.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testPost.getHash()).isEqualTo(UPDATED_HASH);
+        assertThat(testPost.getStar()).isEqualTo(UPDATED_STAR);
+        assertThat(testPost.getHash()).isEqualTo(DEFAULT_HASH);
     }
 
     @Test
@@ -391,7 +599,25 @@ class PostResourceIT {
             .content(UPDATED_CONTENT)
             .price(UPDATED_PRICE)
             .square(UPDATED_SQUARE)
+            .address(UPDATED_ADDRESS)
+            .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
+            .width(UPDATED_WIDTH)
+            .length(UPDATED_LENGTH)
+            .direction(UPDATED_DIRECTION)
+            .distance(UPDATED_DISTANCE)
+            .legal(UPDATED_LEGAL)
+            .numberOfFloors(UPDATED_NUMBER_OF_FLOORS)
+            .numberOfBedroom(UPDATED_NUMBER_OF_BEDROOM)
+            .hasKitchen(UPDATED_HAS_KITCHEN)
+            .hasDinningRoom(UPDATED_HAS_DINNING_ROOM)
+            .hasRooftop(UPDATED_HAS_ROOFTOP)
+            .hasGarage(UPDATED_HAS_GARAGE)
+            .isVip(UPDATED_IS_VIP)
+            .postingTime(UPDATED_POSTING_TIME)
+            .expiredTime(UPDATED_EXPIRED_TIME)
+            .brokerageFees(UPDATED_BROKERAGE_FEES)
             .status(UPDATED_STATUS)
+            .star(UPDATED_STAR)
             .hash(UPDATED_HASH);
 
         restPostMockMvc
@@ -410,7 +636,25 @@ class PostResourceIT {
         assertThat(testPost.getContent()).isEqualTo(UPDATED_CONTENT);
         assertThat(testPost.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(UPDATED_SQUARE);
+        assertThat(testPost.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testPost.getGoogleMapsLocation()).isEqualTo(UPDATED_GOOGLE_MAPS_LOCATION);
+        assertThat(testPost.getWidth()).isEqualTo(UPDATED_WIDTH);
+        assertThat(testPost.getLength()).isEqualTo(UPDATED_LENGTH);
+        assertThat(testPost.getDirection()).isEqualTo(UPDATED_DIRECTION);
+        assertThat(testPost.getDistance()).isEqualTo(UPDATED_DISTANCE);
+        assertThat(testPost.getLegal()).isEqualTo(UPDATED_LEGAL);
+        assertThat(testPost.getNumberOfFloors()).isEqualTo(UPDATED_NUMBER_OF_FLOORS);
+        assertThat(testPost.getNumberOfBedroom()).isEqualTo(UPDATED_NUMBER_OF_BEDROOM);
+        assertThat(testPost.getHasKitchen()).isEqualTo(UPDATED_HAS_KITCHEN);
+        assertThat(testPost.getHasDinningRoom()).isEqualTo(UPDATED_HAS_DINNING_ROOM);
+        assertThat(testPost.getHasRooftop()).isEqualTo(UPDATED_HAS_ROOFTOP);
+        assertThat(testPost.getHasGarage()).isEqualTo(UPDATED_HAS_GARAGE);
+        assertThat(testPost.getIsVip()).isEqualTo(UPDATED_IS_VIP);
+        assertThat(testPost.getPostingTime()).isEqualTo(UPDATED_POSTING_TIME);
+        assertThat(testPost.getExpiredTime()).isEqualTo(UPDATED_EXPIRED_TIME);
+        assertThat(testPost.getBrokerageFees()).isEqualTo(UPDATED_BROKERAGE_FEES);
         assertThat(testPost.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPost.getStar()).isEqualTo(UPDATED_STAR);
         assertThat(testPost.getHash()).isEqualTo(UPDATED_HASH);
     }
 

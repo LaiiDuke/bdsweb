@@ -26,7 +26,61 @@
             <column name="square" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="google_maps_location" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="width" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="length" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="direction" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="distance" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="legal" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="number_of_floors" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="number_of_bedroom" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="has_kitchen" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="has_dinning_room" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="has_rooftop" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="has_garage" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_vip" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="posting_time" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="expired_time" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="brokerage_fees" type="double">
+                <constraints nullable="true" />
+            </column>
             <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="star" type="double">
                 <constraints nullable="true" />
             </column>
             <column name="hash" type="varchar(255)">
@@ -39,6 +93,18 @@
                 <constraints nullable="true" />
             </column>
             <column name="user_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="province_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="district_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="ward_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="street_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -66,7 +132,25 @@
             <column name="content" type="clob"/>
             <column name="price" type="numeric"/>
             <column name="square" type="numeric"/>
+            <column name="address" type="string"/>
+            <column name="google_maps_location" type="string"/>
+            <column name="width" type="numeric"/>
+            <column name="length" type="numeric"/>
+            <column name="direction" type="string"/>
+            <column name="distance" type="string"/>
+            <column name="legal" type="string"/>
+            <column name="number_of_floors" type="numeric"/>
+            <column name="number_of_bedroom" type="numeric"/>
+            <column name="has_kitchen" type="boolean"/>
+            <column name="has_dinning_room" type="boolean"/>
+            <column name="has_rooftop" type="boolean"/>
+            <column name="has_garage" type="boolean"/>
+            <column name="is_vip" type="boolean"/>
+            <column name="posting_time" type="date"/>
+            <column name="expired_time" type="date"/>
+            <column name="brokerage_fees" type="numeric"/>
             <column name="status" type="string"/>
+            <column name="star" type="numeric"/>
             <column name="hash" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

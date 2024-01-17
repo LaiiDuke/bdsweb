@@ -3,6 +3,7 @@ package com.duke.bds.domain;
 import com.duke.bds.domain.enumeration.PostStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -39,9 +40,63 @@ public class Post implements Serializable {
     @Column(name = "square")
     private Long square;
 
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "google_maps_location")
+    private String googleMapsLocation;
+
+    @Column(name = "width")
+    private Double width;
+
+    @Column(name = "length")
+    private Double length;
+
+    @Column(name = "direction")
+    private String direction;
+
+    @Column(name = "distance")
+    private String distance;
+
+    @Column(name = "legal")
+    private String legal;
+
+    @Column(name = "number_of_floors")
+    private Long numberOfFloors;
+
+    @Column(name = "number_of_bedroom")
+    private Long numberOfBedroom;
+
+    @Column(name = "has_kitchen")
+    private Boolean hasKitchen;
+
+    @Column(name = "has_dinning_room")
+    private Boolean hasDinningRoom;
+
+    @Column(name = "has_rooftop")
+    private Boolean hasRooftop;
+
+    @Column(name = "has_garage")
+    private Boolean hasGarage;
+
+    @Column(name = "is_vip")
+    private Boolean isVip;
+
+    @Column(name = "posting_time")
+    private LocalDate postingTime;
+
+    @Column(name = "expired_time")
+    private LocalDate expiredTime;
+
+    @Column(name = "brokerage_fees")
+    private Double brokerageFees;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private PostStatus status;
+
+    @Column(name = "star")
+    private Double star;
 
     @Column(name = "hash")
     private String hash;
@@ -58,6 +113,22 @@ public class Post implements Serializable {
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "districts" }, allowSetters = true)
+    private Province province;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "wards", "streets", "province" }, allowSetters = true)
+    private District district;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "streets", "district" }, allowSetters = true)
+    private Ward ward;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "ward", "district" }, allowSetters = true)
+    private Street street;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -126,6 +197,227 @@ public class Post implements Serializable {
         this.square = square;
     }
 
+    public String getAddress() {
+        return this.address;
+    }
+
+    public Post address(String address) {
+        this.setAddress(address);
+        return this;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getGoogleMapsLocation() {
+        return this.googleMapsLocation;
+    }
+
+    public Post googleMapsLocation(String googleMapsLocation) {
+        this.setGoogleMapsLocation(googleMapsLocation);
+        return this;
+    }
+
+    public void setGoogleMapsLocation(String googleMapsLocation) {
+        this.googleMapsLocation = googleMapsLocation;
+    }
+
+    public Double getWidth() {
+        return this.width;
+    }
+
+    public Post width(Double width) {
+        this.setWidth(width);
+        return this;
+    }
+
+    public void setWidth(Double width) {
+        this.width = width;
+    }
+
+    public Double getLength() {
+        return this.length;
+    }
+
+    public Post length(Double length) {
+        this.setLength(length);
+        return this;
+    }
+
+    public void setLength(Double length) {
+        this.length = length;
+    }
+
+    public String getDirection() {
+        return this.direction;
+    }
+
+    public Post direction(String direction) {
+        this.setDirection(direction);
+        return this;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public String getDistance() {
+        return this.distance;
+    }
+
+    public Post distance(String distance) {
+        this.setDistance(distance);
+        return this;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getLegal() {
+        return this.legal;
+    }
+
+    public Post legal(String legal) {
+        this.setLegal(legal);
+        return this;
+    }
+
+    public void setLegal(String legal) {
+        this.legal = legal;
+    }
+
+    public Long getNumberOfFloors() {
+        return this.numberOfFloors;
+    }
+
+    public Post numberOfFloors(Long numberOfFloors) {
+        this.setNumberOfFloors(numberOfFloors);
+        return this;
+    }
+
+    public void setNumberOfFloors(Long numberOfFloors) {
+        this.numberOfFloors = numberOfFloors;
+    }
+
+    public Long getNumberOfBedroom() {
+        return this.numberOfBedroom;
+    }
+
+    public Post numberOfBedroom(Long numberOfBedroom) {
+        this.setNumberOfBedroom(numberOfBedroom);
+        return this;
+    }
+
+    public void setNumberOfBedroom(Long numberOfBedroom) {
+        this.numberOfBedroom = numberOfBedroom;
+    }
+
+    public Boolean getHasKitchen() {
+        return this.hasKitchen;
+    }
+
+    public Post hasKitchen(Boolean hasKitchen) {
+        this.setHasKitchen(hasKitchen);
+        return this;
+    }
+
+    public void setHasKitchen(Boolean hasKitchen) {
+        this.hasKitchen = hasKitchen;
+    }
+
+    public Boolean getHasDinningRoom() {
+        return this.hasDinningRoom;
+    }
+
+    public Post hasDinningRoom(Boolean hasDinningRoom) {
+        this.setHasDinningRoom(hasDinningRoom);
+        return this;
+    }
+
+    public void setHasDinningRoom(Boolean hasDinningRoom) {
+        this.hasDinningRoom = hasDinningRoom;
+    }
+
+    public Boolean getHasRooftop() {
+        return this.hasRooftop;
+    }
+
+    public Post hasRooftop(Boolean hasRooftop) {
+        this.setHasRooftop(hasRooftop);
+        return this;
+    }
+
+    public void setHasRooftop(Boolean hasRooftop) {
+        this.hasRooftop = hasRooftop;
+    }
+
+    public Boolean getHasGarage() {
+        return this.hasGarage;
+    }
+
+    public Post hasGarage(Boolean hasGarage) {
+        this.setHasGarage(hasGarage);
+        return this;
+    }
+
+    public void setHasGarage(Boolean hasGarage) {
+        this.hasGarage = hasGarage;
+    }
+
+    public Boolean getIsVip() {
+        return this.isVip;
+    }
+
+    public Post isVip(Boolean isVip) {
+        this.setIsVip(isVip);
+        return this;
+    }
+
+    public void setIsVip(Boolean isVip) {
+        this.isVip = isVip;
+    }
+
+    public LocalDate getPostingTime() {
+        return this.postingTime;
+    }
+
+    public Post postingTime(LocalDate postingTime) {
+        this.setPostingTime(postingTime);
+        return this;
+    }
+
+    public void setPostingTime(LocalDate postingTime) {
+        this.postingTime = postingTime;
+    }
+
+    public LocalDate getExpiredTime() {
+        return this.expiredTime;
+    }
+
+    public Post expiredTime(LocalDate expiredTime) {
+        this.setExpiredTime(expiredTime);
+        return this;
+    }
+
+    public void setExpiredTime(LocalDate expiredTime) {
+        this.expiredTime = expiredTime;
+    }
+
+    public Double getBrokerageFees() {
+        return this.brokerageFees;
+    }
+
+    public Post brokerageFees(Double brokerageFees) {
+        this.setBrokerageFees(brokerageFees);
+        return this;
+    }
+
+    public void setBrokerageFees(Double brokerageFees) {
+        this.brokerageFees = brokerageFees;
+    }
+
     public PostStatus getStatus() {
         return this.status;
     }
@@ -137,6 +429,19 @@ public class Post implements Serializable {
 
     public void setStatus(PostStatus status) {
         this.status = status;
+    }
+
+    public Double getStar() {
+        return this.star;
+    }
+
+    public Post star(Double star) {
+        this.setStar(star);
+        return this;
+    }
+
+    public void setStar(Double star) {
+        this.star = star;
     }
 
     public String getHash() {
@@ -222,6 +527,58 @@ public class Post implements Serializable {
         return this;
     }
 
+    public Province getProvince() {
+        return this.province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    public Post province(Province province) {
+        this.setProvince(province);
+        return this;
+    }
+
+    public District getDistrict() {
+        return this.district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public Post district(District district) {
+        this.setDistrict(district);
+        return this;
+    }
+
+    public Ward getWard() {
+        return this.ward;
+    }
+
+    public void setWard(Ward ward) {
+        this.ward = ward;
+    }
+
+    public Post ward(Ward ward) {
+        this.setWard(ward);
+        return this;
+    }
+
+    public Street getStreet() {
+        return this.street;
+    }
+
+    public void setStreet(Street street) {
+        this.street = street;
+    }
+
+    public Post street(Street street) {
+        this.setStreet(street);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -250,7 +607,25 @@ public class Post implements Serializable {
             ", content='" + getContent() + "'" +
             ", price=" + getPrice() +
             ", square=" + getSquare() +
+            ", address='" + getAddress() + "'" +
+            ", googleMapsLocation='" + getGoogleMapsLocation() + "'" +
+            ", width=" + getWidth() +
+            ", length=" + getLength() +
+            ", direction='" + getDirection() + "'" +
+            ", distance='" + getDistance() + "'" +
+            ", legal='" + getLegal() + "'" +
+            ", numberOfFloors=" + getNumberOfFloors() +
+            ", numberOfBedroom=" + getNumberOfBedroom() +
+            ", hasKitchen='" + getHasKitchen() + "'" +
+            ", hasDinningRoom='" + getHasDinningRoom() + "'" +
+            ", hasRooftop='" + getHasRooftop() + "'" +
+            ", hasGarage='" + getHasGarage() + "'" +
+            ", isVip='" + getIsVip() + "'" +
+            ", postingTime='" + getPostingTime() + "'" +
+            ", expiredTime='" + getExpiredTime() + "'" +
+            ", brokerageFees=" + getBrokerageFees() +
             ", status='" + getStatus() + "'" +
+            ", star=" + getStar() +
             ", hash='" + getHash() + "'" +
             "}";
     }
