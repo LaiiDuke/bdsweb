@@ -1,0 +1,23 @@
+
+String province; //tinh
+String district; //huyen
+String precinct; //xa
+String street; //ten duong
+String detailAddress; //dia chi chi tiet: so nha, ...
+String googleMapsLocation; //dinh vi tren maps
+String priceType; //gia tong dien tich hay gia/m2
+String width; //chieu rong
+String length;// chieu dai
+String direction; //huong dong, tay, nam bac, dong nam, ...
+String distance; //cach mat duong ? m
+String legal; //phap ly : so do, giayl phep kd ,...
+Integer numberOfFloors; //so tang
+Integer numberOfBedroom; //so phong ngu
+Boolean hasKitchen; //co phong bep
+Boolean hasDinningRoom; //co phong an
+Boolean hasRooftop; //co san thuong
+Boolean hasGarage; //co gara de xe oto
+Boolean isVip; //tin vip?
+Date postingTime; //thoi gian dang bai
+Date expiredTime; //thoi gian het han 
+Long brokerageFees; //phi moi gioi
