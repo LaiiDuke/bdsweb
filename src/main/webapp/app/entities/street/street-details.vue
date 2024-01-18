@@ -2,22 +2,24 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="street">
-        <h2 class="jh-entity-heading" data-cy="streetDetailsHeading"><span>Street</span> {{ street.id }}</h2>
+        <h2 class="jh-entity-heading" data-cy="streetDetailsHeading">
+          <span v-text="$t('bdswebApp.street.detail.title')">Street</span> {{ street.id }}
+        </h2>
         <dl class="row jh-entity-details">
           <dt>
-            <span>Name</span>
+            <span v-text="$t('bdswebApp.street.name')">Name</span>
           </dt>
           <dd>
             <span>{{ street.name }}</span>
           </dd>
           <dt>
-            <span>Status</span>
+            <span v-text="$t('bdswebApp.street.status')">Status</span>
           </dt>
           <dd>
-            <span>{{ street.status }}</span>
+            <span v-text="$t('bdswebApp.PostStatus.' + street.status)">{{ street.status }}</span>
           </dd>
           <dt>
-            <span>Ward</span>
+            <span v-text="$t('bdswebApp.street.ward')">Ward</span>
           </dt>
           <dd>
             <div v-if="street.ward">
@@ -25,7 +27,7 @@
             </div>
           </dd>
           <dt>
-            <span>District</span>
+            <span v-text="$t('bdswebApp.street.district')">District</span>
           </dt>
           <dd>
             <div v-if="street.district">
@@ -34,11 +36,11 @@
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span> Back</span>
+          <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>
         </button>
         <router-link v-if="street.id" :to="{ name: 'StreetEdit', params: { streetId: street.id } }" custom v-slot="{ navigate }">
           <button @click="navigate" class="btn btn-primary">
-            <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span> Edit</span>
+            <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.edit')"> Edit</span>
           </button>
         </router-link>
       </div>

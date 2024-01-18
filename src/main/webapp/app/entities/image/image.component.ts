@@ -75,7 +75,7 @@ export default class Image extends mixins(JhiDataUtils) {
     this.imageService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A Image is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.image.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

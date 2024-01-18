@@ -72,7 +72,7 @@ export default class Street extends Vue {
     this.streetService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A Street is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.street.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

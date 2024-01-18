@@ -1,10 +1,11 @@
 <template>
   <div>
     <h2 id="page-heading" data-cy="ProvinceHeading">
-      <span id="province-heading">Provinces</span>
+      <span v-text="$t('bdswebApp.province.home.title')" id="province-heading">Provinces</span>
       <div class="d-flex justify-content-end">
         <button class="btn btn-info mr-2" v-on:click="handleSyncList" :disabled="isFetching">
-          <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon> <span>Refresh List</span>
+          <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon>
+          <span v-text="$t('bdswebApp.province.home.refreshListLabel')">Refresh List</span>
         </button>
         <router-link :to="{ name: 'ProvinceCreate' }" custom v-slot="{ navigate }">
           <button
@@ -14,24 +15,26 @@
             class="btn btn-primary jh-create-entity create-province"
           >
             <font-awesome-icon icon="plus"></font-awesome-icon>
-            <span> Create a new Province </span>
+            <span v-text="$t('bdswebApp.province.home.createLabel')"> Create a new Province </span>
           </button>
         </router-link>
       </div>
     </h2>
     <br />
     <div class="alert alert-warning" v-if="!isFetching && provinces && provinces.length === 0">
-      <span>No provinces found</span>
+      <span v-text="$t('bdswebApp.province.home.notFound')">No provinces found</span>
     </div>
     <div class="table-responsive" v-if="provinces && provinces.length > 0">
       <table class="table table-striped" aria-describedby="provinces">
         <thead>
           <tr>
             <th scope="row" v-on:click="changeOrder('id')">
-              <span>ID</span> <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+              <span v-text="$t('global.field.id')">ID</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('name')">
-              <span>Name</span> <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
+              <span v-text="$t('bdswebApp.province.name')">Name</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
             </th>
             <th scope="row"></th>
           </tr>
@@ -47,13 +50,13 @@
                 <router-link :to="{ name: 'ProvinceView', params: { provinceId: province.id } }" custom v-slot="{ navigate }">
                   <button @click="navigate" class="btn btn-info btn-sm details" data-cy="entityDetailsButton">
                     <font-awesome-icon icon="eye"></font-awesome-icon>
-                    <span class="d-none d-md-inline">View</span>
+                    <span class="d-none d-md-inline" v-text="$t('entity.action.view')">View</span>
                   </button>
                 </router-link>
                 <router-link :to="{ name: 'ProvinceEdit', params: { provinceId: province.id } }" custom v-slot="{ navigate }">
                   <button @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
                     <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
-                    <span class="d-none d-md-inline">Edit</span>
+                    <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>
                 </router-link>
                 <b-button
@@ -64,7 +67,7 @@
                   v-b-modal.removeEntity
                 >
                   <font-awesome-icon icon="times"></font-awesome-icon>
-                  <span class="d-none d-md-inline">Delete</span>
+                  <span class="d-none d-md-inline" v-text="$t('entity.action.delete')">Delete</span>
                 </b-button>
               </div>
             </td>
@@ -74,18 +77,23 @@
     </div>
     <b-modal ref="removeEntity" id="removeEntity">
       <span slot="modal-title"
-        ><span id="bdswebApp.province.delete.question" data-cy="provinceDeleteDialogHeading">Confirm delete operation</span></span
+        ><span id="bdswebApp.province.delete.question" data-cy="provinceDeleteDialogHeading" v-text="$t('entity.delete.title')"
+          >Confirm delete operation</span
+        ></span
       >
       <div class="modal-body">
-        <p id="jhi-delete-province-heading">Are you sure you want to delete this Province?</p>
+        <p id="jhi-delete-province-heading" v-text="$t('bdswebApp.province.delete.question', { id: removeId })">
+          Are you sure you want to delete this Province?
+        </p>
       </div>
       <div slot="modal-footer">
-        <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">Cancel</button>
+        <button type="button" class="btn btn-secondary" v-text="$t('entity.action.cancel')" v-on:click="closeDialog()">Cancel</button>
         <button
           type="button"
           class="btn btn-primary"
           id="jhi-confirm-delete-province"
           data-cy="entityConfirmDeleteButton"
+          v-text="$t('entity.action.delete')"
           v-on:click="removeProvince()"
         >
           Delete

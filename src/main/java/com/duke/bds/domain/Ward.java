@@ -30,7 +30,8 @@ public class Ward implements Serializable {
     @JsonIgnoreProperties(value = { "ward", "district" }, allowSetters = true)
     private Set<Street> streets = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "wards", "streets", "province" }, allowSetters = true)
     private District district;
 

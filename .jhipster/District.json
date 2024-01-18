@@ -33,7 +33,8 @@
       "otherEntityName": "province",
       "otherEntityRelationshipName": "districts",
       "relationshipName": "province",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceImpl"

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.duke.bds.IntegrationTest;
 import com.duke.bds.domain.District;
+import com.duke.bds.domain.Province;
 import com.duke.bds.repository.DistrictRepository;
 import com.duke.bds.service.dto.DistrictDTO;
 import com.duke.bds.service.mapper.DistrictMapper;
@@ -62,6 +63,16 @@ class DistrictResourceIT {
      */
     public static District createEntity(EntityManager em) {
         District district = new District().name(DEFAULT_NAME);
+        // Add required entity
+        Province province;
+        if (TestUtil.findAll(em, Province.class).isEmpty()) {
+            province = ProvinceResourceIT.createEntity(em);
+            em.persist(province);
+            em.flush();
+        } else {
+            province = TestUtil.findAll(em, Province.class).get(0);
+        }
+        district.setProvince(province);
         return district;
     }
 
@@ -73,6 +84,16 @@ class DistrictResourceIT {
      */
     public static District createUpdatedEntity(EntityManager em) {
         District district = new District().name(UPDATED_NAME);
+        // Add required entity
+        Province province;
+        if (TestUtil.findAll(em, Province.class).isEmpty()) {
+            province = ProvinceResourceIT.createUpdatedEntity(em);
+            em.persist(province);
+            em.flush();
+        } else {
+            province = TestUtil.findAll(em, Province.class).get(0);
+        }
+        district.setProvince(province);
         return district;
     }
 

@@ -1,11 +1,11 @@
-id;name;status
-1;Borders matrix program;VERIFIED
-2;analyzing;VERIFIED
-3;Outdoors;WAITING
-4;Arkansas;WAITING
-5;Granite;VERIFIED
-6;Personal;VERIFIED
-7;RAM extensible;WAITING
-8;channels Integrated;WAITING
-9;Hawaii Pants;WAITING
-10;Account Buckinghamshire;WAITING
+id;name;status;district_id
+1;Borders matrix program;VERIFIED;1
+2;analyzing;VERIFIED;2
+3;Outdoors;WAITING;3
+4;Arkansas;WAITING;4
+5;Granite;VERIFIED;5
+6;Personal;VERIFIED;6
+7;RAM extensible;WAITING;7
+8;channels Integrated;WAITING;8
+9;Hawaii Pants;WAITING;9
+10;Account Buckinghamshire;WAITING;10

@@ -66,6 +66,24 @@ const validations: any = {
     status: {},
     star: {},
     hash: {},
+    type: {
+      required,
+    },
+    category: {
+      required,
+    },
+    user: {
+      required,
+    },
+    province: {
+      required,
+    },
+    district: {
+      required,
+    },
+    street: {
+      required,
+    },
   },
 };
 
@@ -140,7 +158,7 @@ export default class PostUpdate extends mixins(JhiDataUtils) {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Post is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.post.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -159,7 +177,7 @@ export default class PostUpdate extends mixins(JhiDataUtils) {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Post is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.post.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',

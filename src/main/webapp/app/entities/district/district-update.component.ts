@@ -21,6 +21,9 @@ const validations: any = {
     name: {
       required,
     },
+    province: {
+      required,
+    },
   },
 };
 
@@ -74,7 +77,7 @@ export default class DistrictUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A District is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.district.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -93,7 +96,7 @@ export default class DistrictUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A District is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.district.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',

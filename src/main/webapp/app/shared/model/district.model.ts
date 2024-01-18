@@ -7,7 +7,7 @@ export interface IDistrict {
   name?: string;
   wards?: IWard[] | null;
   streets?: IStreet[] | null;
-  province?: IProvince | null;
+  province?: IProvince;
 }
 
 export class District implements IDistrict {
@@ -16,6 +16,6 @@ export class District implements IDistrict {
     public name?: string,
     public wards?: IWard[] | null,
     public streets?: IStreet[] | null,
-    public province?: IProvince | null
+    public province?: IProvince
   ) {}
 }

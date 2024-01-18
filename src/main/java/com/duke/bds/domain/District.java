@@ -34,7 +34,8 @@ public class District implements Serializable {
     @JsonIgnoreProperties(value = { "ward", "district" }, allowSetters = true)
     private Set<Street> streets = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "districts" }, allowSetters = true)
     private Province province;
 

@@ -72,7 +72,7 @@ export default class UserInfo extends Vue {
     this.userInfoService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A UserInfo is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.userInfo.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

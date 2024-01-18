@@ -53,7 +53,7 @@ export default class PostTypeUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A PostType is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.postType.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -72,7 +72,7 @@ export default class PostTypeUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A PostType is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.postType.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',

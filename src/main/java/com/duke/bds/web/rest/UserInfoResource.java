@@ -64,7 +64,7 @@ public class UserInfoResource {
         UserInfoDTO result = userInfoService.save(userInfoDTO);
         return ResponseEntity
             .created(new URI("/api/user-infos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -98,7 +98,7 @@ public class UserInfoResource {
         UserInfoDTO result = userInfoService.update(userInfoDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, userInfoDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userInfoDTO.getId().toString()))
             .body(result);
     }
 
@@ -134,7 +134,7 @@ public class UserInfoResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, userInfoDTO.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userInfoDTO.getId().toString())
         );
     }
 
@@ -177,7 +177,7 @@ public class UserInfoResource {
         userInfoService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
 }

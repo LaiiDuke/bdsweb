@@ -60,7 +60,7 @@ export default class ImageUpdate extends mixins(JhiDataUtils) {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Image is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.image.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -79,7 +79,7 @@ export default class ImageUpdate extends mixins(JhiDataUtils) {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Image is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.image.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',
