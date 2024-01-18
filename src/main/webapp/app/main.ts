@@ -26,6 +26,11 @@ import AlertService from './shared/alert/alert.service';
 
 import '../content/scss/global.scss';
 import '../content/scss/vendor.scss';
+import '../app/assets/css/fontawesome.css';
+import '../app/assets/css/animated.css';
+import '../app/assets/css/owl.css';
+import '../app/assets/css/templatemo-plot-listing.css';
+import LoadScript from 'vue-plugin-load-script';
 /* tslint:disable */
 
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
@@ -37,6 +42,7 @@ config.initFortAwesome(Vue);
 bootstrapVueConfig.initBootstrapVue(Vue);
 Vue.use(Vue2Filters);
 Vue.use(ToastPlugin);
+// Vue.use(LoadScript);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('jhi-item-count', JhiItemCountComponent);
 Vue.component('jhi-sort-indicator', JhiSortIndicatorComponent);

@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <ribbon></ribbon>
-    <div id="app-header">
+    <!--    <ribbon></ribbon>-->
+    <div id="">
       <jhi-navbar></jhi-navbar>
     </div>
-    <div class="container-fluid">
-      <div class="card jh-card">
+    <div class="">
+      <div class="">
         <router-view></router-view>
       </div>
       <b-modal id="login-page" hide-footer lazy>
