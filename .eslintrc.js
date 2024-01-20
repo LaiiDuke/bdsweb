@@ -10,6 +10,10 @@ module.exports = {
     ecmaVersion: 2020,
     project: ['./tsconfig.json', './tsconfig.spec.json'],
   },
+  globals: {
+    $: true,
+    jQuery: true,
+  },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

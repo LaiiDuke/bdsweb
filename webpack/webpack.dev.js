@@ -19,7 +19,14 @@ module.exports = (env, options) => {
     optimization: {
       moduleIds: 'named',
     },
-    plugins: [],
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jquery: 'jquery',
+        'window.jQuery': 'jquery',
+        jQuery: 'jquery',
+      }),
+    ],
   };
   if (!options.env.WEBPACK_SERVE) return devConfig;
   devConfig.plugins.push(

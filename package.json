@@ -87,6 +87,8 @@
     "bootstrap": "4.6.2",
     "bootstrap-vue": "2.22.0",
     "dayjs": "1.11.5",
+    "jquery": "^3.7.1",
+    "owl.carousel": "^2.3.4",
     "vue": "2.7.5",
     "vue-class-component": "7.2.6",
     "vue-cookie": "1.1.4",

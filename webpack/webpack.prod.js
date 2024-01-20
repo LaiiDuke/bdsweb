@@ -99,6 +99,12 @@ const webpackConfig = {
       skipWaiting: true,
       exclude: [/swagger-ui/],
     }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jquery: 'jquery',
+      'window.jQuery': 'jquery',
+      jQuery: 'jquery',
+    }),
   ],
 };
 

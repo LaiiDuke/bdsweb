@@ -55,7 +55,7 @@
           <div class="col-lg-10 offset-lg-1">
             <ul class="categories">
               <li>
-                <a href="category.html"
+                <a href="#"
                   ><span class="icon"><img src="../../assets/images/search-icon-01.png" alt="Home" /></span> Apartments</a
                 >
               </li>
@@ -100,7 +100,7 @@
                 <div class="row">
                   <div class="col-lg-3">
                     <div class="menu">
-                      <div class="first-thumb active">
+                      <div class="first-thumb">
                         <div class="thumb">
                           <span class="icon"><img src="../../assets/images/search-icon-01.png" alt="" /></span>
                           Apartments
@@ -113,7 +113,7 @@
                         </div>
                       </div>
                       <div>
-                        <div class="thumb">
+                        <div class="thumb active">
                           <span class="icon"><img src="../../assets/images/search-icon-03.png" alt="" /></span>
                           Cars
                         </div>
@@ -197,7 +197,7 @@
                                     fresh and latest website templates.
                                   </p>
                                   <div class="main-white-button">
-                                    <a href="listing.html"><i class="fa fa-eye"></i> More Listing</a>
+                                    <a href="#"><i class="fa fa-eye"></i> More Listing</a>
                                   </div>
                                 </div>
                               </div>
@@ -281,6 +281,12 @@
           </div>
           <div class="col-lg-12">
             <div class="owl-carousel owl-listing">
+              <div class="item">
+                <div class="row">
+                  <post-component v-for="(item, index) in lstPost" :key="index" :post-obj="item"> </post-component>
+                </div>
+              </div>
+
               <div class="item">
                 <div class="row">
                   <div class="col-lg-12">
@@ -580,5 +586,140 @@
   </div>
 </template>
 
-<script lang="ts" src="./home.component.ts"></script>
+<!--<script lang="ts" src="./home.component.ts"></script>-->
 <!-- Scripts -->
+<script>
+import jQuery from '../../vendor/jquery/jquery.min.js';
+import PostComponent from '@/component/post/post.vue';
+import '../../assets/js/owl-carousel';
+import 'owl.carousel';
+export default {
+  components: {
+    PostComponent,
+  },
+  data() {
+    return {
+      lstPost: [
+        {
+          title: 'title1',
+          id: 1,
+          content: null,
+          price: 20,
+          star: 4,
+          square: 120,
+          numberOfBedroom: 4,
+          numberOfFloors: 5,
+          width: 12,
+          length: 10,
+          imgUrl: '',
+          address: 'So 2, Duong Abc, Phuong xyz',
+        },
+        {
+          title: 'title2',
+          id: 2,
+          content: null,
+          price: 20,
+          star: 4,
+          square: 120,
+          numberOfBedroom: 4,
+          numberOfFloors: 5,
+          width: 12,
+          length: 10,
+          imgUrl: '',
+          address: 'So 2, Duong Abc, Phuong xyz',
+        },
+        {
+          title: 'title3',
+          id: 3,
+          content: null,
+          price: 20,
+          star: 4,
+          square: 120,
+          numberOfBedroom: 4,
+          numberOfFloors: 5,
+          width: 12,
+          length: 10,
+          imgUrl: '',
+          address: 'So 2, Duong Abc, Phuong xyz',
+        },
+      ],
+    };
+  },
+  created() {
+    this.lstPost.push({
+      title: 'title4',
+      id: 4,
+      content: null,
+      price: 20,
+      star: 4,
+      square: 120,
+      numberOfBedroom: 4,
+      numberOfFloors: 5,
+      width: 12,
+      length: 10,
+      imgUrl: '',
+      address: 'So 2, Duong Abc, Phuong xyz',
+    });
+    jQuery(document).ready(function ($) {
+      // Acc
+      $(document).on('click', '.naccs .menu div', function () {
+        var numberIndex = $(this).index();
+        console.log('clicked');
+        if (!$(this).is('active')) {
+          $('.naccs .menu div').removeClass('active');
+          $('.naccs ul li').removeClass('active');
+
+          $(this).addClass('active');
+          $('.naccs ul')
+            .find('li:eq(' + numberIndex + ')')
+            .addClass('active');
+
+          var listItemHeight = $('.naccs ul')
+            .find('li:eq(' + numberIndex + ')')
+            .innerHeight();
+          $('.naccs ul').height(listItemHeight + 'px');
+        }
+      });
+
+      // Menu Dropdown Toggle
+      if ($('.menu-trigger').length) {
+        $('.menu-trigger').on('click', function () {
+          $(this).toggleClass('active');
+          $('.header-area .nav').slideToggle(200);
+        });
+      }
+
+      // Page loading animation
+      $(window).on('load', function () {
+        $('#js-preloader').addClass('loaded');
+      });
+    });
+  },
+  watch: {
+    lstPost() {
+      $('.owl-listing').owlCarousel({
+        items: 1,
+        loop: true,
+        dots: true,
+        nav: false,
+        autoplay: true,
+        margin: 30,
+        responsive: {
+          0: {
+            items: 1,
+          },
+          600: {
+            items: 1,
+          },
+          1000: {
+            items: 1,
+          },
+          1600: {
+            items: 1,
+          },
+        },
+      });
+    },
+  },
+};
+</script>

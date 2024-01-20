@@ -2,18 +2,20 @@
   <div id="app">
     <!--    <ribbon></ribbon>-->
     <div id="">
-      <jhi-navbar></jhi-navbar>
+      <!--      <jhi-navbar></jhi-navbar>-->
+      <user-navbar></user-navbar>
     </div>
     <div class="">
       <div class="">
         <router-view></router-view>
       </div>
-      <b-modal id="login-page" hide-footer lazy>
-        <span data-cy="loginTitle" slot="modal-title" id="login-title">Sign in</span>
-        <login-form></login-form>
-      </b-modal>
+      <!--      <b-modal id="login-page" hide-footer lazy>-->
+      <!--        <span data-cy="loginTitle" slot="modal-title" id="login-title">Sign in</span>-->
+      <!--        <login-form></login-form>-->
+      <!--      </b-modal>-->
 
-      <jhi-footer></jhi-footer>
+      <!--      <jhi-footer></jhi-footer>-->
+      <user-footer></user-footer>
     </div>
   </div>
 </template>

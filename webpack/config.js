@@ -1,12 +1,19 @@
 'use strict';
 
 const path = require('path');
-
+const webpack = require('webpack');
 module.exports = {
   serverApiUrl: '',
   // APP_VERSION is passed as an environment variable from the Gradle / Maven build tasks.
   version: process.env.hasOwnProperty('APP_VERSION') ? process.env.APP_VERSION : 'UNKNOWN',
-
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jquery: 'jquery',
+      'window.jQuery': 'jquery',
+      jQuery: 'jquery',
+    }),
+  ],
   dev: {
     hotReload: true,
 
