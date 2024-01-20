@@ -60,7 +60,7 @@ export default class ProvinceUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Province is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.province.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -79,7 +79,7 @@ export default class ProvinceUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Province is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.province.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',

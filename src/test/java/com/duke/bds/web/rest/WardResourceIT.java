@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.duke.bds.IntegrationTest;
+import com.duke.bds.domain.District;
 import com.duke.bds.domain.Ward;
 import com.duke.bds.repository.WardRepository;
 import com.duke.bds.service.dto.WardDTO;
@@ -62,6 +63,16 @@ class WardResourceIT {
      */
     public static Ward createEntity(EntityManager em) {
         Ward ward = new Ward().name(DEFAULT_NAME);
+        // Add required entity
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            district = DistrictResourceIT.createEntity(em);
+            em.persist(district);
+            em.flush();
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        ward.setDistrict(district);
         return ward;
     }
 
@@ -73,6 +84,16 @@ class WardResourceIT {
      */
     public static Ward createUpdatedEntity(EntityManager em) {
         Ward ward = new Ward().name(UPDATED_NAME);
+        // Add required entity
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            district = DistrictResourceIT.createUpdatedEntity(em);
+            em.persist(district);
+            em.flush();
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        ward.setDistrict(district);
         return ward;
     }
 

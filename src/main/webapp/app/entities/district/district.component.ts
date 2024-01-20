@@ -72,7 +72,7 @@ export default class District extends Vue {
     this.districtService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A District is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.district.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

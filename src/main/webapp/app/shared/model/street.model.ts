@@ -7,7 +7,7 @@ export interface IStreet {
   name?: string;
   status?: PostStatus | null;
   ward?: IWard | null;
-  district?: IDistrict | null;
+  district?: IDistrict;
 }
 
 export class Street implements IStreet {
@@ -16,6 +16,6 @@ export class Street implements IStreet {
     public name?: string,
     public status?: PostStatus | null,
     public ward?: IWard | null,
-    public district?: IDistrict | null
+    public district?: IDistrict
   ) {}
 }

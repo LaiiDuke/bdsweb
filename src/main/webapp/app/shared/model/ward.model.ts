@@ -5,9 +5,9 @@ export interface IWard {
   id?: number;
   name?: string;
   streets?: IStreet[] | null;
-  district?: IDistrict | null;
+  district?: IDistrict;
 }
 
 export class Ward implements IWard {
-  constructor(public id?: number, public name?: string, public streets?: IStreet[] | null, public district?: IDistrict | null) {}
+  constructor(public id?: number, public name?: string, public streets?: IStreet[] | null, public district?: IDistrict) {}
 }

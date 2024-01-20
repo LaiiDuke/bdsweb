@@ -72,7 +72,7 @@ export default class Ward extends Vue {
     this.wardService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A Ward is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.ward.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

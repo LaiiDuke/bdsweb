@@ -2,14 +2,20 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <form name="editForm" role="form" novalidate v-on:submit.prevent="save()">
-        <h2 id="bdswebApp.config.home.createOrEditLabel" data-cy="ConfigCreateUpdateHeading">Create or edit a Config</h2>
+        <h2
+          id="bdswebApp.config.home.createOrEditLabel"
+          data-cy="ConfigCreateUpdateHeading"
+          v-text="$t('bdswebApp.config.home.createOrEditLabel')"
+        >
+          Create or edit a Config
+        </h2>
         <div>
           <div class="form-group" v-if="config.id">
-            <label for="id">ID</label>
+            <label for="id" v-text="$t('global.field.id')">ID</label>
             <input type="text" class="form-control" id="id" name="id" v-model="config.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="config-code">Code</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.config.code')" for="config-code">Code</label>
             <input
               type="text"
               class="form-control"
@@ -21,11 +27,13 @@
               required
             />
             <div v-if="$v.config.code.$anyDirty && $v.config.code.$invalid">
-              <small class="form-text text-danger" v-if="!$v.config.code.required"> This field is required. </small>
+              <small class="form-text text-danger" v-if="!$v.config.code.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="config-value">Value</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.config.value')" for="config-value">Value</label>
             <input
               type="text"
               class="form-control"
@@ -37,11 +45,13 @@
               required
             />
             <div v-if="$v.config.value.$anyDirty && $v.config.value.$invalid">
-              <small class="form-text text-danger" v-if="!$v.config.value.required"> This field is required. </small>
+              <small class="form-text text-danger" v-if="!$v.config.value.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="config-description">Description</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.config.description')" for="config-description">Description</label>
             <input
               type="text"
               class="form-control"
@@ -55,7 +65,7 @@
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" v-on:click="previousState()">
-            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span>Cancel</span>
+            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.cancel')">Cancel</span>
           </button>
           <button
             type="submit"
@@ -64,7 +74,7 @@
             :disabled="$v.config.$invalid || isSaving"
             class="btn btn-primary"
           >
-            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span>Save</span>
+            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.save')">Save</span>
           </button>
         </div>
       </form>

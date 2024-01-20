@@ -56,7 +56,7 @@ export default class ConfigUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Config is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.config.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -75,7 +75,7 @@ export default class ConfigUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Config is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.config.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',

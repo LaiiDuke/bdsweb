@@ -33,7 +33,8 @@ public class Street implements Serializable {
     @JsonIgnoreProperties(value = { "streets", "district" }, allowSetters = true)
     private Ward ward;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "wards", "streets", "province" }, allowSetters = true)
     private District district;
 

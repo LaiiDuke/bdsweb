@@ -20,6 +20,9 @@ const validations: any = {
       required,
     },
     status: {},
+    district: {
+      required,
+    },
   },
 };
 
@@ -70,7 +73,7 @@ export default class StreetUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Street is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.street.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -89,7 +92,7 @@ export default class StreetUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Street is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.street.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',

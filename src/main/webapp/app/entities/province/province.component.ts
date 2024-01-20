@@ -72,7 +72,7 @@ export default class Province extends Vue {
     this.provinceService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A Province is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.province.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

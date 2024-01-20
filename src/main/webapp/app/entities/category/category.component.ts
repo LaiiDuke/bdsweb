@@ -72,7 +72,7 @@ export default class Category extends Vue {
     this.categoryService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A Category is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.category.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

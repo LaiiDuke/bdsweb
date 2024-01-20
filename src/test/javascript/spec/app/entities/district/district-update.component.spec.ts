@@ -19,6 +19,7 @@ import AlertService from '@/shared/alert/alert.service';
 const localVue = createLocalVue();
 
 config.initVueApp(localVue);
+const i18n = config.initI18N(localVue);
 const store = config.initVueXStore(localVue);
 const router = new Router();
 localVue.use(Router);
@@ -40,6 +41,7 @@ describe('Component Tests', () => {
 
       wrapper = shallowMount<DistrictClass>(DistrictUpdateComponent, {
         store,
+        i18n,
         localVue,
         router,
         provide: {

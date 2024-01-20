@@ -83,21 +83,21 @@ relationship OneToOne {
 }
 
 relationship OneToMany {
-    Province{districts} to District{province}
-    District{wards} to Ward{district}
+    Province{districts} to District{province required}
+    District{wards} to Ward{district required}
     Ward{streets} to Street{ward}
-    District{streets} to Street{district}
+    District{streets} to Street{district required}
     Post{images} to Image
 }
 
 relationship ManyToOne {
-    Post{type} to PostType
-    Post{category} to Category
-    Post{user} to User
-    Post{province} to Province
-    Post{district} to District
+    Post{type required} to PostType
+    Post{category required} to Category
+    Post{user required} to User
+    Post{province required} to Province
+    Post{district required} to District
     Post{ward} to Ward
-    Post{street} to Street
+    Post{street required} to Street
 }
 
 // Set pagination options

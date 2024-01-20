@@ -1,35 +1,38 @@
 <template>
   <div>
     <h2 id="page-heading" data-cy="WardHeading">
-      <span id="ward-heading">Wards</span>
+      <span v-text="$t('bdswebApp.ward.home.title')" id="ward-heading">Wards</span>
       <div class="d-flex justify-content-end">
         <button class="btn btn-info mr-2" v-on:click="handleSyncList" :disabled="isFetching">
-          <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon> <span>Refresh List</span>
+          <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon>
+          <span v-text="$t('bdswebApp.ward.home.refreshListLabel')">Refresh List</span>
         </button>
         <router-link :to="{ name: 'WardCreate' }" custom v-slot="{ navigate }">
           <button @click="navigate" id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-ward">
             <font-awesome-icon icon="plus"></font-awesome-icon>
-            <span> Create a new Ward </span>
+            <span v-text="$t('bdswebApp.ward.home.createLabel')"> Create a new Ward </span>
           </button>
         </router-link>
       </div>
     </h2>
     <br />
     <div class="alert alert-warning" v-if="!isFetching && wards && wards.length === 0">
-      <span>No wards found</span>
+      <span v-text="$t('bdswebApp.ward.home.notFound')">No wards found</span>
     </div>
     <div class="table-responsive" v-if="wards && wards.length > 0">
       <table class="table table-striped" aria-describedby="wards">
         <thead>
           <tr>
             <th scope="row" v-on:click="changeOrder('id')">
-              <span>ID</span> <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+              <span v-text="$t('global.field.id')">ID</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('name')">
-              <span>Name</span> <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
+              <span v-text="$t('bdswebApp.ward.name')">Name</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('district.id')">
-              <span>District</span>
+              <span v-text="$t('bdswebApp.ward.district')">District</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'district.id'"></jhi-sort-indicator>
             </th>
             <th scope="row"></th>
@@ -51,13 +54,13 @@
                 <router-link :to="{ name: 'WardView', params: { wardId: ward.id } }" custom v-slot="{ navigate }">
                   <button @click="navigate" class="btn btn-info btn-sm details" data-cy="entityDetailsButton">
                     <font-awesome-icon icon="eye"></font-awesome-icon>
-                    <span class="d-none d-md-inline">View</span>
+                    <span class="d-none d-md-inline" v-text="$t('entity.action.view')">View</span>
                   </button>
                 </router-link>
                 <router-link :to="{ name: 'WardEdit', params: { wardId: ward.id } }" custom v-slot="{ navigate }">
                   <button @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
                     <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
-                    <span class="d-none d-md-inline">Edit</span>
+                    <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>
                 </router-link>
                 <b-button
@@ -68,7 +71,7 @@
                   v-b-modal.removeEntity
                 >
                   <font-awesome-icon icon="times"></font-awesome-icon>
-                  <span class="d-none d-md-inline">Delete</span>
+                  <span class="d-none d-md-inline" v-text="$t('entity.action.delete')">Delete</span>
                 </b-button>
               </div>
             </td>
@@ -78,18 +81,23 @@
     </div>
     <b-modal ref="removeEntity" id="removeEntity">
       <span slot="modal-title"
-        ><span id="bdswebApp.ward.delete.question" data-cy="wardDeleteDialogHeading">Confirm delete operation</span></span
+        ><span id="bdswebApp.ward.delete.question" data-cy="wardDeleteDialogHeading" v-text="$t('entity.delete.title')"
+          >Confirm delete operation</span
+        ></span
       >
       <div class="modal-body">
-        <p id="jhi-delete-ward-heading">Are you sure you want to delete this Ward?</p>
+        <p id="jhi-delete-ward-heading" v-text="$t('bdswebApp.ward.delete.question', { id: removeId })">
+          Are you sure you want to delete this Ward?
+        </p>
       </div>
       <div slot="modal-footer">
-        <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">Cancel</button>
+        <button type="button" class="btn btn-secondary" v-text="$t('entity.action.cancel')" v-on:click="closeDialog()">Cancel</button>
         <button
           type="button"
           class="btn btn-primary"
           id="jhi-confirm-delete-ward"
           data-cy="entityConfirmDeleteButton"
+          v-text="$t('entity.action.delete')"
           v-on:click="removeWard()"
         >
           Delete

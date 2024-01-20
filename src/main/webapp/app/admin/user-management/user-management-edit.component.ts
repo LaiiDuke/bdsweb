@@ -100,7 +100,6 @@ export default class JhiUserManagementEdit extends Vue {
           this.alertService().showHttpError(this, error.response);
         });
     } else {
-      this.userAccount.langKey = 'en';
       this.userManagementService()
         .create(this.userAccount)
         .then(res => {
@@ -126,6 +125,6 @@ export default class JhiUserManagementEdit extends Vue {
   }
 
   private getMessageFromHeader(res: any): any {
-    return res.headers['x-bdswebapp-alert'];
+    return this.$t(res.headers['x-bdswebapp-alert'], { param: decodeURIComponent(res.headers['x-bdswebapp-params'].replace(/\+/g, ' ')) });
   }
 }

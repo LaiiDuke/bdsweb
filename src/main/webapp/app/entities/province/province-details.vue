@@ -2,21 +2,23 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="province">
-        <h2 class="jh-entity-heading" data-cy="provinceDetailsHeading"><span>Province</span> {{ province.id }}</h2>
+        <h2 class="jh-entity-heading" data-cy="provinceDetailsHeading">
+          <span v-text="$t('bdswebApp.province.detail.title')">Province</span> {{ province.id }}
+        </h2>
         <dl class="row jh-entity-details">
           <dt>
-            <span>Name</span>
+            <span v-text="$t('bdswebApp.province.name')">Name</span>
           </dt>
           <dd>
             <span>{{ province.name }}</span>
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span> Back</span>
+          <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>
         </button>
         <router-link v-if="province.id" :to="{ name: 'ProvinceEdit', params: { provinceId: province.id } }" custom v-slot="{ navigate }">
           <button @click="navigate" class="btn btn-primary">
-            <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span> Edit</span>
+            <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.edit')"> Edit</span>
           </button>
         </router-link>
       </div>

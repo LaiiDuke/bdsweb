@@ -72,7 +72,7 @@ export default class Config extends Vue {
     this.configService()
       .delete(this.removeId)
       .then(() => {
-        const message = 'A Config is deleted with identifier ' + this.removeId;
+        const message = this.$t('bdswebApp.config.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-top-center',
           title: 'Info',

@@ -2,14 +2,20 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <form name="editForm" role="form" novalidate v-on:submit.prevent="save()">
-        <h2 id="bdswebApp.postType.home.createOrEditLabel" data-cy="PostTypeCreateUpdateHeading">Create or edit a PostType</h2>
+        <h2
+          id="bdswebApp.postType.home.createOrEditLabel"
+          data-cy="PostTypeCreateUpdateHeading"
+          v-text="$t('bdswebApp.postType.home.createOrEditLabel')"
+        >
+          Create or edit a PostType
+        </h2>
         <div>
           <div class="form-group" v-if="postType.id">
-            <label for="id">ID</label>
+            <label for="id" v-text="$t('global.field.id')">ID</label>
             <input type="text" class="form-control" id="id" name="id" v-model="postType.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-type-name">Name</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.postType.name')" for="post-type-name">Name</label>
             <input
               type="text"
               class="form-control"
@@ -21,11 +27,13 @@
               required
             />
             <div v-if="$v.postType.name.$anyDirty && $v.postType.name.$invalid">
-              <small class="form-text text-danger" v-if="!$v.postType.name.required"> This field is required. </small>
+              <small class="form-text text-danger" v-if="!$v.postType.name.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-type-description">Description</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.postType.description')" for="post-type-description">Description</label>
             <input
               type="text"
               class="form-control"
@@ -39,7 +47,7 @@
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" v-on:click="previousState()">
-            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span>Cancel</span>
+            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.cancel')">Cancel</span>
           </button>
           <button
             type="submit"
@@ -48,7 +56,7 @@
             :disabled="$v.postType.$invalid || isSaving"
             class="btn btn-primary"
           >
-            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span>Save</span>
+            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.save')">Save</span>
           </button>
         </div>
       </form>

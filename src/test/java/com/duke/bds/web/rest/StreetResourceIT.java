@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.duke.bds.IntegrationTest;
+import com.duke.bds.domain.District;
 import com.duke.bds.domain.Street;
 import com.duke.bds.domain.enumeration.PostStatus;
 import com.duke.bds.repository.StreetRepository;
@@ -66,6 +67,16 @@ class StreetResourceIT {
      */
     public static Street createEntity(EntityManager em) {
         Street street = new Street().name(DEFAULT_NAME).status(DEFAULT_STATUS);
+        // Add required entity
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            district = DistrictResourceIT.createEntity(em);
+            em.persist(district);
+            em.flush();
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        street.setDistrict(district);
         return street;
     }
 
@@ -77,6 +88,16 @@ class StreetResourceIT {
      */
     public static Street createUpdatedEntity(EntityManager em) {
         Street street = new Street().name(UPDATED_NAME).status(UPDATED_STATUS);
+        // Add required entity
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            district = DistrictResourceIT.createUpdatedEntity(em);
+            em.persist(district);
+            em.flush();
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        street.setDistrict(district);
         return street;
     }
 

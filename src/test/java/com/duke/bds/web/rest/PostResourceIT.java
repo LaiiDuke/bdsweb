@@ -6,7 +6,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.duke.bds.IntegrationTest;
+import com.duke.bds.domain.Category;
+import com.duke.bds.domain.District;
 import com.duke.bds.domain.Post;
+import com.duke.bds.domain.PostType;
+import com.duke.bds.domain.Province;
+import com.duke.bds.domain.Street;
+import com.duke.bds.domain.User;
 import com.duke.bds.domain.enumeration.PostStatus;
 import com.duke.bds.repository.PostRepository;
 import com.duke.bds.service.dto.PostDTO;
@@ -159,6 +165,61 @@ class PostResourceIT {
             .status(DEFAULT_STATUS)
             .star(DEFAULT_STAR)
             .hash(DEFAULT_HASH);
+        // Add required entity
+        PostType postType;
+        if (TestUtil.findAll(em, PostType.class).isEmpty()) {
+            postType = PostTypeResourceIT.createEntity(em);
+            em.persist(postType);
+            em.flush();
+        } else {
+            postType = TestUtil.findAll(em, PostType.class).get(0);
+        }
+        post.setType(postType);
+        // Add required entity
+        Category category;
+        if (TestUtil.findAll(em, Category.class).isEmpty()) {
+            category = CategoryResourceIT.createEntity(em);
+            em.persist(category);
+            em.flush();
+        } else {
+            category = TestUtil.findAll(em, Category.class).get(0);
+        }
+        post.setCategory(category);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        post.setUser(user);
+        // Add required entity
+        Province province;
+        if (TestUtil.findAll(em, Province.class).isEmpty()) {
+            province = ProvinceResourceIT.createEntity(em);
+            em.persist(province);
+            em.flush();
+        } else {
+            province = TestUtil.findAll(em, Province.class).get(0);
+        }
+        post.setProvince(province);
+        // Add required entity
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            district = DistrictResourceIT.createEntity(em);
+            em.persist(district);
+            em.flush();
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        post.setDistrict(district);
+        // Add required entity
+        Street street;
+        if (TestUtil.findAll(em, Street.class).isEmpty()) {
+            street = StreetResourceIT.createEntity(em);
+            em.persist(street);
+            em.flush();
+        } else {
+            street = TestUtil.findAll(em, Street.class).get(0);
+        }
+        post.setStreet(street);
         return post;
     }
 
@@ -194,6 +255,61 @@ class PostResourceIT {
             .status(UPDATED_STATUS)
             .star(UPDATED_STAR)
             .hash(UPDATED_HASH);
+        // Add required entity
+        PostType postType;
+        if (TestUtil.findAll(em, PostType.class).isEmpty()) {
+            postType = PostTypeResourceIT.createUpdatedEntity(em);
+            em.persist(postType);
+            em.flush();
+        } else {
+            postType = TestUtil.findAll(em, PostType.class).get(0);
+        }
+        post.setType(postType);
+        // Add required entity
+        Category category;
+        if (TestUtil.findAll(em, Category.class).isEmpty()) {
+            category = CategoryResourceIT.createUpdatedEntity(em);
+            em.persist(category);
+            em.flush();
+        } else {
+            category = TestUtil.findAll(em, Category.class).get(0);
+        }
+        post.setCategory(category);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        post.setUser(user);
+        // Add required entity
+        Province province;
+        if (TestUtil.findAll(em, Province.class).isEmpty()) {
+            province = ProvinceResourceIT.createUpdatedEntity(em);
+            em.persist(province);
+            em.flush();
+        } else {
+            province = TestUtil.findAll(em, Province.class).get(0);
+        }
+        post.setProvince(province);
+        // Add required entity
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            district = DistrictResourceIT.createUpdatedEntity(em);
+            em.persist(district);
+            em.flush();
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        post.setDistrict(district);
+        // Add required entity
+        Street street;
+        if (TestUtil.findAll(em, Street.class).isEmpty()) {
+            street = StreetResourceIT.createUpdatedEntity(em);
+            em.persist(street);
+            em.flush();
+        } else {
+            street = TestUtil.findAll(em, Street.class).get(0);
+        }
+        post.setStreet(street);
         return post;
     }
 

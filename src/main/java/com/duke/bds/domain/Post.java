@@ -105,20 +105,25 @@ public class Post implements Serializable {
     @JsonIgnoreProperties(value = { "post" }, allowSetters = true)
     private Set<Image> images = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private PostType type;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "districts" }, allowSetters = true)
     private Province province;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "wards", "streets", "province" }, allowSetters = true)
     private District district;
 
@@ -126,7 +131,8 @@ public class Post implements Serializable {
     @JsonIgnoreProperties(value = { "streets", "district" }, allowSetters = true)
     private Ward ward;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "ward", "district" }, allowSetters = true)
     private Street street;
 

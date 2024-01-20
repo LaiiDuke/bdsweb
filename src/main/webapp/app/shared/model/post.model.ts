@@ -35,11 +35,11 @@ export interface IPost {
   star?: number | null;
   hash?: string | null;
   images?: IImage[] | null;
-  type?: IPostType | null;
-  category?: ICategory | null;
-  user?: IUser | null;
-  province?: IProvince | null;
-  district?: IDistrict | null;
+  type?: IPostType;
+  category?: ICategory;
+  user?: IUser;
+  province?: IProvince;
+  district?: IDistrict;
   ward?: IWard | null;
   street?: IStreet | null;
   imgUrl?: string | null;
@@ -73,11 +73,11 @@ export class Post implements IPost {
     public star?: number | null,
     public hash?: string | null,
     public images?: IImage[] | null,
-    public type?: IPostType | null,
-    public category?: ICategory | null,
-    public user?: IUser | null,
-    public province?: IProvince | null,
-    public district?: IDistrict | null,
+    public type?: IPostType,
+    public category?: ICategory,
+    public user?: IUser,
+    public province?: IProvince,
+    public district?: IDistrict,
     public ward?: IWard | null,
     public street?: IStreet | null,
     public imgUrl?: string | null

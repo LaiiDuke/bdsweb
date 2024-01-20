@@ -2,154 +2,156 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="post">
-        <h2 class="jh-entity-heading" data-cy="postDetailsHeading"><span>Post</span> {{ post.id }}</h2>
+        <h2 class="jh-entity-heading" data-cy="postDetailsHeading">
+          <span v-text="$t('bdswebApp.post.detail.title')">Post</span> {{ post.id }}
+        </h2>
         <dl class="row jh-entity-details">
           <dt>
-            <span>Title</span>
+            <span v-text="$t('bdswebApp.post.title')">Title</span>
           </dt>
           <dd>
             <span>{{ post.title }}</span>
           </dd>
           <dt>
-            <span>Content</span>
+            <span v-text="$t('bdswebApp.post.content')">Content</span>
           </dt>
           <dd>
             <span>{{ post.content }}</span>
           </dd>
           <dt>
-            <span>Price</span>
+            <span v-text="$t('bdswebApp.post.price')">Price</span>
           </dt>
           <dd>
             <span>{{ post.price }}</span>
           </dd>
           <dt>
-            <span>Square</span>
+            <span v-text="$t('bdswebApp.post.square')">Square</span>
           </dt>
           <dd>
             <span>{{ post.square }}</span>
           </dd>
           <dt>
-            <span>Address</span>
+            <span v-text="$t('bdswebApp.post.address')">Address</span>
           </dt>
           <dd>
             <span>{{ post.address }}</span>
           </dd>
           <dt>
-            <span>Google Maps Location</span>
+            <span v-text="$t('bdswebApp.post.googleMapsLocation')">Google Maps Location</span>
           </dt>
           <dd>
             <span>{{ post.googleMapsLocation }}</span>
           </dd>
           <dt>
-            <span>Width</span>
+            <span v-text="$t('bdswebApp.post.width')">Width</span>
           </dt>
           <dd>
             <span>{{ post.width }}</span>
           </dd>
           <dt>
-            <span>Length</span>
+            <span v-text="$t('bdswebApp.post.length')">Length</span>
           </dt>
           <dd>
             <span>{{ post.length }}</span>
           </dd>
           <dt>
-            <span>Direction</span>
+            <span v-text="$t('bdswebApp.post.direction')">Direction</span>
           </dt>
           <dd>
             <span>{{ post.direction }}</span>
           </dd>
           <dt>
-            <span>Distance</span>
+            <span v-text="$t('bdswebApp.post.distance')">Distance</span>
           </dt>
           <dd>
             <span>{{ post.distance }}</span>
           </dd>
           <dt>
-            <span>Legal</span>
+            <span v-text="$t('bdswebApp.post.legal')">Legal</span>
           </dt>
           <dd>
             <span>{{ post.legal }}</span>
           </dd>
           <dt>
-            <span>Number Of Floors</span>
+            <span v-text="$t('bdswebApp.post.numberOfFloors')">Number Of Floors</span>
           </dt>
           <dd>
             <span>{{ post.numberOfFloors }}</span>
           </dd>
           <dt>
-            <span>Number Of Bedroom</span>
+            <span v-text="$t('bdswebApp.post.numberOfBedroom')">Number Of Bedroom</span>
           </dt>
           <dd>
             <span>{{ post.numberOfBedroom }}</span>
           </dd>
           <dt>
-            <span>Has Kitchen</span>
+            <span v-text="$t('bdswebApp.post.hasKitchen')">Has Kitchen</span>
           </dt>
           <dd>
             <span>{{ post.hasKitchen }}</span>
           </dd>
           <dt>
-            <span>Has Dinning Room</span>
+            <span v-text="$t('bdswebApp.post.hasDinningRoom')">Has Dinning Room</span>
           </dt>
           <dd>
             <span>{{ post.hasDinningRoom }}</span>
           </dd>
           <dt>
-            <span>Has Rooftop</span>
+            <span v-text="$t('bdswebApp.post.hasRooftop')">Has Rooftop</span>
           </dt>
           <dd>
             <span>{{ post.hasRooftop }}</span>
           </dd>
           <dt>
-            <span>Has Garage</span>
+            <span v-text="$t('bdswebApp.post.hasGarage')">Has Garage</span>
           </dt>
           <dd>
             <span>{{ post.hasGarage }}</span>
           </dd>
           <dt>
-            <span>Is Vip</span>
+            <span v-text="$t('bdswebApp.post.isVip')">Is Vip</span>
           </dt>
           <dd>
             <span>{{ post.isVip }}</span>
           </dd>
           <dt>
-            <span>Posting Time</span>
+            <span v-text="$t('bdswebApp.post.postingTime')">Posting Time</span>
           </dt>
           <dd>
             <span>{{ post.postingTime }}</span>
           </dd>
           <dt>
-            <span>Expired Time</span>
+            <span v-text="$t('bdswebApp.post.expiredTime')">Expired Time</span>
           </dt>
           <dd>
             <span>{{ post.expiredTime }}</span>
           </dd>
           <dt>
-            <span>Brokerage Fees</span>
+            <span v-text="$t('bdswebApp.post.brokerageFees')">Brokerage Fees</span>
           </dt>
           <dd>
             <span>{{ post.brokerageFees }}</span>
           </dd>
           <dt>
-            <span>Status</span>
+            <span v-text="$t('bdswebApp.post.status')">Status</span>
           </dt>
           <dd>
-            <span>{{ post.status }}</span>
+            <span v-text="$t('bdswebApp.PostStatus.' + post.status)">{{ post.status }}</span>
           </dd>
           <dt>
-            <span>Star</span>
+            <span v-text="$t('bdswebApp.post.star')">Star</span>
           </dt>
           <dd>
             <span>{{ post.star }}</span>
           </dd>
           <dt>
-            <span>Hash</span>
+            <span v-text="$t('bdswebApp.post.hash')">Hash</span>
           </dt>
           <dd>
             <span>{{ post.hash }}</span>
           </dd>
           <dt>
-            <span>Type</span>
+            <span v-text="$t('bdswebApp.post.type')">Type</span>
           </dt>
           <dd>
             <div v-if="post.type">
@@ -157,7 +159,7 @@
             </div>
           </dd>
           <dt>
-            <span>Category</span>
+            <span v-text="$t('bdswebApp.post.category')">Category</span>
           </dt>
           <dd>
             <div v-if="post.category">
@@ -165,13 +167,13 @@
             </div>
           </dd>
           <dt>
-            <span>User</span>
+            <span v-text="$t('bdswebApp.post.user')">User</span>
           </dt>
           <dd>
             {{ post.user ? post.user.id : '' }}
           </dd>
           <dt>
-            <span>Province</span>
+            <span v-text="$t('bdswebApp.post.province')">Province</span>
           </dt>
           <dd>
             <div v-if="post.province">
@@ -179,7 +181,7 @@
             </div>
           </dd>
           <dt>
-            <span>District</span>
+            <span v-text="$t('bdswebApp.post.district')">District</span>
           </dt>
           <dd>
             <div v-if="post.district">
@@ -187,7 +189,7 @@
             </div>
           </dd>
           <dt>
-            <span>Ward</span>
+            <span v-text="$t('bdswebApp.post.ward')">Ward</span>
           </dt>
           <dd>
             <div v-if="post.ward">
@@ -195,7 +197,7 @@
             </div>
           </dd>
           <dt>
-            <span>Street</span>
+            <span v-text="$t('bdswebApp.post.street')">Street</span>
           </dt>
           <dd>
             <div v-if="post.street">
@@ -204,11 +206,11 @@
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span> Back</span>
+          <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>
         </button>
         <router-link v-if="post.id" :to="{ name: 'PostEdit', params: { postId: post.id } }" custom v-slot="{ navigate }">
           <button @click="navigate" class="btn btn-primary">
-            <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span> Edit</span>
+            <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.edit')"> Edit</span>
           </button>
         </router-link>
       </div>

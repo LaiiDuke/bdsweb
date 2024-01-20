@@ -2,14 +2,20 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <form name="editForm" role="form" novalidate v-on:submit.prevent="save()">
-        <h2 id="bdswebApp.post.home.createOrEditLabel" data-cy="PostCreateUpdateHeading">Create or edit a Post</h2>
+        <h2
+          id="bdswebApp.post.home.createOrEditLabel"
+          data-cy="PostCreateUpdateHeading"
+          v-text="$t('bdswebApp.post.home.createOrEditLabel')"
+        >
+          Create or edit a Post
+        </h2>
         <div>
           <div class="form-group" v-if="post.id">
-            <label for="id">ID</label>
+            <label for="id" v-text="$t('global.field.id')">ID</label>
             <input type="text" class="form-control" id="id" name="id" v-model="post.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-title">Title</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.title')" for="post-title">Title</label>
             <input
               type="text"
               class="form-control"
@@ -21,14 +27,16 @@
               required
             />
             <div v-if="$v.post.title.$anyDirty && $v.post.title.$invalid">
-              <small class="form-text text-danger" v-if="!$v.post.title.required"> This field is required. </small>
-              <small class="form-text text-danger" v-if="!$v.post.title.maxLength">
+              <small class="form-text text-danger" v-if="!$v.post.title.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+              <small class="form-text text-danger" v-if="!$v.post.title.maxLength" v-text="$t('entity.validation.maxlength', { max: 200 })">
                 This field cannot be longer than 200 characters.
               </small>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-content">Content</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.content')" for="post-content">Content</label>
             <textarea
               class="form-control"
               name="content"
@@ -39,7 +47,7 @@
             ></textarea>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-price">Price</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.price')" for="post-price">Price</label>
             <input
               type="number"
               class="form-control"
@@ -51,12 +59,16 @@
               required
             />
             <div v-if="$v.post.price.$anyDirty && $v.post.price.$invalid">
-              <small class="form-text text-danger" v-if="!$v.post.price.required"> This field is required. </small>
-              <small class="form-text text-danger" v-if="!$v.post.price.numeric"> This field should be a number. </small>
+              <small class="form-text text-danger" v-if="!$v.post.price.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+              <small class="form-text text-danger" v-if="!$v.post.price.numeric" v-text="$t('entity.validation.number')">
+                This field should be a number.
+              </small>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-square">Square</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.square')" for="post-square">Square</label>
             <input
               type="number"
               class="form-control"
@@ -68,7 +80,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-address">Address</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.address')" for="post-address">Address</label>
             <input
               type="text"
               class="form-control"
@@ -80,7 +92,9 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-googleMapsLocation">Google Maps Location</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.googleMapsLocation')" for="post-googleMapsLocation"
+              >Google Maps Location</label
+            >
             <input
               type="text"
               class="form-control"
@@ -92,7 +106,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-width">Width</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.width')" for="post-width">Width</label>
             <input
               type="number"
               class="form-control"
@@ -104,7 +118,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-length">Length</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.length')" for="post-length">Length</label>
             <input
               type="number"
               class="form-control"
@@ -116,7 +130,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-direction">Direction</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.direction')" for="post-direction">Direction</label>
             <input
               type="text"
               class="form-control"
@@ -128,7 +142,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-distance">Distance</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.distance')" for="post-distance">Distance</label>
             <input
               type="text"
               class="form-control"
@@ -140,7 +154,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-legal">Legal</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.legal')" for="post-legal">Legal</label>
             <input
               type="text"
               class="form-control"
@@ -152,7 +166,9 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-numberOfFloors">Number Of Floors</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.numberOfFloors')" for="post-numberOfFloors"
+              >Number Of Floors</label
+            >
             <input
               type="number"
               class="form-control"
@@ -164,7 +180,9 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-numberOfBedroom">Number Of Bedroom</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.numberOfBedroom')" for="post-numberOfBedroom"
+              >Number Of Bedroom</label
+            >
             <input
               type="number"
               class="form-control"
@@ -176,7 +194,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-hasKitchen">Has Kitchen</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.hasKitchen')" for="post-hasKitchen">Has Kitchen</label>
             <input
               type="checkbox"
               class="form-check"
@@ -188,7 +206,9 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-hasDinningRoom">Has Dinning Room</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.hasDinningRoom')" for="post-hasDinningRoom"
+              >Has Dinning Room</label
+            >
             <input
               type="checkbox"
               class="form-check"
@@ -200,7 +220,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-hasRooftop">Has Rooftop</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.hasRooftop')" for="post-hasRooftop">Has Rooftop</label>
             <input
               type="checkbox"
               class="form-check"
@@ -212,7 +232,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-hasGarage">Has Garage</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.hasGarage')" for="post-hasGarage">Has Garage</label>
             <input
               type="checkbox"
               class="form-check"
@@ -224,7 +244,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-isVip">Is Vip</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.isVip')" for="post-isVip">Is Vip</label>
             <input
               type="checkbox"
               class="form-check"
@@ -236,7 +256,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-postingTime">Posting Time</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.postingTime')" for="post-postingTime">Posting Time</label>
             <b-input-group class="mb-3">
               <b-input-group-prepend>
                 <b-form-datepicker
@@ -264,7 +284,7 @@
             </b-input-group>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-expiredTime">Expired Time</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.expiredTime')" for="post-expiredTime">Expired Time</label>
             <b-input-group class="mb-3">
               <b-input-group-prepend>
                 <b-form-datepicker
@@ -292,7 +312,7 @@
             </b-input-group>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-brokerageFees">Brokerage Fees</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.brokerageFees')" for="post-brokerageFees">Brokerage Fees</label>
             <input
               type="number"
               class="form-control"
@@ -304,7 +324,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-status">Status</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.status')" for="post-status">Status</label>
             <select
               class="form-control"
               name="status"
@@ -313,11 +333,18 @@
               id="post-status"
               data-cy="status"
             >
-              <option v-for="postStatus in postStatusValues" :key="postStatus" v-bind:value="postStatus">{{ postStatus }}</option>
+              <option
+                v-for="postStatus in postStatusValues"
+                :key="postStatus"
+                v-bind:value="postStatus"
+                v-bind:label="$t('bdswebApp.PostStatus.' + postStatus)"
+              >
+                {{ postStatus }}
+              </option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-star">Star</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.star')" for="post-star">Star</label>
             <input
               type="number"
               class="form-control"
@@ -329,7 +356,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-hash">Hash</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.hash')" for="post-hash">Hash</label>
             <input
               type="text"
               class="form-control"
@@ -341,9 +368,9 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-type">Type</label>
-            <select class="form-control" id="post-type" data-cy="type" name="type" v-model="post.type">
-              <option v-bind:value="null"></option>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.type')" for="post-type">Type</label>
+            <select class="form-control" id="post-type" data-cy="type" name="type" v-model="post.type" required>
+              <option v-if="!post.type" v-bind:value="null" selected></option>
               <option
                 v-bind:value="post.type && postTypeOption.id === post.type.id ? post.type : postTypeOption"
                 v-for="postTypeOption in postTypes"
@@ -353,10 +380,15 @@
               </option>
             </select>
           </div>
+          <div v-if="$v.post.type.$anyDirty && $v.post.type.$invalid">
+            <small class="form-text text-danger" v-if="!$v.post.type.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-category">Category</label>
-            <select class="form-control" id="post-category" data-cy="category" name="category" v-model="post.category">
-              <option v-bind:value="null"></option>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.category')" for="post-category">Category</label>
+            <select class="form-control" id="post-category" data-cy="category" name="category" v-model="post.category" required>
+              <option v-if="!post.category" v-bind:value="null" selected></option>
               <option
                 v-bind:value="post.category && categoryOption.id === post.category.id ? post.category : categoryOption"
                 v-for="categoryOption in categories"
@@ -366,10 +398,15 @@
               </option>
             </select>
           </div>
+          <div v-if="$v.post.category.$anyDirty && $v.post.category.$invalid">
+            <small class="form-text text-danger" v-if="!$v.post.category.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-user">User</label>
-            <select class="form-control" id="post-user" data-cy="user" name="user" v-model="post.user">
-              <option v-bind:value="null"></option>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.user')" for="post-user">User</label>
+            <select class="form-control" id="post-user" data-cy="user" name="user" v-model="post.user" required>
+              <option v-if="!post.user" v-bind:value="null" selected></option>
               <option
                 v-bind:value="post.user && userOption.id === post.user.id ? post.user : userOption"
                 v-for="userOption in users"
@@ -379,10 +416,15 @@
               </option>
             </select>
           </div>
+          <div v-if="$v.post.user.$anyDirty && $v.post.user.$invalid">
+            <small class="form-text text-danger" v-if="!$v.post.user.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-province">Province</label>
-            <select class="form-control" id="post-province" data-cy="province" name="province" v-model="post.province">
-              <option v-bind:value="null"></option>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.province')" for="post-province">Province</label>
+            <select class="form-control" id="post-province" data-cy="province" name="province" v-model="post.province" required>
+              <option v-if="!post.province" v-bind:value="null" selected></option>
               <option
                 v-bind:value="post.province && provinceOption.id === post.province.id ? post.province : provinceOption"
                 v-for="provinceOption in provinces"
@@ -392,10 +434,15 @@
               </option>
             </select>
           </div>
+          <div v-if="$v.post.province.$anyDirty && $v.post.province.$invalid">
+            <small class="form-text text-danger" v-if="!$v.post.province.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-district">District</label>
-            <select class="form-control" id="post-district" data-cy="district" name="district" v-model="post.district">
-              <option v-bind:value="null"></option>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.district')" for="post-district">District</label>
+            <select class="form-control" id="post-district" data-cy="district" name="district" v-model="post.district" required>
+              <option v-if="!post.district" v-bind:value="null" selected></option>
               <option
                 v-bind:value="post.district && districtOption.id === post.district.id ? post.district : districtOption"
                 v-for="districtOption in districts"
@@ -405,8 +452,13 @@
               </option>
             </select>
           </div>
+          <div v-if="$v.post.district.$anyDirty && $v.post.district.$invalid">
+            <small class="form-text text-danger" v-if="!$v.post.district.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-ward">Ward</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.ward')" for="post-ward">Ward</label>
             <select class="form-control" id="post-ward" data-cy="ward" name="ward" v-model="post.ward">
               <option v-bind:value="null"></option>
               <option
@@ -419,9 +471,9 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="post-street">Street</label>
-            <select class="form-control" id="post-street" data-cy="street" name="street" v-model="post.street">
-              <option v-bind:value="null"></option>
+            <label class="form-control-label" v-text="$t('bdswebApp.post.street')" for="post-street">Street</label>
+            <select class="form-control" id="post-street" data-cy="street" name="street" v-model="post.street" required>
+              <option v-if="!post.street" v-bind:value="null" selected></option>
               <option
                 v-bind:value="post.street && streetOption.id === post.street.id ? post.street : streetOption"
                 v-for="streetOption in streets"
@@ -431,10 +483,15 @@
               </option>
             </select>
           </div>
+          <div v-if="$v.post.street.$anyDirty && $v.post.street.$invalid">
+            <small class="form-text text-danger" v-if="!$v.post.street.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" v-on:click="previousState()">
-            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span>Cancel</span>
+            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.cancel')">Cancel</span>
           </button>
           <button
             type="submit"
@@ -443,7 +500,7 @@
             :disabled="$v.post.$invalid || isSaving"
             class="btn btn-primary"
           >
-            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span>Save</span>
+            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.save')">Save</span>
           </button>
         </div>
       </form>

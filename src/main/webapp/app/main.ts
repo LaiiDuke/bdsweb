@@ -30,7 +30,8 @@ import '../app/assets/css/fontawesome.css';
 import '../app/assets/css/animated.css';
 import '../app/assets/css/owl.css';
 import '../app/assets/css/templatemo-plot-listing.css';
-import LoadScript from 'vue-plugin-load-script';
+
+import TranslationService from '@/locale/translation.service';
 /* tslint:disable */
 
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
@@ -47,10 +48,12 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('jhi-item-count', JhiItemCountComponent);
 Vue.component('jhi-sort-indicator', JhiSortIndicatorComponent);
 Vue.component('infinite-loading', InfiniteLoading);
+const i18n = config.initI18N(Vue);
 const store = config.initVueXStore(Vue);
 
+const translationService = new TranslationService(store, i18n);
 const loginService = new LoginService();
-const accountService = new AccountService(store, router);
+const accountService = new AccountService(store, translationService, router);
 
 router.beforeEach(async (to, from, next) => {
   if (!to.matched.length) {
@@ -86,10 +89,12 @@ const vue = new Vue({
     logsService: () => new LogsService(),
     metricsService: () => new MetricsService(),
 
+    translationService: () => translationService,
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
     accountService: () => accountService,
     alertService: () => new AlertService(),
   },
+  i18n,
   store,
 });
 

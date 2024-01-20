@@ -18,6 +18,9 @@ const validations: any = {
     name: {
       required,
     },
+    district: {
+      required,
+    },
   },
 };
 
@@ -67,7 +70,7 @@ export default class WardUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Ward is updated with identifier ' + param.id;
+          const message = this.$t('bdswebApp.ward.updated', { param: param.id });
           return (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Info',
@@ -86,7 +89,7 @@ export default class WardUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = 'A Ward is created with identifier ' + param.id;
+          const message = this.$t('bdswebApp.ward.created', { param: param.id });
           (this.$root as any).$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-top-center',
             title: 'Success',

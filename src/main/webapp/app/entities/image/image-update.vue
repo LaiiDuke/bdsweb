@@ -2,14 +2,20 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <form name="editForm" role="form" novalidate v-on:submit.prevent="save()">
-        <h2 id="bdswebApp.image.home.createOrEditLabel" data-cy="ImageCreateUpdateHeading">Create or edit a Image</h2>
+        <h2
+          id="bdswebApp.image.home.createOrEditLabel"
+          data-cy="ImageCreateUpdateHeading"
+          v-text="$t('bdswebApp.image.home.createOrEditLabel')"
+        >
+          Create or edit a Image
+        </h2>
         <div>
           <div class="form-group" v-if="image.id">
-            <label for="id">ID</label>
+            <label for="id" v-text="$t('global.field.id')">ID</label>
             <input type="text" class="form-control" id="id" name="id" v-model="image.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="image-data">Data</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.image.data')" for="image-data">Data</label>
             <div>
               <img
                 v-bind:src="'data:' + image.dataContentType + ';base64,' + image.data"
@@ -34,6 +40,7 @@
                 data-cy="data"
                 v-on:change="setFileData($event, image, 'data', true)"
                 accept="image/*"
+                v-text="$t('entity.action.addimage')"
               />
             </div>
             <input
@@ -48,7 +55,7 @@
             <input type="hidden" class="form-control" name="dataContentType" id="image-dataContentType" v-model="image.dataContentType" />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="image-url">Url</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.image.url')" for="image-url">Url</label>
             <input
               type="text"
               class="form-control"
@@ -60,7 +67,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="image-post">Post</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.image.post')" for="image-post">Post</label>
             <select class="form-control" id="image-post" data-cy="post" name="post" v-model="image.post">
               <option v-bind:value="null"></option>
               <option
@@ -75,7 +82,7 @@
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" v-on:click="previousState()">
-            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span>Cancel</span>
+            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.cancel')">Cancel</span>
           </button>
           <button
             type="submit"
@@ -84,7 +91,7 @@
             :disabled="$v.image.$invalid || isSaving"
             class="btn btn-primary"
           >
-            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span>Save</span>
+            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.save')">Save</span>
           </button>
         </div>
       </form>
