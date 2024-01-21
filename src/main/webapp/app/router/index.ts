@@ -9,6 +9,8 @@ import Router, { RouteConfig } from 'vue-router';
 
 const Home = () => import('@/core/home/home.vue');
 const HomePage = () => import('@/page/home/home.vue');
+const ListProductPage = () => import('@/page/listProduct/listProduct.vue');
+const ContactPage = () => import('@/page/contact/contact.vue');
 const Error = () => import('@/core/error/error.vue');
 import account from '@/router/account';
 import admin from '@/router/admin';
@@ -25,6 +27,16 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: HomePage
+    },
+    {
+      path: '/list-product',
+      name: 'List Product',
+      component: ListProductPage
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: ContactPage
     },
     {
       path: '/forbidden',
