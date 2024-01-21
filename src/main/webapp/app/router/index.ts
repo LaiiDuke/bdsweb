@@ -11,6 +11,8 @@ const Home = () => import('@/core/home/home.vue');
 const HomePage = () => import('@/page/home/home.vue');
 const ListProductPage = () => import('@/page/listProduct/listProduct.vue');
 const ContactPage = () => import('@/page/contact/contact.vue');
+const CategoryPage = () => import('@/page/category/category.vue');
+const DetailPage = () => import('@/page/detail/detail.vue');
 const Error = () => import('@/core/error/error.vue');
 import account from '@/router/account';
 import admin from '@/router/admin';
@@ -37,6 +39,16 @@ const router = new Router({
       path: '/contact',
       name: 'Contact',
       component: ContactPage
+    },
+    {
+      path: '/category',
+      name: 'Category',
+      component: CategoryPage
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: DetailPage
     },
     {
       path: '/forbidden',
