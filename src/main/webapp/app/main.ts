@@ -30,15 +30,6 @@ import '../app/assets/css/fontawesome.css';
 import '../app/assets/css/animated.css';
 import '../app/assets/css/owl.css';
 import '../app/assets/css/templatemo-plot-listing.css';
-import '../app/assets/css/bootstrap.min.css';
-import '../app/assets/css/bootstrap-theme.min.css';
-import '../app/assets/css/font-awesome.min.css';
-import '../app/assets/css/flexslider.css';
-import '../app/assets/css/select-theme-default.css';
-import '../app/assets/css/owl.carousel.css';
-import '../app/assets/css/owl.theme.css';
-import '../app/assets/css/style.css';
-
 import TranslationService from '@/locale/translation.service';
 /* tslint:disable */
 

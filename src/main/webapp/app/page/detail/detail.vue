@@ -1,61 +1,18 @@
 <template>
   <div>
-    <div class="slider-section">
-      <div id="premium-bar">
-        <div class="container">
-          <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-              <!-- Brand and toggle get grouped for better mobile display -->
-              <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/"><img src="../../assets/images/logo.png" alt="logo" /></a>
-              </div>
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="/listProduct">Listings</a></li>
-                  <li class="active"><a href="/detail">Property Details</a></li>
-                  <li><a href="/category">agents</a></li>
-                  <li><a href="/contact">News</a></li>
-                  <li><a href="/detail">Single Post</a></li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Another action</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li><a href="#">One more separated link</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="/contact">contact</a></li>
-                </ul>
-              </div>
-              <!-- /.navbar-collapse -->
+    <div class="page-heading">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="top-text header-text">
+              <h6>Keep in touch with us</h6>
+              <h2>Feel free to send us a message about your business needs</h2>
             </div>
-            <!-- /.container-fluid -->
-          </nav>
-        </div>
-      </div>
-      <!-- head-Section -->
-      <div class="page-title-section">
-        <div class="container">
-          <div class="pull-left page-title">
-            <a href="#">
-              <h2>property listings</h2>
-            </a>
-          </div>
-          <div class="pull-right breadcrumb">
-            <a href="#">home</a><span class="fa fa-arrow-circle-right sep"></span><a href="#">property listings</a>
           </div>
         </div>
       </div>
     </div>
+
     <!-- content-Section -->
     <div class="content-section">
       <div class="container">
@@ -63,118 +20,7 @@
           <div class="col-md-8 page-content">
             <div class="inner-wrapper">
               <div class="property-images-slider">
-                <div id="details-slider" class="flexslider">
-                  <a href="#" class="fa fa-home property-type-icon"></a>
-                  <a href="#" class="yellow-btn">$370,000</a>
-                  <a href="#" class="status">for sale</a>
-                  <ul class="slides">
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="image-wrapper">
-                        <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div id="details-carousel" class="flexslider">
-                  <ul class="slides">
-                    <li>
-                      <img src="../../assets/images/property/40_thumb-1.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/41_thumb-2.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/42_thumb-3.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/43_thumb-4.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/44_thumb-5.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/45_thumb-6.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/40_thumb-1.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/41_thumb-2.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/42_thumb-3.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/43_thumb-4.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/44_thumb-5.png" />
-                    </li>
-                    <li>
-                      <img src="../../assets/images/property/45_thumb-6.png" />
-                    </li>
-                  </ul>
-                </div>
+                <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
               </div>
               <div class="property-desc">
                 <h3>2211 Summer Ridge Dr</h3>
@@ -302,10 +148,21 @@
     </div>
   </div>
 </template>
+
+<!--<script lang="ts" src="./home.component.ts"></script>-->
 <!-- Scripts -->
 <script>
 import jQuery from '../../vendor/jquery/jquery.min.js';
 import 'owl.carousel';
+import '../../assets/css/bootstrap.min.css';
+import '../../assets/css/bootstrap-theme.min.css';
+import '../../assets/css/font-awesome.min.css';
+import '../../assets/css/flexslider.css';
+import '../../assets/css/select-theme-default.css';
+import '../../assets/css/owl.carousel.css';
+import '../../assets/css/owl.theme.css';
+import '../../assets/css/style.css';
+import '../../assets/css/master.scss';
 export default {
   components: {},
   data() {
@@ -313,16 +170,99 @@ export default {
   },
   created() {
     jQuery(document).ready(function ($) {
-      $(window).scroll(function () {
-        var scroll = $(window).scrollTop();
-        var box = $('.header-text').height();
-        var header = $('header').height();
+      // Agents slider
+      $('.owl-carousel').owlCarousel({
+        items: 2,
+        navigation: true,
+        pagination: false,
+        navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
+      });
 
-        if (scroll >= box - header) {
-          $('header').addClass('background-header');
-        } else {
-          $('header').removeClass('background-header');
-        }
+      //Tab
+      $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+      });
+
+      // Animated back to top
+      $('#backtop-btn').click(function () {
+        $('html, body').animate({ scrollTop: 0 }, 600);
+      });
+
+      // Nav Menu
+      $('.dropdown').on('show.bs.dropdown', function (e) {
+        $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+      });
+
+      $('.dropdown').on('hide.bs.dropdown', function (e) {
+        $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+      });
+
+      // Contact Form
+      $("input[type='text'], textarea").keypress(function () {
+        $(this).css({ 'background-color': '#fff' });
+      });
+      $(function () {
+        $('#submit-btn').click(function () {
+          var has_error = 0;
+          var name = $('#name').val();
+          var message = $('#message').val();
+          var email = $('#email').val();
+          var website = $('#website').val();
+          var atpos = email.indexOf('@');
+          var dotpos = email.lastIndexOf('.');
+          var dataString = '&name=' + name + '&email=' + email + '&website=' + website + '&message=' + message;
+
+          $('input[type=text]').focus(function () {
+            $(this).css({
+              'background-color': '#fff',
+            });
+          });
+          $('textarea').focus(function () {
+            $(this).css({
+              'background-color': '#fff',
+            });
+          });
+
+          if ($('#name').val().length == 0) {
+            has_error = 1;
+            $('#name').css({
+              'background-color': 'rgba(248, 116, 116, 0.52)',
+            });
+          }
+          if ($('#email').val().length == 0) {
+            has_error = 1;
+            $('#email').css({
+              'background-color': 'rgba(248, 116, 116, 0.52)',
+            });
+          }
+          if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length) {
+            has_error = 1;
+            $('#email').css({
+              'background-color': 'rgba(248, 116, 116, 0.52)',
+            });
+          }
+          if ($('#message').val().length == 0) {
+            has_error = 1;
+            $('#message').css({
+              'background-color': 'rgba(248, 116, 116, 0.52)',
+            });
+          }
+          if (has_error == 0) {
+            $.ajax({
+              type: 'POST',
+              url: 'contact.php',
+              data: dataString,
+              success: function () {
+                $('#submit-btn').val('SENT!');
+                $('#submit-btn').css({
+                  'background-color': '#00E681',
+                });
+              },
+            });
+          }
+          return false;
+        });
       });
     });
   },

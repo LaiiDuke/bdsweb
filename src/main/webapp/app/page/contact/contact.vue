@@ -93,12 +93,9 @@
 <!-- Scripts -->
 <script>
 import jQuery from '../../vendor/jquery/jquery.min.js';
-import PostComponent from '@/component/post/post.vue';
 import 'owl.carousel';
 export default {
-  components: {
-    PostComponent,
-  },
+  components: {},
   data() {
     return {};
   },

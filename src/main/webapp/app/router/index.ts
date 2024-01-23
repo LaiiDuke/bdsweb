@@ -11,6 +11,7 @@ const Home = () => import('@/core/home/home.vue');
 const HomePage = () => import('@/page/home/home.vue');
 const ListProductPage = () => import('@/page/listProduct/listProduct.vue');
 const ContactPage = () => import('@/page/contact/contact.vue');
+const LoginPage = () => import('@/account/login-form/login-form.vue');
 const CategoryPage = () => import('@/page/category/category.vue');
 const DetailPage = () => import('@/page/detail/detail.vue');
 const Error = () => import('@/core/error/error.vue');
@@ -25,6 +26,11 @@ Vue.use(Router);
 const router = new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/admin',
+      name: 'Home admin',
+      component: Home
+    },
     {
       path: '/',
       name: 'Home',
@@ -49,6 +55,11 @@ const router = new Router({
       path: '/detail',
       name: 'Detail',
       component: DetailPage
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginPage
     },
     {
       path: '/forbidden',
