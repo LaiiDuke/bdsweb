@@ -327,7 +327,7 @@ header
   background-color: transparent;
   border-bottom: 1px solid rgba(250, 250, 250, 0.2);
   position: fixed;
-  top: 0px;
+  /*top: 0px;*/
   left: 0px;
   right: 0px;
   z-index: 100;
@@ -2122,6 +2122,7 @@ responsive
 @media (max-width: 767px) {
   .main-banner ul.categories li a {
     color: transparent;
+    font-size: 0;
   }
   .header-area .main-nav a.logo {
     background-image: url(../images/black-logo.png);

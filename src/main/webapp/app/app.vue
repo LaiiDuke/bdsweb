@@ -2,7 +2,7 @@
   <div id="app">
     <!--    <ribbon></ribbon>-->
     <div id="">
-      <!--      <jhi-navbar></jhi-navbar>-->
+      <jhi-navbar></jhi-navbar>
       <user-navbar></user-navbar>
     </div>
     <div class="">
