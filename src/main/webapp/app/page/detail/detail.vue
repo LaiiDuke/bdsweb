@@ -20,7 +20,19 @@
           <div class="col-md-8 page-content">
             <div class="inner-wrapper">
               <div class="property-images-slider">
-                <img src="../../assets/images/property/39_slide-n1.png" alt="gallery" />
+                <b-carousel
+                  id="carousel-1"
+                  v-model="slide"
+                  :interval="4000"
+                  controls
+                  indicators
+                  background="#ababab"
+                  img-width="680px"
+                  img-height="300px"
+                  style="text-shadow: 1px 1px 2px #333"
+                >
+                  <b-carousel-slide v-for="(item, index) in images" :key="index" :img-src="item"> </b-carousel-slide>
+                </b-carousel>
               </div>
               <div class="property-desc">
                 <h3>2211 Summer Ridge Dr</h3>
@@ -163,108 +175,25 @@ import '../../assets/css/owl.carousel.css';
 import '../../assets/css/owl.theme.css';
 import '../../assets/css/style.css';
 import '../../assets/css/master.scss';
+
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      slide: 0,
+      images: [
+        'https://picsum.photos/1024/480/?image=52',
+        'https://picsum.photos/1024/480/?image=52',
+        'https://picsum.photos/1024/480/?image=52',
+        'https://picsum.photos/1024/480/?image=52',
+        'https://picsum.photos/1024/480/?image=52',
+        'https://picsum.photos/1024/480/?image=52',
+        'https://picsum.photos/1024/480/?image=52',
+      ],
+    };
   },
   created() {
-    jQuery(document).ready(function ($) {
-      // Agents slider
-      $('.owl-carousel').owlCarousel({
-        items: 2,
-        navigation: true,
-        pagination: false,
-        navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-      });
-
-      //Tab
-      $('#myTab a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-      });
-
-      // Animated back to top
-      $('#backtop-btn').click(function () {
-        $('html, body').animate({ scrollTop: 0 }, 600);
-      });
-
-      // Nav Menu
-      $('.dropdown').on('show.bs.dropdown', function (e) {
-        $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-      });
-
-      $('.dropdown').on('hide.bs.dropdown', function (e) {
-        $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-      });
-
-      // Contact Form
-      $("input[type='text'], textarea").keypress(function () {
-        $(this).css({ 'background-color': '#fff' });
-      });
-      $(function () {
-        $('#submit-btn').click(function () {
-          var has_error = 0;
-          var name = $('#name').val();
-          var message = $('#message').val();
-          var email = $('#email').val();
-          var website = $('#website').val();
-          var atpos = email.indexOf('@');
-          var dotpos = email.lastIndexOf('.');
-          var dataString = '&name=' + name + '&email=' + email + '&website=' + website + '&message=' + message;
-
-          $('input[type=text]').focus(function () {
-            $(this).css({
-              'background-color': '#fff',
-            });
-          });
-          $('textarea').focus(function () {
-            $(this).css({
-              'background-color': '#fff',
-            });
-          });
-
-          if ($('#name').val().length == 0) {
-            has_error = 1;
-            $('#name').css({
-              'background-color': 'rgba(248, 116, 116, 0.52)',
-            });
-          }
-          if ($('#email').val().length == 0) {
-            has_error = 1;
-            $('#email').css({
-              'background-color': 'rgba(248, 116, 116, 0.52)',
-            });
-          }
-          if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length) {
-            has_error = 1;
-            $('#email').css({
-              'background-color': 'rgba(248, 116, 116, 0.52)',
-            });
-          }
-          if ($('#message').val().length == 0) {
-            has_error = 1;
-            $('#message').css({
-              'background-color': 'rgba(248, 116, 116, 0.52)',
-            });
-          }
-          if (has_error == 0) {
-            $.ajax({
-              type: 'POST',
-              url: 'contact.php',
-              data: dataString,
-              success: function () {
-                $('#submit-btn').val('SENT!');
-                $('#submit-btn').css({
-                  'background-color': '#00E681',
-                });
-              },
-            });
-          }
-          return false;
-        });
-      });
-    });
+    jQuery(document).ready(function ($) {});
   },
   watch: {},
 };
