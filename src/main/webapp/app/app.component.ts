@@ -14,7 +14,6 @@ import '@/shared/config/dayjs';
     ribbon: Ribbon,
     'jhi-navbar': JhiNavbar,
     'login-form': LoginForm,
-
     'jhi-footer': JhiFooter,
     'user-navbar': UserNavbar,
     'user-footer': UserFooter,

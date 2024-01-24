@@ -30,7 +30,6 @@ import '../app/assets/css/fontawesome.css';
 import '../app/assets/css/animated.css';
 import '../app/assets/css/owl.css';
 import '../app/assets/css/templatemo-plot-listing.css';
-
 import TranslationService from '@/locale/translation.service';
 /* tslint:disable */
 

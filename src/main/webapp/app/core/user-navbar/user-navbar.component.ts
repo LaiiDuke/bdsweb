@@ -27,6 +27,11 @@ export default class UserNavbar extends Vue {
           $('header').removeClass('background-header');
         }
       });
+
+      // Page loading animation
+      $(window).on('load', function () {
+        $('#js-preloader').addClass('loaded');
+      });
     });
   }
 

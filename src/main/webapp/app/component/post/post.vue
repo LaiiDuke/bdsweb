@@ -33,7 +33,7 @@
         </ul>
 
         <div class="main-white-button">
-          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
         </div>
       </div>
     </div>

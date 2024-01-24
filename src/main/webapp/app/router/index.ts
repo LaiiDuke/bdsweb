@@ -9,6 +9,11 @@ import Router, { RouteConfig } from 'vue-router';
 
 const Home = () => import('@/core/home/home.vue');
 const HomePage = () => import('@/page/home/home.vue');
+const ListProductPage = () => import('@/page/listProduct/listProduct.vue');
+const ContactPage = () => import('@/page/contact/contact.vue');
+const LoginPage = () => import('@/account/login-form/login-form.vue');
+const CategoryPage = () => import('@/page/category/category.vue');
+const DetailPage = () => import('@/page/detail/detail.vue');
 const Error = () => import('@/core/error/error.vue');
 import account from '@/router/account';
 import admin from '@/router/admin';
@@ -22,9 +27,39 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
+      path: '/admin',
+      name: 'Home admin',
+      component: Home
+    },
+    {
       path: '/',
       name: 'Home',
       component: HomePage
+    },
+    {
+      path: '/list-product',
+      name: 'List Product',
+      component: ListProductPage
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: ContactPage
+    },
+    {
+      path: '/category',
+      name: 'Category',
+      component: CategoryPage
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: DetailPage
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginPage
     },
     {
       path: '/forbidden',

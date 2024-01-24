@@ -315,7 +315,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 4 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -346,7 +346,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 3 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -377,7 +377,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 3 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -412,7 +412,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 3 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -443,7 +443,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 3 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -474,7 +474,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 3 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -509,7 +509,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 5 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -540,7 +540,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 4 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
@@ -571,7 +571,7 @@
                           <li><img src="../../assets/images/listing-icon-03.png" alt="" /> 4 Bathrooms</li>
                         </ul>
                         <div class="main-white-button">
-                          <a href="contact.html"><i class="fa fa-eye"></i> Contact Now</a>
+                          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
                         </div>
                       </div>
                     </div>
