@@ -1,42 +1,42 @@
 <template>
   <div>
-    <b-dropdown-item to="/user-info">
+    <b-dropdown-item to="/admin/user-info">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.userInfo')">User Info</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/post-type">
+    <b-dropdown-item to="/admin/post-type">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.postType')">Post Type</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/category">
+    <b-dropdown-item to="/admin/category">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.category')">Category</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/post">
+    <b-dropdown-item to="/admin/post">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.post')">Post</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/province">
+    <b-dropdown-item to="/admin/province">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.province')">Province</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/district">
+    <b-dropdown-item to="/admin/district">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.district')">District</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/ward">
+    <b-dropdown-item to="/admin/ward">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.ward')">Ward</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/street">
+    <b-dropdown-item to="/admin/street">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.street')">Street</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/image">
+    <b-dropdown-item to="/admin/image">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.image')">Image</span>
     </b-dropdown-item>
-    <b-dropdown-item to="/config">
+    <b-dropdown-item to="/admin/config">
       <font-awesome-icon icon="asterisk" />
       <span v-text="$t('global.menu.entities.config')">Config</span>
     </b-dropdown-item>

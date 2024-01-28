@@ -1,11 +1,19 @@
 package com.duke.bds.service.impl;
 
+import com.duke.bds.domain.Image;
 import com.duke.bds.domain.Post;
+import com.duke.bds.repository.ImageRepository;
 import com.duke.bds.repository.PostRepository;
 import com.duke.bds.service.PostService;
+import com.duke.bds.service.dto.ImageDTO;
 import com.duke.bds.service.dto.PostDTO;
+import com.duke.bds.service.mapper.ImageMapper;
 import com.duke.bds.service.mapper.PostMapper;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,12 +31,16 @@ public class PostServiceImpl implements PostService {
     private final Logger log = LoggerFactory.getLogger(PostServiceImpl.class);
 
     private final PostRepository postRepository;
+    private final ImageRepository imageRepository;
 
     private final PostMapper postMapper;
+    private final ImageMapper imageMapper;
 
-    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper) {
+    public PostServiceImpl(PostRepository postRepository, ImageRepository imageRepository, PostMapper postMapper, ImageMapper imageMapper) {
         this.postRepository = postRepository;
+        this.imageRepository = imageRepository;
         this.postMapper = postMapper;
+        this.imageMapper = imageMapper;
     }
 
     @Override
@@ -80,5 +92,25 @@ public class PostServiceImpl implements PostService {
     public void delete(Long id) {
         log.debug("Request to delete Post : {}", id);
         postRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<PostDTO> getVipPost(Pageable pageable) {
+        Page<Post> posts = postRepository.findVipPost(pageable);
+        List<Post> lstPost = posts.getContent();
+
+        List<Image> lstImg = imageRepository.findAllByPostIn(lstPost);
+        List<ImageDTO> lstImgDto = lstImg.stream().map(imageMapper::toDto).collect(Collectors.toList());
+
+        Map<PostDTO, List<ImageDTO>> mapImagePost = lstImgDto.stream().collect(Collectors.groupingBy(ImageDTO::getPost));
+        Page<PostDTO> result = posts.map(postMapper::toDto);
+        result
+            .getContent()
+            .forEach(postDTO -> {
+                if (mapImagePost.get(postDTO) != null) {
+                    postDTO.setImage(mapImagePost.get(postDTO).get(0));
+                }
+            });
+        return result;
     }
 }

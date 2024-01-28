@@ -84,4 +84,17 @@ export default class PostService {
         });
     });
   }
+
+  public getVipPost(paginationQuery?: any): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      axios
+        .get('api/vip-posts' + `?${buildPaginationQueryOpts(paginationQuery)}`)
+        .then(res => {
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
 }

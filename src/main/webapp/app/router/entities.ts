@@ -66,7 +66,7 @@ const ConfigDetails = () => import('@/entities/config/config-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 export default {
-  path: '/',
+  path: '/admin',
   component: Entities,
   children: [
     {

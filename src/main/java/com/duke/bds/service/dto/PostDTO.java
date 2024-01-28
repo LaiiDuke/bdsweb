@@ -81,6 +81,8 @@ public class PostDTO implements Serializable {
 
     private StreetDTO street;
 
+    private ImageDTO image;
+
     public Long getId() {
         return id;
     }
@@ -351,6 +353,14 @@ public class PostDTO implements Serializable {
             return false;
         }
         return Objects.equals(this.id, postDTO.id);
+    }
+
+    public ImageDTO getImage() {
+        return image;
+    }
+
+    public void setImage(ImageDTO image) {
+        this.image = image;
     }
 
     @Override

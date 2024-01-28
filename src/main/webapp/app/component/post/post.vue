@@ -25,7 +25,7 @@
         </div>
 
         <ul class="rate">
-          <li v-for="index in postObj.star" :key="index"><i class="fa fa-star-o"></i></li>
+          <li v-for="index in Math.min(postObj.star, 5)" :key="index"><i class="fa fa-star-o"></i></li>
           <li>(18) Reviews</li>
         </ul>
         <ul class="size">
@@ -43,10 +43,8 @@
 <!--<script lang="ts" src="./post.component.ts"></script>-->
 <!-- Scripts -->
 <script>
-import Component from 'vue-class-component';
-import { Inject, Vue } from 'vue-property-decorator';
 import { Post } from '@/shared/model/post.model';
-
+import 'owl.carousel';
 export default {
   name: 'PostComponent',
   props: {

@@ -171,8 +171,6 @@ import '../../assets/css/bootstrap-theme.min.css';
 import '../../assets/css/font-awesome.min.css';
 import '../../assets/css/flexslider.css';
 import '../../assets/css/select-theme-default.css';
-import '../../assets/css/owl.carousel.css';
-import '../../assets/css/owl.theme.css';
 import '../../assets/css/style.css';
 import '../../assets/css/master.scss';
 

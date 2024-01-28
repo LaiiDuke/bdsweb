@@ -180,4 +180,18 @@ public class PostResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     * {@code GET  /vip-posts} : get vip posts.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of posts in body.
+     */
+    @GetMapping("/vip-posts")
+    public ResponseEntity<List<PostDTO>> getVipPosts(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Posts");
+        Page<PostDTO> posts = postService.getVipPost(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), posts);
+        return ResponseEntity.ok().headers(headers).body(posts.getContent());
+    }
 }

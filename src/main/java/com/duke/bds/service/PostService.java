@@ -1,6 +1,7 @@
 package com.duke.bds.service;
 
 import com.duke.bds.service.dto.PostDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,4 +56,6 @@ public interface PostService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<PostDTO> getVipPost(Pageable pageable);
 }

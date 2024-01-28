@@ -1,21 +1,8 @@
 package com.duke.bds.service.mapper;
 
-import com.duke.bds.domain.Category;
-import com.duke.bds.domain.District;
-import com.duke.bds.domain.Post;
-import com.duke.bds.domain.PostType;
-import com.duke.bds.domain.Province;
-import com.duke.bds.domain.Street;
-import com.duke.bds.domain.User;
-import com.duke.bds.domain.Ward;
-import com.duke.bds.service.dto.CategoryDTO;
-import com.duke.bds.service.dto.DistrictDTO;
-import com.duke.bds.service.dto.PostDTO;
-import com.duke.bds.service.dto.PostTypeDTO;
-import com.duke.bds.service.dto.ProvinceDTO;
-import com.duke.bds.service.dto.StreetDTO;
-import com.duke.bds.service.dto.UserDTO;
-import com.duke.bds.service.dto.WardDTO;
+import com.duke.bds.domain.*;
+import com.duke.bds.service.dto.*;
+import java.util.List;
 import org.mapstruct.*;
 
 /**

@@ -41,6 +41,18 @@
         </div>
       </div>
     </header>
+    <div v-if="$route.path.startsWith('/admin')" class="page-heading">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="top-text header-text">
+              <h6>Keep in touch with us</h6>
+              <h2>Feel free to send us a message about your business needs</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
