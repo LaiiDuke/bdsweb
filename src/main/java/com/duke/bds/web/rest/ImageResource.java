@@ -178,4 +178,16 @@ public class ImageResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     *
+     * @param postId
+     * @return
+     */
+    @GetMapping("/images/post/{postId}")
+    public ResponseEntity<List<ImageDTO>> findByPostId(@PathVariable Long postId) {
+        log.debug("REST request to get Images of post");
+        List<ImageDTO> lstImage = imageService.findByPostId(postId);
+        return ResponseEntity.ok().body(lstImage);
+    }
 }

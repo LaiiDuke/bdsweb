@@ -52,7 +52,7 @@ const router = new Router({
       component: CategoryPage
     },
     {
-      path: '/detail',
+      path: '/detail/:postId',
       name: 'Detail',
       component: DetailPage
     },

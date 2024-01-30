@@ -5,6 +5,7 @@ import com.duke.bds.repository.ImageRepository;
 import com.duke.bds.service.ImageService;
 import com.duke.bds.service.dto.ImageDTO;
 import com.duke.bds.service.mapper.ImageMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,5 +81,10 @@ public class ImageServiceImpl implements ImageService {
     public void delete(Long id) {
         log.debug("Request to delete Image : {}", id);
         imageRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ImageDTO> findByPostId(Long id) {
+        return imageMapper.toDto(imageRepository.findAllByPostId(id));
     }
 }

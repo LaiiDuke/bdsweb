@@ -31,28 +31,21 @@
                   img-height="300px"
                   style="text-shadow: 1px 1px 2px #333"
                 >
-                  <b-carousel-slide v-for="(item, index) in images" :key="index" :img-src="item"> </b-carousel-slide>
+                  <b-carousel-slide v-for="(item, index) in images" :key="index" :img-src="`data:image/png;base64,` + item.data">
+                  </b-carousel-slide>
                 </b-carousel>
               </div>
               <div class="property-desc">
                 <h3>2211 Summer Ridge Dr</h3>
                 <ul class="slide-item-features item-features">
-                  <li><span class="fa fa-arrows-alt"></span>5000 Sq Ft</li>
-                  <li><span class="fa fa-male"></span>2 bathrooms</li>
-                  <li><span class="fa fa-inbox"></span>3 bedrooms</li>
+                  <li><span class="fa fa-arrows-alt"></span>{{ postObj.square }} m2</li>
+                  <li><span class="fa fa-male"></span>{{ postObj.numberOfFloors }} floors</li>
+                  <li><span class="fa fa-inbox"></span>{{ postObj.numberOfBedroom }} bedrooms</li>
                 </ul>
                 <p class="first-paragraph">
-                  This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis
-                  bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a
-                  sit amet mauris. Morbi accumsan ipsum velit.
+                  {{ postObj.content }}
                 </p>
-                <p>
-                  Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit. Class aptent
-                  taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu
-                  felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc.
-                  Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in
-                  orci enim.
-                </p>
+
                 <div class="additional-features">
                   <h3>Additional Features</h3>
                   <ul class="features">
@@ -173,26 +166,56 @@ import '../../assets/css/flexslider.css';
 import '../../assets/css/select-theme-default.css';
 import '../../assets/css/style.css';
 import '../../assets/css/master.scss';
-
+import PostService from '../../entities/post/post.service';
+import ImageService from '../../entities/image/image.service';
 export default {
   components: {},
   data() {
     return {
       slide: 0,
-      images: [
-        'https://picsum.photos/1024/480/?image=52',
-        'https://picsum.photos/1024/480/?image=52',
-        'https://picsum.photos/1024/480/?image=52',
-        'https://picsum.photos/1024/480/?image=52',
-        'https://picsum.photos/1024/480/?image=52',
-        'https://picsum.photos/1024/480/?image=52',
-        'https://picsum.photos/1024/480/?image=52',
-      ],
+      postService: new PostService(),
+      imageService: new ImageService(),
+      postObj: {},
+      images: [{ data: '' }],
     };
   },
   created() {
     jQuery(document).ready(function ($) {});
+    this.getDetailPost();
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.params.postId) {
+        vm.getDetailPost(to.params.postId);
+        vm.getImagesOfPost(to.params.postId);
+      }
+    });
+  },
+  methods: {
+    getDetailPost(postId) {
+      this.isFetching = true;
+      this.postService.find(postId).then(
+        res => {
+          this.postObj = res;
+        },
+        err => {
+          this.alertService().showHttpError(this, err.response);
+        }
+      );
+    },
+
+    getImagesOfPost(postId) {
+      this.imageService.findByPostId(postId).then(
+        res => {
+          this.images = res;
+        },
+        err => {
+          this.alertService().showHttpError(this, err.response);
+        }
+      );
+    },
+  },
+
   watch: {},
 };
 </script>

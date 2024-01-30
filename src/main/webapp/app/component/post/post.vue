@@ -33,7 +33,10 @@
         </ul>
 
         <div class="main-white-button">
-          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>
+          <router-link :to="{ name: 'Detail', params: { postId: postObj.id } }" custom v-slot="{ navigate }">
+            <a @click="navigate"> <i class="fa fa-eye"></i> Contact Now </a>
+          </router-link>
+          <!--          <a href="/detail"><i class="fa fa-eye"></i> Contact Now</a>-->
         </div>
       </div>
     </div>
