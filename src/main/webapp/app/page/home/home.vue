@@ -317,9 +317,9 @@
               </div>
             </div>
             <div v-show="lstPost && lstPost.length > 0">
-              <!--              <div class="row justify-content-center">-->
-              <!--                <jhi-item-count :page="page" :total="queryCount" :itemsPerPage="itemsPerPage"></jhi-item-count>-->
-              <!--              </div>-->
+              <div class="row justify-content-center">
+                <jhi-item-count :page="page" :total="queryCount" :itemsPerPage="itemsPerPage"></jhi-item-count>
+              </div>
               <div class="row justify-content-center">
                 <b-pagination
                   size="md"
@@ -361,7 +361,7 @@ export default {
       lstPost: [],
       page: 1,
       previousPage: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 3,
       queryCount: null,
       totalItems: 0,
     };
@@ -459,6 +459,7 @@ export default {
       this.postService.retrieve(paginationQuery).then(
         res => {
           this.lstPost = res.data;
+          this.totalItems = Number(res.headers['x-total-count']);
           this.queryCount = this.totalItems;
           this.fetched = true;
         },
