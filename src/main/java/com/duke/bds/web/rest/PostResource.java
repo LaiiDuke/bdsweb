@@ -194,4 +194,15 @@ public class PostResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), posts);
         return ResponseEntity.ok().headers(headers).body(posts.getContent());
     }
+
+    @GetMapping("/post/post-type/{postTypeId}")
+    public ResponseEntity<List<PostDTO>> findByPostType(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable("postTypeId") Long postTypeId
+    ) {
+        log.debug("REST request to get a page of Posts");
+        Page<PostDTO> posts = postService.findByPostType(pageable, postTypeId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), posts);
+        return ResponseEntity.ok().headers(headers).body(posts.getContent());
+    }
 }

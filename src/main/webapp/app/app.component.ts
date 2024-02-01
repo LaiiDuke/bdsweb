@@ -8,6 +8,9 @@ import UserFooter from '@/core/user-footer/user-footer.vue';
 import UserNavbar from '@/core/user-navbar/user-navbar.vue';
 
 import '@/shared/config/dayjs';
+import { Provide } from 'vue-property-decorator';
+import CategoryService from '@/entities/category/category.service';
+import PostService from '@/entities/post/post.service';
 
 @Component({
   components: {
@@ -19,4 +22,7 @@ import '@/shared/config/dayjs';
     'user-footer': UserFooter,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  @Provide('categoryService') private categoryService = () => new CategoryService();
+  @Provide('postService') private postService = () => new PostService();
+}

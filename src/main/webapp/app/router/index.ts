@@ -37,8 +37,8 @@ const router = new Router({
       component: HomePage
     },
     {
-      path: '/list-product',
-      name: 'List Product',
+      path: '/list-product/:postTypeId',
+      name: 'ListProduct',
       component: ListProductPage
     },
     {
@@ -47,8 +47,8 @@ const router = new Router({
       component: ContactPage
     },
     {
-      path: '/category',
-      name: 'Category',
+      path: '/category/:categoryId',
+      name: 'CategoryPost',
       component: CategoryPage
     },
     {

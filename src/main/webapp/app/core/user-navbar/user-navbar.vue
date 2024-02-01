@@ -22,10 +22,17 @@
               <!-- ***** Logo End ***** -->
               <!-- ***** Menu Start ***** -->
               <ul class="nav">
-                <li><a href="/" class="active">Home</a></li>
-                <li><a href="/category">Category</a></li>
-                <li><a href="/list-product">Listing</a></li>
-                <li><a href="/contact">Contact Us</a></li>
+                <li class="nav-link"><a href="/" class="active">Home</a></li>
+                <b-nav-item-dropdown id="categoryBarDropdown" text="Category" v-if="categories && Object.keys(categories).length > 1">
+                  <!--                  <span class="no-bold">Category</span>-->
+                  <b-dropdown-item v-for="(item, index) in categories" :key="index">
+                    <router-link :to="{ name: 'CategoryPost', params: { categoryId: item.id } }" custom v-slot="{ navigate }">
+                      <a @click="navigate">{{ item.name }} </a>
+                    </router-link>
+                  </b-dropdown-item>
+                </b-nav-item-dropdown>
+                <li class="nav-link"><a href="/list-product">Listing</a></li>
+                <li class="nav-link"><a href="/contact">Contact Us</a></li>
                 <li>
                   <div class="main-white-button">
                     <a href="#"><i class="fa fa-plus"></i> Add Your Listing</a>

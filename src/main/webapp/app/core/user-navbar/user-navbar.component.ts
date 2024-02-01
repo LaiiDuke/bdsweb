@@ -1,20 +1,24 @@
 import { Component, Inject, Vue } from 'vue-property-decorator';
 import LoginService from '@/account/login.service';
 import AccountService from '@/account/account.service';
+import CategoryService from '@/entities/category/category.service';
 import jQuery from '../../vendor/jquery/jquery.min.js';
 
 @Component
 export default class UserNavbar extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
-
+  @Inject('categoryService')
+  private categoryService: () => CategoryService;
   @Inject('accountService') private accountService: () => AccountService;
   public version = 'v' + VERSION;
   private currentLanguage = this.$store.getters.currentLanguage;
   private languages: any = this.$store.getters.languages;
+  private categories = [];
   private hasAnyAuthorityValues = {};
 
   created() {
+    this.getCategory();
     jQuery(document).ready(function ($) {
       $(window).scroll(function () {
         var scroll = $(window).scrollTop();
@@ -77,5 +81,13 @@ export default class UserNavbar extends Vue {
 
   public get inProduction(): boolean {
     return this.$store.getters.activeProfiles.indexOf('prod') > -1;
+  }
+
+  public getCategory() {
+    this.categoryService()
+      .retrieve()
+      .then(_res => {
+        this.categories = _res.data;
+      });
   }
 }

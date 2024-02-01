@@ -113,4 +113,24 @@ public class PostServiceImpl implements PostService {
             });
         return result;
     }
+
+    @Override
+    public Page<PostDTO> findByPostType(Pageable pageable, Long postTypeId) {
+        Page<Post> posts = postRepository.findByPostTypeId(pageable, postTypeId);
+        List<Post> lstPost = posts.getContent();
+
+        List<Image> lstImg = imageRepository.findAllByPostIn(lstPost);
+        List<ImageDTO> lstImgDto = lstImg.stream().map(imageMapper::toDto).collect(Collectors.toList());
+
+        Map<PostDTO, List<ImageDTO>> mapImagePost = lstImgDto.stream().collect(Collectors.groupingBy(ImageDTO::getPost));
+        Page<PostDTO> result = posts.map(postMapper::toDto);
+        result
+            .getContent()
+            .forEach(postDTO -> {
+                if (mapImagePost.get(postDTO) != null) {
+                    postDTO.setImage(mapImagePost.get(postDTO).get(0));
+                }
+            });
+        return result;
+    }
 }

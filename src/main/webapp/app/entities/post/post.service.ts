@@ -97,4 +97,17 @@ export default class PostService {
         });
     });
   }
+
+  public findByPostType(paginationQuery?: any, postTypeId?: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      axios
+        .get('api/post/post-type/' + postTypeId + '/' + `?${buildPaginationQueryOpts(paginationQuery)}`)
+        .then(res => {
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
 }

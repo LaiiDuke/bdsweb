@@ -58,4 +58,6 @@ public interface PostService {
     void delete(Long id);
 
     Page<PostDTO> getVipPost(Pageable pageable);
+
+    Page<PostDTO> findByPostType(Pageable pageable, Long postTypeId);
 }
