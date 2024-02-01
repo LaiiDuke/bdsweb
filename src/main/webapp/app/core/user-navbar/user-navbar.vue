@@ -35,7 +35,7 @@
                 <li class="nav-link"><a href="/contact">Contact Us</a></li>
                 <li>
                   <div class="main-white-button">
-                    <a href="#"><i class="fa fa-plus"></i> Add Your Listing</a>
+                    <a href="/post/new"><i class="fa fa-plus"></i> Add Your Listing</a>
                   </div>
                 </li>
               </ul>
