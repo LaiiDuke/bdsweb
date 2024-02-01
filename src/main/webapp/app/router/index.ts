@@ -14,6 +14,7 @@ const ContactPage = () => import('@/page/contact/contact.vue');
 const LoginPage = () => import('@/account/login-form/login-form.vue');
 const CategoryPage = () => import('@/page/category/category.vue');
 const DetailPage = () => import('@/page/detail/detail.vue');
+const NewPostPage = () => import('@/page/new-post/new-post.vue');
 const Error = () => import('@/core/error/error.vue');
 import account from '@/router/account';
 import admin from '@/router/admin';
@@ -55,6 +56,11 @@ const router = new Router({
       path: '/detail/:postId',
       name: 'Detail',
       component: DetailPage
+    },
+    {
+      path: '/post/new',
+      name: 'Post',
+      component: NewPostPage,
     },
     {
       path: '/login',
