@@ -301,6 +301,40 @@
         </div>
       </div>
     </div>
+    <div class="recent-listing">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-heading">
+              <h2>post</h2>
+              <h6>Check Them Out</h6>
+            </div>
+          </div>
+          <div class="owl-carousel owl-listing">
+            <div class="item" v-if="fetched">
+              <div class="row">
+                <post-component v-for="(item, ind) in lstPost" :key="ind" :post-obj="item"></post-component>
+              </div>
+            </div>
+            <div v-show="lstPost && lstPost.length > 0">
+              <!--              <div class="row justify-content-center">-->
+              <!--                <jhi-item-count :page="page" :total="queryCount" :itemsPerPage="itemsPerPage"></jhi-item-count>-->
+              <!--              </div>-->
+              <div class="row justify-content-center">
+                <b-pagination
+                  size="md"
+                  :total-rows="totalItems"
+                  v-model="page"
+                  pills
+                  :per-page="itemsPerPage"
+                  :change="loadPage(page)"
+                ></b-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -320,72 +354,21 @@ export default {
   data() {
     return {
       vipPost: [],
-      isFetching: false,
+      fetched: false,
       refresh: 0,
       numberOfSlide: 0,
       postService: new PostService(),
-      lstPost: [
-        {
-          title: 'title1',
-          id: 1,
-          content: null,
-          price: 20,
-          star: 4,
-          square: 120,
-          numberOfBedroom: 4,
-          numberOfFloors: 5,
-          width: 12,
-          length: 10,
-          imgUrl: '',
-          address: 'So 2, Duong Abc, Phuong xyz',
-        },
-        {
-          title: 'title2',
-          id: 2,
-          content: null,
-          price: 20,
-          star: 4,
-          square: 120,
-          numberOfBedroom: 4,
-          numberOfFloors: 5,
-          width: 12,
-          length: 10,
-          imgUrl: '',
-          address: 'So 2, Duong Abc, Phuong xyz',
-        },
-        {
-          title: 'title3',
-          id: 3,
-          content: null,
-          price: 20,
-          star: 4,
-          square: 120,
-          numberOfBedroom: 4,
-          numberOfFloors: 5,
-          width: 12,
-          length: 10,
-          imgUrl: '',
-          address: 'So 2, Duong Abc, Phuong xyz',
-        },
-      ],
+      lstPost: [],
+      page: 1,
+      previousPage: 1,
+      itemsPerPage: 10,
+      queryCount: null,
+      totalItems: 0,
     };
   },
   setup() {},
   created() {
-    this.lstPost.push({
-      title: 'title4',
-      id: 4,
-      content: null,
-      price: 20,
-      star: 4,
-      square: 120,
-      numberOfBedroom: 4,
-      numberOfFloors: 5,
-      width: 12,
-      length: 10,
-      imgUrl: '',
-      address: 'So 2, Duong Abc, Phuong xyz',
-    });
+    this.getPaginatePost();
     this.getVipPost();
     jQuery(document).ready(function ($) {
       // Acc
@@ -450,7 +433,6 @@ export default {
   },
   methods: {
     getVipPost() {
-      this.isFetching = true;
       const paginationQuery = {
         page: 0,
         size: 12,
@@ -460,19 +442,42 @@ export default {
         res => {
           this.vipPost = res.data;
           this.queryCount = this.totalItems;
-          this.isFetching = false;
           this.numberOfSlide = res.data.length / 2;
           this.refresh++;
         },
         err => {
-          this.isFetching = false;
           this.alertService().showHttpError(this, err.response);
         }
       );
     },
-
+    getPaginatePost() {
+      const paginationQuery = {
+        page: this.page - 1,
+        size: this.itemsPerPage,
+        sort: this.sort(),
+      };
+      this.postService.retrieve(paginationQuery).then(
+        res => {
+          this.lstPost = res.data;
+          this.queryCount = this.totalItems;
+          this.fetched = true;
+        },
+        err => {
+          this.alertService().showHttpError(this, err.response);
+        }
+      );
+    },
     sort() {
       return ['postingTime,desc'];
+    },
+    loadPage(page) {
+      if (page !== this.previousPage) {
+        this.previousPage = page;
+        this.transition();
+      }
+    },
+    transition() {
+      this.getPaginatePost();
     },
   },
 };
