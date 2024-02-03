@@ -2,26 +2,26 @@
   "bdswebApp": {
     "street": {
       "home": {
-        "title": "Streets",
+        "title": "Các Đường/Phố",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Thêm mới một Street",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Street",
+        "createLabel": "Thêm mới một Đường/Phố",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Đường/Phố",
         "notFound": "No Streets found"
       },
-      "created": "Một Street mới được tạo với định danh {{ param }}",
-      "updated": "Một Street cập nhật với định danh {{ param }}",
-      "deleted": "Một Street đã xóa với định danh {{ param }}",
+      "created": "Một Đường/Phố mới được tạo với định danh {{ param }}",
+      "updated": "Một Đường/Phố cập nhật với định danh {{ param }}",
+      "deleted": "Một Đường/Phố đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Street {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Đường/Phố {{ id }}?"
       },
       "detail": {
-        "title": "Street"
+        "title": "Đường/Phố"
       },
       "id": "ID",
-      "name": "Name",
-      "status": "Status",
-      "ward": "Ward",
-      "district": "District"
+      "name": "Tên",
+      "status": "Trạng thái",
+      "ward": "Phường/Xã",
+      "district": "Quận/Huyện"
     }
   }
 }

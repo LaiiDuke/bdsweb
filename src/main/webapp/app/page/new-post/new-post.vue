@@ -20,7 +20,7 @@
             <h2
               id="bdswebApp.post.home.createOrEditLabel"
               data-cy="PostCreateUpdateHeading"
-              v-text="$t('bdswebApp.post.home.createOrEditLabel')"
+              v-text="$t(post.id ? 'bdswebApp.post.home.createOrEditLabel' : 'bdswebApp.post.home.createLabel')"
             >
               Create or edit a Post
             </h2>

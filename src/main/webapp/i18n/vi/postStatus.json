@@ -2,9 +2,9 @@
   "bdswebApp": {
     "PostStatus": {
       "null": "",
-      "WAITING": "WAITING",
-      "VERIFIED": "VERIFIED",
-      "REJECTED": "REJECTED"
+      "WAITING": "Đang chờ",
+      "VERIFIED": "Đã duyệt",
+      "REJECTED": "Từ chối"
     }
   }
 }

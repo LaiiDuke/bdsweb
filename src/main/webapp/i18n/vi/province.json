@@ -2,24 +2,24 @@
   "bdswebApp": {
     "province": {
       "home": {
-        "title": "Provinces",
+        "title": "Các Tỉnh/Thành phố",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Thêm mới một Province",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Province",
+        "createLabel": "Thêm mới một Tỉnh/Thành phố",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Tỉnh/Thành phố",
         "notFound": "No Provinces found"
       },
-      "created": "Một Province mới được tạo với định danh {{ param }}",
-      "updated": "Một Province cập nhật với định danh {{ param }}",
-      "deleted": "Một Province đã xóa với định danh {{ param }}",
+      "created": "Một Tỉnh/Thành phố mới được tạo với định danh {{ param }}",
+      "updated": "Một Tỉnh/Thành phố cập nhật với định danh {{ param }}",
+      "deleted": "Một Tỉnh/Thành phố đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Province {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Tỉnh/Thành phố {{ id }}?"
       },
       "detail": {
-        "title": "Province"
+        "title": "Tỉnh/Thành phố"
       },
       "id": "ID",
-      "name": "Name",
-      "districts": "Districts"
+      "name": "Tên",
+      "districts": "Các Quận/Huyện"
     }
   }
 }

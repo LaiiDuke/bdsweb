@@ -59,7 +59,7 @@ const router = new Router({
     },
     {
       path: '/post/new',
-      name: 'Post',
+      name: 'PostNew',
       component: NewPostPage,
     },
     {

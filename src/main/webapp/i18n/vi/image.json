@@ -2,20 +2,20 @@
   "bdswebApp": {
     "image": {
       "home": {
-        "title": "Images",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Thêm mới một Image",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Image",
+        "title": "Các Ảnh",
+        "refreshListLabel": "Làm mới",
+        "createLabel": "Thêm mới một Ảnh",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Ảnh",
         "notFound": "No Images found"
       },
-      "created": "Một Image mới được tạo với định danh {{ param }}",
-      "updated": "Một Image cập nhật với định danh {{ param }}",
-      "deleted": "Một Image đã xóa với định danh {{ param }}",
+      "created": "Một Ảnh mới được tạo với định danh {{ param }}",
+      "updated": "Một Ảnh cập nhật với định danh {{ param }}",
+      "deleted": "Một Ảnh đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Image {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Ảnh {{ id }}?"
       },
       "detail": {
-        "title": "Image"
+        "title": "Ảnh"
       },
       "id": "ID",
       "data": "Data",
