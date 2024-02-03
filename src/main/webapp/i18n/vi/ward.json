@@ -2,25 +2,25 @@
   "bdswebApp": {
     "ward": {
       "home": {
-        "title": "Wards",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Thêm mới một Ward",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Ward",
+        "title": "Các Phường/Xã",
+        "refreshListLabel": "Làm mới",
+        "createLabel": "Thêm mới một Phường/Xã",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Phường/Xã",
         "notFound": "No Wards found"
       },
-      "created": "Một Ward mới được tạo với định danh {{ param }}",
-      "updated": "Một Ward cập nhật với định danh {{ param }}",
-      "deleted": "Một Ward đã xóa với định danh {{ param }}",
+      "created": "Một Phường/Xã mới được tạo với định danh {{ param }}",
+      "updated": "Một Phường/Xã cập nhật với định danh {{ param }}",
+      "deleted": "Một Phường/Xã đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Ward {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Phường/Xã {{ id }}?"
       },
       "detail": {
-        "title": "Ward"
+        "title": "Phường/Xã"
       },
       "id": "ID",
-      "name": "Name",
-      "streets": "Streets",
-      "district": "District"
+      "name": "Tên",
+      "streets": "Các Đường/Phố",
+      "district": "Quận"
     }
   }
 }

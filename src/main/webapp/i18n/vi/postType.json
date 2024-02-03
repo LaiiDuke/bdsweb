@@ -2,20 +2,20 @@
   "bdswebApp": {
     "postType": {
       "home": {
-        "title": "Post Types",
+        "title": "Loại bài đăng",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Thêm mới một Post Type",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Post Type",
+        "createLabel": "Thêm mới một Loại bài đăng",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Loại bài đăng",
         "notFound": "No Post Types found"
       },
-      "created": "Một Post Type mới được tạo với định danh {{ param }}",
-      "updated": "Một Post Type cập nhật với định danh {{ param }}",
-      "deleted": "Một Post Type đã xóa với định danh {{ param }}",
+      "created": "Một Loại bài đăng mới được tạo với định danh {{ param }}",
+      "updated": "Một Loại bài đăng cập nhật với định danh {{ param }}",
+      "deleted": "Một Loại bài đăng đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Post Type {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Loại bài đăng {{ id }}?"
       },
       "detail": {
-        "title": "Post Type"
+        "title": "Loại bài đăng"
       },
       "id": "ID",
       "name": "Name",

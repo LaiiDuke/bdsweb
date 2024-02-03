@@ -22,8 +22,8 @@
               <!-- ***** Logo End ***** -->
               <!-- ***** Menu Start ***** -->
               <ul class="nav">
-                <li class="nav-link"><a href="/" class="active">Home</a></li>
-                <b-nav-item-dropdown id="categoryBarDropdown" text="Category" v-if="categories && Object.keys(categories).length > 1">
+                <li class="nav-link"><a href="/" class="active">Trang chủ</a></li>
+                <b-nav-item-dropdown id="categoryBarDropdown" text="Danh mục" v-if="categories && Object.keys(categories).length > 1">
                   <!--                  <span class="no-bold">Category</span>-->
                   <b-dropdown-item v-for="(item, index) in categories" :key="index">
                     <router-link :to="{ name: 'CategoryPost', params: { categoryId: item.id } }" custom v-slot="{ navigate }">
@@ -31,7 +31,7 @@
                     </router-link>
                   </b-dropdown-item>
                 </b-nav-item-dropdown>
-                <b-nav-item-dropdown id="postTypeDropdown" text="Post type" v-if="lstType && Object.keys(lstType).length > 1">
+                <b-nav-item-dropdown id="postTypeDropdown" text="Bài đăng" v-if="lstType && Object.keys(lstType).length > 1">
                   <!--                  <span class="no-bold">Category</span>-->
                   <b-dropdown-item v-for="(item, index) in lstType" :key="index">
                     <router-link :to="{ name: 'ListProduct', params: { postTypeId: item.id } }" custom v-slot="{ navigate }">
@@ -39,10 +39,10 @@
                     </router-link>
                   </b-dropdown-item>
                 </b-nav-item-dropdown>
-                <li class="nav-link"><a href="/contact">Contact Us</a></li>
+                <li class="nav-link"><a href="/contact">Liên hệ</a></li>
                 <li>
                   <div class="main-white-button">
-                    <a href="/post/new"><i class="fa fa-plus"></i> Add Your Listing</a>
+                    <a href="/post/new"><i class="fa fa-plus"></i>Đăng bài</a>
                   </div>
                 </li>
               </ul>
