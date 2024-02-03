@@ -7,7 +7,7 @@
     </div>
     <div>
       <div>
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
       </div>
       <b-modal id="login-page" hide-footer lazy>
         <span data-cy="loginTitle" slot="modal-title" id="login-title" v-text="$t('login.title')">Sign in</span>

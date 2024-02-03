@@ -31,7 +31,14 @@
                     </router-link>
                   </b-dropdown-item>
                 </b-nav-item-dropdown>
-                <li class="nav-link"><a href="/list-product">Listing</a></li>
+                <b-nav-item-dropdown id="postTypeDropdown" text="Post type" v-if="lstType && Object.keys(lstType).length > 1">
+                  <!--                  <span class="no-bold">Category</span>-->
+                  <b-dropdown-item v-for="(item, index) in lstType" :key="index">
+                    <router-link :to="{ name: 'ListProduct', params: { postTypeId: item.id } }" custom v-slot="{ navigate }">
+                      <a @click="navigate">{{ item.name }} </a>
+                    </router-link>
+                  </b-dropdown-item>
+                </b-nav-item-dropdown>
                 <li class="nav-link"><a href="/contact">Contact Us</a></li>
                 <li>
                   <div class="main-white-button">
