@@ -23,6 +23,10 @@ public class Category implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "icon")
+    private String icon;
+
+    @Lob
     @Column(name = "description")
     private String description;
 
@@ -52,6 +56,19 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIcon() {
+        return this.icon;
+    }
+
+    public Category icon(String icon) {
+        this.setIcon(icon);
+        return this;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getDescription() {
@@ -92,6 +109,7 @@ public class Category implements Serializable {
         return "Category{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", icon='" + getIcon() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

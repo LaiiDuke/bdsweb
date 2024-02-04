@@ -7,7 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.duke.bds.IntegrationTest;
 import com.duke.bds.domain.Image;
+import com.duke.bds.domain.Post;
 import com.duke.bds.repository.ImageRepository;
+import com.duke.bds.service.criteria.ImageCriteria;
 import com.duke.bds.service.dto.ImageDTO;
 import com.duke.bds.service.mapper.ImageMapper;
 import java.util.List;
@@ -157,6 +159,152 @@ class ImageResourceIT {
             .andExpect(jsonPath("$.dataContentType").value(DEFAULT_DATA_CONTENT_TYPE))
             .andExpect(jsonPath("$.data").value(Base64Utils.encodeToString(DEFAULT_DATA)))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL));
+    }
+
+    @Test
+    @Transactional
+    void getImagesByIdFiltering() throws Exception {
+        // Initialize the database
+        imageRepository.saveAndFlush(image);
+
+        Long id = image.getId();
+
+        defaultImageShouldBeFound("id.equals=" + id);
+        defaultImageShouldNotBeFound("id.notEquals=" + id);
+
+        defaultImageShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultImageShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultImageShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultImageShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllImagesByUrlIsEqualToSomething() throws Exception {
+        // Initialize the database
+        imageRepository.saveAndFlush(image);
+
+        // Get all the imageList where url equals to DEFAULT_URL
+        defaultImageShouldBeFound("url.equals=" + DEFAULT_URL);
+
+        // Get all the imageList where url equals to UPDATED_URL
+        defaultImageShouldNotBeFound("url.equals=" + UPDATED_URL);
+    }
+
+    @Test
+    @Transactional
+    void getAllImagesByUrlIsInShouldWork() throws Exception {
+        // Initialize the database
+        imageRepository.saveAndFlush(image);
+
+        // Get all the imageList where url in DEFAULT_URL or UPDATED_URL
+        defaultImageShouldBeFound("url.in=" + DEFAULT_URL + "," + UPDATED_URL);
+
+        // Get all the imageList where url equals to UPDATED_URL
+        defaultImageShouldNotBeFound("url.in=" + UPDATED_URL);
+    }
+
+    @Test
+    @Transactional
+    void getAllImagesByUrlIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        imageRepository.saveAndFlush(image);
+
+        // Get all the imageList where url is not null
+        defaultImageShouldBeFound("url.specified=true");
+
+        // Get all the imageList where url is null
+        defaultImageShouldNotBeFound("url.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllImagesByUrlContainsSomething() throws Exception {
+        // Initialize the database
+        imageRepository.saveAndFlush(image);
+
+        // Get all the imageList where url contains DEFAULT_URL
+        defaultImageShouldBeFound("url.contains=" + DEFAULT_URL);
+
+        // Get all the imageList where url contains UPDATED_URL
+        defaultImageShouldNotBeFound("url.contains=" + UPDATED_URL);
+    }
+
+    @Test
+    @Transactional
+    void getAllImagesByUrlNotContainsSomething() throws Exception {
+        // Initialize the database
+        imageRepository.saveAndFlush(image);
+
+        // Get all the imageList where url does not contain DEFAULT_URL
+        defaultImageShouldNotBeFound("url.doesNotContain=" + DEFAULT_URL);
+
+        // Get all the imageList where url does not contain UPDATED_URL
+        defaultImageShouldBeFound("url.doesNotContain=" + UPDATED_URL);
+    }
+
+    @Test
+    @Transactional
+    void getAllImagesByPostIsEqualToSomething() throws Exception {
+        Post post;
+        if (TestUtil.findAll(em, Post.class).isEmpty()) {
+            imageRepository.saveAndFlush(image);
+            post = PostResourceIT.createEntity(em);
+        } else {
+            post = TestUtil.findAll(em, Post.class).get(0);
+        }
+        em.persist(post);
+        em.flush();
+        image.setPost(post);
+        imageRepository.saveAndFlush(image);
+        Long postId = post.getId();
+
+        // Get all the imageList where post equals to postId
+        defaultImageShouldBeFound("postId.equals=" + postId);
+
+        // Get all the imageList where post equals to (postId + 1)
+        defaultImageShouldNotBeFound("postId.equals=" + (postId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultImageShouldBeFound(String filter) throws Exception {
+        restImageMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(image.getId().intValue())))
+            .andExpect(jsonPath("$.[*].dataContentType").value(hasItem(DEFAULT_DATA_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].data").value(hasItem(Base64Utils.encodeToString(DEFAULT_DATA))))
+            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)));
+
+        // Check, that the count call also returns 1
+        restImageMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultImageShouldNotBeFound(String filter) throws Exception {
+        restImageMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restImageMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

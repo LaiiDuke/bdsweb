@@ -9,9 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.duke.bds.IntegrationTest;
 import com.duke.bds.domain.District;
 import com.duke.bds.domain.Street;
+import com.duke.bds.domain.Ward;
 import com.duke.bds.domain.enumeration.PostStatus;
 import com.duke.bds.repository.StreetRepository;
 import com.duke.bds.service.StreetService;
+import com.duke.bds.service.criteria.StreetCriteria;
 import com.duke.bds.service.dto.StreetDTO;
 import com.duke.bds.service.mapper.StreetMapper;
 import java.util.ArrayList;
@@ -224,6 +226,213 @@ class StreetResourceIT {
             .andExpect(jsonPath("$.id").value(street.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+    }
+
+    @Test
+    @Transactional
+    void getStreetsByIdFiltering() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        Long id = street.getId();
+
+        defaultStreetShouldBeFound("id.equals=" + id);
+        defaultStreetShouldNotBeFound("id.notEquals=" + id);
+
+        defaultStreetShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultStreetShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultStreetShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultStreetShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where name equals to DEFAULT_NAME
+        defaultStreetShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the streetList where name equals to UPDATED_NAME
+        defaultStreetShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultStreetShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the streetList where name equals to UPDATED_NAME
+        defaultStreetShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where name is not null
+        defaultStreetShouldBeFound("name.specified=true");
+
+        // Get all the streetList where name is null
+        defaultStreetShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where name contains DEFAULT_NAME
+        defaultStreetShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the streetList where name contains UPDATED_NAME
+        defaultStreetShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where name does not contain DEFAULT_NAME
+        defaultStreetShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the streetList where name does not contain UPDATED_NAME
+        defaultStreetShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where status equals to DEFAULT_STATUS
+        defaultStreetShouldBeFound("status.equals=" + DEFAULT_STATUS);
+
+        // Get all the streetList where status equals to UPDATED_STATUS
+        defaultStreetShouldNotBeFound("status.equals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where status in DEFAULT_STATUS or UPDATED_STATUS
+        defaultStreetShouldBeFound("status.in=" + DEFAULT_STATUS + "," + UPDATED_STATUS);
+
+        // Get all the streetList where status equals to UPDATED_STATUS
+        defaultStreetShouldNotBeFound("status.in=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        streetRepository.saveAndFlush(street);
+
+        // Get all the streetList where status is not null
+        defaultStreetShouldBeFound("status.specified=true");
+
+        // Get all the streetList where status is null
+        defaultStreetShouldNotBeFound("status.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByWardIsEqualToSomething() throws Exception {
+        Ward ward;
+        if (TestUtil.findAll(em, Ward.class).isEmpty()) {
+            streetRepository.saveAndFlush(street);
+            ward = WardResourceIT.createEntity(em);
+        } else {
+            ward = TestUtil.findAll(em, Ward.class).get(0);
+        }
+        em.persist(ward);
+        em.flush();
+        street.setWard(ward);
+        streetRepository.saveAndFlush(street);
+        Long wardId = ward.getId();
+
+        // Get all the streetList where ward equals to wardId
+        defaultStreetShouldBeFound("wardId.equals=" + wardId);
+
+        // Get all the streetList where ward equals to (wardId + 1)
+        defaultStreetShouldNotBeFound("wardId.equals=" + (wardId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllStreetsByDistrictIsEqualToSomething() throws Exception {
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            streetRepository.saveAndFlush(street);
+            district = DistrictResourceIT.createEntity(em);
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        em.persist(district);
+        em.flush();
+        street.setDistrict(district);
+        streetRepository.saveAndFlush(street);
+        Long districtId = district.getId();
+
+        // Get all the streetList where district equals to districtId
+        defaultStreetShouldBeFound("districtId.equals=" + districtId);
+
+        // Get all the streetList where district equals to (districtId + 1)
+        defaultStreetShouldNotBeFound("districtId.equals=" + (districtId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultStreetShouldBeFound(String filter) throws Exception {
+        restStreetMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(street.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+
+        // Check, that the count call also returns 1
+        restStreetMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultStreetShouldNotBeFound(String filter) throws Exception {
+        restStreetMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restStreetMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

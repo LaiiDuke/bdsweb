@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.PostRepository;
+import com.duke.bds.service.PostQueryService;
 import com.duke.bds.service.PostService;
+import com.duke.bds.service.criteria.PostCriteria;
 import com.duke.bds.service.dto.PostDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,12 @@ public class PostResource {
 
     private final PostRepository postRepository;
 
-    public PostResource(PostService postService, PostRepository postRepository) {
+    private final PostQueryService postQueryService;
+
+    public PostResource(PostService postService, PostRepository postRepository, PostQueryService postQueryService) {
         this.postService = postService;
         this.postRepository = postRepository;
+        this.postQueryService = postQueryService;
     }
 
     /**
@@ -142,23 +146,30 @@ public class PostResource {
      * {@code GET  /posts} : get all the posts.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of posts in body.
      */
     @GetMapping("/posts")
     public ResponseEntity<List<PostDTO>> getAllPosts(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+        PostCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get a page of Posts");
-        Page<PostDTO> page;
-        if (eagerload) {
-            page = postService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = postService.findAll(pageable);
-        }
+        log.debug("REST request to get Posts by criteria: {}", criteria);
+        Page<PostDTO> page = postQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /posts/count} : count all the posts.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/posts/count")
+    public ResponseEntity<Long> countPosts(PostCriteria criteria) {
+        log.debug("REST request to count Posts by criteria: {}", criteria);
+        return ResponseEntity.ok().body(postQueryService.countByCriteria(criteria));
     }
 
     /**

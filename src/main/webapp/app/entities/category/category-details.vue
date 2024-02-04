@@ -13,6 +13,12 @@
             <span>{{ category.name }}</span>
           </dd>
           <dt>
+            <span v-text="$t('bdswebApp.category.icon')">Icon</span>
+          </dt>
+          <dd>
+            <span>{{ category.icon }}</span>
+          </dd>
+          <dt>
             <span v-text="$t('bdswebApp.category.description')">Description</span>
           </dt>
           <dd>

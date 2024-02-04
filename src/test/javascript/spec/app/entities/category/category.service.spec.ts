@@ -29,7 +29,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new CategoryService();
-      elemDefault = new Category(123, 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new Category(123, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -82,6 +82,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
+            icon: 'BBBBBB',
             description: 'BBBBBB',
           },
           elemDefault
@@ -109,7 +110,7 @@ describe('Service Tests', () => {
       it('should partial update a Category', async () => {
         const patchObject = Object.assign(
           {
-            description: 'BBBBBB',
+            icon: 'BBBBBB',
           },
           new Category()
         );
@@ -138,6 +139,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
+            icon: 'BBBBBB',
             description: 'BBBBBB',
           },
           elemDefault

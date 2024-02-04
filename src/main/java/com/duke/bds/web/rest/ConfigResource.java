@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.ConfigRepository;
+import com.duke.bds.service.ConfigQueryService;
 import com.duke.bds.service.ConfigService;
+import com.duke.bds.service.criteria.ConfigCriteria;
 import com.duke.bds.service.dto.ConfigDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,12 @@ public class ConfigResource {
 
     private final ConfigRepository configRepository;
 
-    public ConfigResource(ConfigService configService, ConfigRepository configRepository) {
+    private final ConfigQueryService configQueryService;
+
+    public ConfigResource(ConfigService configService, ConfigRepository configRepository, ConfigQueryService configQueryService) {
         this.configService = configService;
         this.configRepository = configRepository;
+        this.configQueryService = configQueryService;
     }
 
     /**
@@ -142,14 +146,30 @@ public class ConfigResource {
      * {@code GET  /configs} : get all the configs.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of configs in body.
      */
     @GetMapping("/configs")
-    public ResponseEntity<List<ConfigDTO>> getAllConfigs(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Configs");
-        Page<ConfigDTO> page = configService.findAll(pageable);
+    public ResponseEntity<List<ConfigDTO>> getAllConfigs(
+        ConfigCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get Configs by criteria: {}", criteria);
+        Page<ConfigDTO> page = configQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /configs/count} : count all the configs.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/configs/count")
+    public ResponseEntity<Long> countConfigs(ConfigCriteria criteria) {
+        log.debug("REST request to count Configs by criteria: {}", criteria);
+        return ResponseEntity.ok().body(configQueryService.countByCriteria(criteria));
     }
 
     /**

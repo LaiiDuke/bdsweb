@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.duke.bds.IntegrationTest;
+import com.duke.bds.domain.User;
 import com.duke.bds.domain.UserInfo;
 import com.duke.bds.repository.UserInfoRepository;
+import com.duke.bds.service.criteria.UserInfoCriteria;
 import com.duke.bds.service.dto.UserInfoDTO;
 import com.duke.bds.service.mapper.UserInfoMapper;
 import java.util.List;
@@ -169,6 +171,216 @@ class UserInfoResourceIT {
             .andExpect(jsonPath("$.id").value(userInfo.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE));
+    }
+
+    @Test
+    @Transactional
+    void getUserInfosByIdFiltering() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        Long id = userInfo.getId();
+
+        defaultUserInfoShouldBeFound("id.equals=" + id);
+        defaultUserInfoShouldNotBeFound("id.notEquals=" + id);
+
+        defaultUserInfoShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultUserInfoShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultUserInfoShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultUserInfoShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where name equals to DEFAULT_NAME
+        defaultUserInfoShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the userInfoList where name equals to UPDATED_NAME
+        defaultUserInfoShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultUserInfoShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the userInfoList where name equals to UPDATED_NAME
+        defaultUserInfoShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where name is not null
+        defaultUserInfoShouldBeFound("name.specified=true");
+
+        // Get all the userInfoList where name is null
+        defaultUserInfoShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByNameContainsSomething() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where name contains DEFAULT_NAME
+        defaultUserInfoShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the userInfoList where name contains UPDATED_NAME
+        defaultUserInfoShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where name does not contain DEFAULT_NAME
+        defaultUserInfoShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the userInfoList where name does not contain UPDATED_NAME
+        defaultUserInfoShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByPhoneIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where phone equals to DEFAULT_PHONE
+        defaultUserInfoShouldBeFound("phone.equals=" + DEFAULT_PHONE);
+
+        // Get all the userInfoList where phone equals to UPDATED_PHONE
+        defaultUserInfoShouldNotBeFound("phone.equals=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByPhoneIsInShouldWork() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where phone in DEFAULT_PHONE or UPDATED_PHONE
+        defaultUserInfoShouldBeFound("phone.in=" + DEFAULT_PHONE + "," + UPDATED_PHONE);
+
+        // Get all the userInfoList where phone equals to UPDATED_PHONE
+        defaultUserInfoShouldNotBeFound("phone.in=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByPhoneIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where phone is not null
+        defaultUserInfoShouldBeFound("phone.specified=true");
+
+        // Get all the userInfoList where phone is null
+        defaultUserInfoShouldNotBeFound("phone.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByPhoneContainsSomething() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where phone contains DEFAULT_PHONE
+        defaultUserInfoShouldBeFound("phone.contains=" + DEFAULT_PHONE);
+
+        // Get all the userInfoList where phone contains UPDATED_PHONE
+        defaultUserInfoShouldNotBeFound("phone.contains=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByPhoneNotContainsSomething() throws Exception {
+        // Initialize the database
+        userInfoRepository.saveAndFlush(userInfo);
+
+        // Get all the userInfoList where phone does not contain DEFAULT_PHONE
+        defaultUserInfoShouldNotBeFound("phone.doesNotContain=" + DEFAULT_PHONE);
+
+        // Get all the userInfoList where phone does not contain UPDATED_PHONE
+        defaultUserInfoShouldBeFound("phone.doesNotContain=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserInfosByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            userInfoRepository.saveAndFlush(userInfo);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        userInfo.setUser(user);
+        userInfoRepository.saveAndFlush(userInfo);
+        Long userId = user.getId();
+
+        // Get all the userInfoList where user equals to userId
+        defaultUserInfoShouldBeFound("userId.equals=" + userId);
+
+        // Get all the userInfoList where user equals to (userId + 1)
+        defaultUserInfoShouldNotBeFound("userId.equals=" + (userId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultUserInfoShouldBeFound(String filter) throws Exception {
+        restUserInfoMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(userInfo.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)));
+
+        // Check, that the count call also returns 1
+        restUserInfoMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultUserInfoShouldNotBeFound(String filter) throws Exception {
+        restUserInfoMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restUserInfoMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

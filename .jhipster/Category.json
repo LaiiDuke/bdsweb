@@ -11,12 +11,17 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "description",
+      "fieldName": "icon",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "Category",
   "pagination": "pagination",
   "readOnly": false,

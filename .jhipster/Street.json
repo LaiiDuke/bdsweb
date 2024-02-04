@@ -17,7 +17,7 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "Street",
   "pagination": "pagination",
   "readOnly": false,

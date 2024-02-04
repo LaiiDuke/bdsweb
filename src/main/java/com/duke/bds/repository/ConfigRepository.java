@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ConfigRepository extends JpaRepository<Config, Long> {}
+public interface ConfigRepository extends JpaRepository<Config, Long>, JpaSpecificationExecutor<Config> {}

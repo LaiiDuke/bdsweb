@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the Street entity.
  */
 @Repository
-public interface StreetRepository extends JpaRepository<Street, Long> {
+public interface StreetRepository extends JpaRepository<Street, Long>, JpaSpecificationExecutor<Street> {
     default Optional<Street> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }

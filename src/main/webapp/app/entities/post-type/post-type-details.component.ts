@@ -1,11 +1,14 @@
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Inject } from 'vue-property-decorator';
+
+import { mixins } from 'vue-class-component';
+import JhiDataUtils from '@/shared/data/data-utils.service';
 
 import { IPostType } from '@/shared/model/post-type.model';
 import PostTypeService from './post-type.service';
 import AlertService from '@/shared/alert/alert.service';
 
 @Component
-export default class PostTypeDetails extends Vue {
+export default class PostTypeDetails extends mixins(JhiDataUtils) {
   @Inject('postTypeService') private postTypeService: () => PostTypeService;
   @Inject('alertService') private alertService: () => AlertService;
 

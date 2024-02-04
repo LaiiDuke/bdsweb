@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.UserInfoRepository;
+import com.duke.bds.service.UserInfoQueryService;
 import com.duke.bds.service.UserInfoService;
+import com.duke.bds.service.criteria.UserInfoCriteria;
 import com.duke.bds.service.dto.UserInfoDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,16 @@ public class UserInfoResource {
 
     private final UserInfoRepository userInfoRepository;
 
-    public UserInfoResource(UserInfoService userInfoService, UserInfoRepository userInfoRepository) {
+    private final UserInfoQueryService userInfoQueryService;
+
+    public UserInfoResource(
+        UserInfoService userInfoService,
+        UserInfoRepository userInfoRepository,
+        UserInfoQueryService userInfoQueryService
+    ) {
         this.userInfoService = userInfoService;
         this.userInfoRepository = userInfoRepository;
+        this.userInfoQueryService = userInfoQueryService;
     }
 
     /**
@@ -142,14 +150,30 @@ public class UserInfoResource {
      * {@code GET  /user-infos} : get all the userInfos.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userInfos in body.
      */
     @GetMapping("/user-infos")
-    public ResponseEntity<List<UserInfoDTO>> getAllUserInfos(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of UserInfos");
-        Page<UserInfoDTO> page = userInfoService.findAll(pageable);
+    public ResponseEntity<List<UserInfoDTO>> getAllUserInfos(
+        UserInfoCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get UserInfos by criteria: {}", criteria);
+        Page<UserInfoDTO> page = userInfoQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /user-infos/count} : count all the userInfos.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/user-infos/count")
+    public ResponseEntity<Long> countUserInfos(UserInfoCriteria criteria) {
+        log.debug("REST request to count UserInfos by criteria: {}", criteria);
+        return ResponseEntity.ok().body(userInfoQueryService.countByCriteria(criteria));
     }
 
     /**

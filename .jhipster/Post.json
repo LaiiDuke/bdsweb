@@ -112,7 +112,7 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "Post",
   "pagination": "pagination",
   "readOnly": false,

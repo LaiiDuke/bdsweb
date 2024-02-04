@@ -33,16 +33,27 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('bdswebApp.postType.description')" for="post-type-description">Description</label>
+            <label class="form-control-label" v-text="$t('bdswebApp.postType.icon')" for="post-type-icon">Icon</label>
             <input
               type="text"
+              class="form-control"
+              name="icon"
+              id="post-type-icon"
+              data-cy="icon"
+              :class="{ valid: !$v.postType.icon.$invalid, invalid: $v.postType.icon.$invalid }"
+              v-model="$v.postType.icon.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('bdswebApp.postType.description')" for="post-type-description">Description</label>
+            <textarea
               class="form-control"
               name="description"
               id="post-type-description"
               data-cy="description"
               :class="{ valid: !$v.postType.description.$invalid, invalid: $v.postType.description.$invalid }"
               v-model="$v.postType.description.$model"
-            />
+            ></textarea>
           </div>
         </div>
         <div>

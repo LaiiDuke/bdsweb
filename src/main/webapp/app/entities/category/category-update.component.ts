@@ -1,4 +1,7 @@
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Inject } from 'vue-property-decorator';
+
+import { mixins } from 'vue-class-component';
+import JhiDataUtils from '@/shared/data/data-utils.service';
 
 import { required } from 'vuelidate/lib/validators';
 
@@ -12,6 +15,7 @@ const validations: any = {
     name: {
       required,
     },
+    icon: {},
     description: {},
   },
 };
@@ -19,7 +23,7 @@ const validations: any = {
 @Component({
   validations,
 })
-export default class CategoryUpdate extends Vue {
+export default class CategoryUpdate extends mixins(JhiDataUtils) {
   @Inject('categoryService') private categoryService: () => CategoryService;
   @Inject('alertService') private alertService: () => AlertService;
 

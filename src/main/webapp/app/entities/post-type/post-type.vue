@@ -36,6 +36,10 @@
               <span v-text="$t('bdswebApp.postType.name')">Name</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
             </th>
+            <th scope="row" v-on:click="changeOrder('icon')">
+              <span v-text="$t('bdswebApp.postType.icon')">Icon</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'icon'"></jhi-sort-indicator>
+            </th>
             <th scope="row" v-on:click="changeOrder('description')">
               <span v-text="$t('bdswebApp.postType.description')">Description</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'description'"></jhi-sort-indicator>
@@ -49,6 +53,7 @@
               <router-link :to="{ name: 'PostTypeView', params: { postTypeId: postType.id } }">{{ postType.id }}</router-link>
             </td>
             <td>{{ postType.name }}</td>
+            <td>{{ postType.icon }}</td>
             <td>{{ postType.description }}</td>
             <td class="text-right">
               <div class="btn-group">

@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.duke.bds.IntegrationTest;
+import com.duke.bds.domain.District;
 import com.duke.bds.domain.Province;
 import com.duke.bds.repository.ProvinceRepository;
+import com.duke.bds.service.criteria.ProvinceCriteria;
 import com.duke.bds.service.dto.ProvinceDTO;
 import com.duke.bds.service.mapper.ProvinceMapper;
 import java.util.List;
@@ -163,6 +165,150 @@ class ProvinceResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(province.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getProvincesByIdFiltering() throws Exception {
+        // Initialize the database
+        provinceRepository.saveAndFlush(province);
+
+        Long id = province.getId();
+
+        defaultProvinceShouldBeFound("id.equals=" + id);
+        defaultProvinceShouldNotBeFound("id.notEquals=" + id);
+
+        defaultProvinceShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultProvinceShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultProvinceShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultProvinceShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllProvincesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        provinceRepository.saveAndFlush(province);
+
+        // Get all the provinceList where name equals to DEFAULT_NAME
+        defaultProvinceShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the provinceList where name equals to UPDATED_NAME
+        defaultProvinceShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllProvincesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        provinceRepository.saveAndFlush(province);
+
+        // Get all the provinceList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultProvinceShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the provinceList where name equals to UPDATED_NAME
+        defaultProvinceShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllProvincesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        provinceRepository.saveAndFlush(province);
+
+        // Get all the provinceList where name is not null
+        defaultProvinceShouldBeFound("name.specified=true");
+
+        // Get all the provinceList where name is null
+        defaultProvinceShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProvincesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        provinceRepository.saveAndFlush(province);
+
+        // Get all the provinceList where name contains DEFAULT_NAME
+        defaultProvinceShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the provinceList where name contains UPDATED_NAME
+        defaultProvinceShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllProvincesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        provinceRepository.saveAndFlush(province);
+
+        // Get all the provinceList where name does not contain DEFAULT_NAME
+        defaultProvinceShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the provinceList where name does not contain UPDATED_NAME
+        defaultProvinceShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllProvincesByDistrictsIsEqualToSomething() throws Exception {
+        District districts;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            provinceRepository.saveAndFlush(province);
+            districts = DistrictResourceIT.createEntity(em);
+        } else {
+            districts = TestUtil.findAll(em, District.class).get(0);
+        }
+        em.persist(districts);
+        em.flush();
+        province.addDistricts(districts);
+        provinceRepository.saveAndFlush(province);
+        Long districtsId = districts.getId();
+
+        // Get all the provinceList where districts equals to districtsId
+        defaultProvinceShouldBeFound("districtsId.equals=" + districtsId);
+
+        // Get all the provinceList where districts equals to (districtsId + 1)
+        defaultProvinceShouldNotBeFound("districtsId.equals=" + (districtsId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultProvinceShouldBeFound(String filter) throws Exception {
+        restProvinceMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(province.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restProvinceMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultProvinceShouldNotBeFound(String filter) throws Exception {
+        restProvinceMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restProvinceMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

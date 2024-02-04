@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.duke.bds.IntegrationTest;
 import com.duke.bds.domain.Category;
 import com.duke.bds.repository.CategoryRepository;
+import com.duke.bds.service.criteria.CategoryCriteria;
 import com.duke.bds.service.dto.CategoryDTO;
 import com.duke.bds.service.mapper.CategoryMapper;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link CategoryResource} REST controller.
@@ -33,6 +35,9 @@ class CategoryResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ICON = "AAAAAAAAAA";
+    private static final String UPDATED_ICON = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -64,7 +69,7 @@ class CategoryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Category createEntity(EntityManager em) {
-        Category category = new Category().name(DEFAULT_NAME).description(DEFAULT_DESCRIPTION);
+        Category category = new Category().name(DEFAULT_NAME).icon(DEFAULT_ICON).description(DEFAULT_DESCRIPTION);
         return category;
     }
 
@@ -75,7 +80,7 @@ class CategoryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Category createUpdatedEntity(EntityManager em) {
-        Category category = new Category().name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        Category category = new Category().name(UPDATED_NAME).icon(UPDATED_ICON).description(UPDATED_DESCRIPTION);
         return category;
     }
 
@@ -99,6 +104,7 @@ class CategoryResourceIT {
         assertThat(categoryList).hasSize(databaseSizeBeforeCreate + 1);
         Category testCategory = categoryList.get(categoryList.size() - 1);
         assertThat(testCategory.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testCategory.getIcon()).isEqualTo(DEFAULT_ICON);
         assertThat(testCategory.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -152,7 +158,8 @@ class CategoryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].icon").value(hasItem(DEFAULT_ICON)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 
     @Test
@@ -168,7 +175,196 @@ class CategoryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(category.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
+            .andExpect(jsonPath("$.icon").value(DEFAULT_ICON))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+    }
+
+    @Test
+    @Transactional
+    void getCategoriesByIdFiltering() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        Long id = category.getId();
+
+        defaultCategoryShouldBeFound("id.equals=" + id);
+        defaultCategoryShouldNotBeFound("id.notEquals=" + id);
+
+        defaultCategoryShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultCategoryShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultCategoryShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultCategoryShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where name equals to DEFAULT_NAME
+        defaultCategoryShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the categoryList where name equals to UPDATED_NAME
+        defaultCategoryShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultCategoryShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the categoryList where name equals to UPDATED_NAME
+        defaultCategoryShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where name is not null
+        defaultCategoryShouldBeFound("name.specified=true");
+
+        // Get all the categoryList where name is null
+        defaultCategoryShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where name contains DEFAULT_NAME
+        defaultCategoryShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the categoryList where name contains UPDATED_NAME
+        defaultCategoryShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where name does not contain DEFAULT_NAME
+        defaultCategoryShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the categoryList where name does not contain UPDATED_NAME
+        defaultCategoryShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByIconIsEqualToSomething() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where icon equals to DEFAULT_ICON
+        defaultCategoryShouldBeFound("icon.equals=" + DEFAULT_ICON);
+
+        // Get all the categoryList where icon equals to UPDATED_ICON
+        defaultCategoryShouldNotBeFound("icon.equals=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByIconIsInShouldWork() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where icon in DEFAULT_ICON or UPDATED_ICON
+        defaultCategoryShouldBeFound("icon.in=" + DEFAULT_ICON + "," + UPDATED_ICON);
+
+        // Get all the categoryList where icon equals to UPDATED_ICON
+        defaultCategoryShouldNotBeFound("icon.in=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByIconIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where icon is not null
+        defaultCategoryShouldBeFound("icon.specified=true");
+
+        // Get all the categoryList where icon is null
+        defaultCategoryShouldNotBeFound("icon.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByIconContainsSomething() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where icon contains DEFAULT_ICON
+        defaultCategoryShouldBeFound("icon.contains=" + DEFAULT_ICON);
+
+        // Get all the categoryList where icon contains UPDATED_ICON
+        defaultCategoryShouldNotBeFound("icon.contains=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    void getAllCategoriesByIconNotContainsSomething() throws Exception {
+        // Initialize the database
+        categoryRepository.saveAndFlush(category);
+
+        // Get all the categoryList where icon does not contain DEFAULT_ICON
+        defaultCategoryShouldNotBeFound("icon.doesNotContain=" + DEFAULT_ICON);
+
+        // Get all the categoryList where icon does not contain UPDATED_ICON
+        defaultCategoryShouldBeFound("icon.doesNotContain=" + UPDATED_ICON);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultCategoryShouldBeFound(String filter) throws Exception {
+        restCategoryMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].icon").value(hasItem(DEFAULT_ICON)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+
+        // Check, that the count call also returns 1
+        restCategoryMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultCategoryShouldNotBeFound(String filter) throws Exception {
+        restCategoryMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restCategoryMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test
@@ -190,7 +386,7 @@ class CategoryResourceIT {
         Category updatedCategory = categoryRepository.findById(category.getId()).get();
         // Disconnect from session so that the updates on updatedCategory are not directly saved in db
         em.detach(updatedCategory);
-        updatedCategory.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        updatedCategory.name(UPDATED_NAME).icon(UPDATED_ICON).description(UPDATED_DESCRIPTION);
         CategoryDTO categoryDTO = categoryMapper.toDto(updatedCategory);
 
         restCategoryMockMvc
@@ -206,6 +402,7 @@ class CategoryResourceIT {
         assertThat(categoryList).hasSize(databaseSizeBeforeUpdate);
         Category testCategory = categoryList.get(categoryList.size() - 1);
         assertThat(testCategory.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testCategory.getIcon()).isEqualTo(UPDATED_ICON);
         assertThat(testCategory.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
@@ -301,6 +498,7 @@ class CategoryResourceIT {
         assertThat(categoryList).hasSize(databaseSizeBeforeUpdate);
         Category testCategory = categoryList.get(categoryList.size() - 1);
         assertThat(testCategory.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testCategory.getIcon()).isEqualTo(DEFAULT_ICON);
         assertThat(testCategory.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -316,7 +514,7 @@ class CategoryResourceIT {
         Category partialUpdatedCategory = new Category();
         partialUpdatedCategory.setId(category.getId());
 
-        partialUpdatedCategory.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        partialUpdatedCategory.name(UPDATED_NAME).icon(UPDATED_ICON).description(UPDATED_DESCRIPTION);
 
         restCategoryMockMvc
             .perform(
@@ -331,6 +529,7 @@ class CategoryResourceIT {
         assertThat(categoryList).hasSize(databaseSizeBeforeUpdate);
         Category testCategory = categoryList.get(categoryList.size() - 1);
         assertThat(testCategory.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testCategory.getIcon()).isEqualTo(UPDATED_ICON);
         assertThat(testCategory.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 

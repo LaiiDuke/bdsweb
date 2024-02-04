@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.duke.bds.IntegrationTest;
 import com.duke.bds.domain.PostType;
 import com.duke.bds.repository.PostTypeRepository;
+import com.duke.bds.service.criteria.PostTypeCriteria;
 import com.duke.bds.service.dto.PostTypeDTO;
 import com.duke.bds.service.mapper.PostTypeMapper;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link PostTypeResource} REST controller.
@@ -33,6 +35,9 @@ class PostTypeResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ICON = "AAAAAAAAAA";
+    private static final String UPDATED_ICON = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -64,7 +69,7 @@ class PostTypeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static PostType createEntity(EntityManager em) {
-        PostType postType = new PostType().name(DEFAULT_NAME).description(DEFAULT_DESCRIPTION);
+        PostType postType = new PostType().name(DEFAULT_NAME).icon(DEFAULT_ICON).description(DEFAULT_DESCRIPTION);
         return postType;
     }
 
@@ -75,7 +80,7 @@ class PostTypeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static PostType createUpdatedEntity(EntityManager em) {
-        PostType postType = new PostType().name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        PostType postType = new PostType().name(UPDATED_NAME).icon(UPDATED_ICON).description(UPDATED_DESCRIPTION);
         return postType;
     }
 
@@ -99,6 +104,7 @@ class PostTypeResourceIT {
         assertThat(postTypeList).hasSize(databaseSizeBeforeCreate + 1);
         PostType testPostType = postTypeList.get(postTypeList.size() - 1);
         assertThat(testPostType.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testPostType.getIcon()).isEqualTo(DEFAULT_ICON);
         assertThat(testPostType.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -152,7 +158,8 @@ class PostTypeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(postType.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].icon").value(hasItem(DEFAULT_ICON)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 
     @Test
@@ -168,7 +175,196 @@ class PostTypeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(postType.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
+            .andExpect(jsonPath("$.icon").value(DEFAULT_ICON))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+    }
+
+    @Test
+    @Transactional
+    void getPostTypesByIdFiltering() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        Long id = postType.getId();
+
+        defaultPostTypeShouldBeFound("id.equals=" + id);
+        defaultPostTypeShouldNotBeFound("id.notEquals=" + id);
+
+        defaultPostTypeShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultPostTypeShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultPostTypeShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultPostTypeShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where name equals to DEFAULT_NAME
+        defaultPostTypeShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the postTypeList where name equals to UPDATED_NAME
+        defaultPostTypeShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultPostTypeShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the postTypeList where name equals to UPDATED_NAME
+        defaultPostTypeShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where name is not null
+        defaultPostTypeShouldBeFound("name.specified=true");
+
+        // Get all the postTypeList where name is null
+        defaultPostTypeShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where name contains DEFAULT_NAME
+        defaultPostTypeShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the postTypeList where name contains UPDATED_NAME
+        defaultPostTypeShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where name does not contain DEFAULT_NAME
+        defaultPostTypeShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the postTypeList where name does not contain UPDATED_NAME
+        defaultPostTypeShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByIconIsEqualToSomething() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where icon equals to DEFAULT_ICON
+        defaultPostTypeShouldBeFound("icon.equals=" + DEFAULT_ICON);
+
+        // Get all the postTypeList where icon equals to UPDATED_ICON
+        defaultPostTypeShouldNotBeFound("icon.equals=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByIconIsInShouldWork() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where icon in DEFAULT_ICON or UPDATED_ICON
+        defaultPostTypeShouldBeFound("icon.in=" + DEFAULT_ICON + "," + UPDATED_ICON);
+
+        // Get all the postTypeList where icon equals to UPDATED_ICON
+        defaultPostTypeShouldNotBeFound("icon.in=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByIconIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where icon is not null
+        defaultPostTypeShouldBeFound("icon.specified=true");
+
+        // Get all the postTypeList where icon is null
+        defaultPostTypeShouldNotBeFound("icon.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByIconContainsSomething() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where icon contains DEFAULT_ICON
+        defaultPostTypeShouldBeFound("icon.contains=" + DEFAULT_ICON);
+
+        // Get all the postTypeList where icon contains UPDATED_ICON
+        defaultPostTypeShouldNotBeFound("icon.contains=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    void getAllPostTypesByIconNotContainsSomething() throws Exception {
+        // Initialize the database
+        postTypeRepository.saveAndFlush(postType);
+
+        // Get all the postTypeList where icon does not contain DEFAULT_ICON
+        defaultPostTypeShouldNotBeFound("icon.doesNotContain=" + DEFAULT_ICON);
+
+        // Get all the postTypeList where icon does not contain UPDATED_ICON
+        defaultPostTypeShouldBeFound("icon.doesNotContain=" + UPDATED_ICON);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultPostTypeShouldBeFound(String filter) throws Exception {
+        restPostTypeMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(postType.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].icon").value(hasItem(DEFAULT_ICON)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+
+        // Check, that the count call also returns 1
+        restPostTypeMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultPostTypeShouldNotBeFound(String filter) throws Exception {
+        restPostTypeMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restPostTypeMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test
@@ -190,7 +386,7 @@ class PostTypeResourceIT {
         PostType updatedPostType = postTypeRepository.findById(postType.getId()).get();
         // Disconnect from session so that the updates on updatedPostType are not directly saved in db
         em.detach(updatedPostType);
-        updatedPostType.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        updatedPostType.name(UPDATED_NAME).icon(UPDATED_ICON).description(UPDATED_DESCRIPTION);
         PostTypeDTO postTypeDTO = postTypeMapper.toDto(updatedPostType);
 
         restPostTypeMockMvc
@@ -206,6 +402,7 @@ class PostTypeResourceIT {
         assertThat(postTypeList).hasSize(databaseSizeBeforeUpdate);
         PostType testPostType = postTypeList.get(postTypeList.size() - 1);
         assertThat(testPostType.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testPostType.getIcon()).isEqualTo(UPDATED_ICON);
         assertThat(testPostType.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
@@ -301,6 +498,7 @@ class PostTypeResourceIT {
         assertThat(postTypeList).hasSize(databaseSizeBeforeUpdate);
         PostType testPostType = postTypeList.get(postTypeList.size() - 1);
         assertThat(testPostType.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testPostType.getIcon()).isEqualTo(DEFAULT_ICON);
         assertThat(testPostType.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -316,7 +514,7 @@ class PostTypeResourceIT {
         PostType partialUpdatedPostType = new PostType();
         partialUpdatedPostType.setId(postType.getId());
 
-        partialUpdatedPostType.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        partialUpdatedPostType.name(UPDATED_NAME).icon(UPDATED_ICON).description(UPDATED_DESCRIPTION);
 
         restPostTypeMockMvc
             .perform(
@@ -331,6 +529,7 @@ class PostTypeResourceIT {
         assertThat(postTypeList).hasSize(databaseSizeBeforeUpdate);
         PostType testPostType = postTypeList.get(postTypeList.size() - 1);
         assertThat(testPostType.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testPostType.getIcon()).isEqualTo(UPDATED_ICON);
         assertThat(testPostType.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 

@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.StreetRepository;
+import com.duke.bds.service.StreetQueryService;
 import com.duke.bds.service.StreetService;
+import com.duke.bds.service.criteria.StreetCriteria;
 import com.duke.bds.service.dto.StreetDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,12 @@ public class StreetResource {
 
     private final StreetRepository streetRepository;
 
-    public StreetResource(StreetService streetService, StreetRepository streetRepository) {
+    private final StreetQueryService streetQueryService;
+
+    public StreetResource(StreetService streetService, StreetRepository streetRepository, StreetQueryService streetQueryService) {
         this.streetService = streetService;
         this.streetRepository = streetRepository;
+        this.streetQueryService = streetQueryService;
     }
 
     /**
@@ -142,23 +146,30 @@ public class StreetResource {
      * {@code GET  /streets} : get all the streets.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of streets in body.
      */
     @GetMapping("/streets")
     public ResponseEntity<List<StreetDTO>> getAllStreets(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+        StreetCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get a page of Streets");
-        Page<StreetDTO> page;
-        if (eagerload) {
-            page = streetService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = streetService.findAll(pageable);
-        }
+        log.debug("REST request to get Streets by criteria: {}", criteria);
+        Page<StreetDTO> page = streetQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /streets/count} : count all the streets.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/streets/count")
+    public ResponseEntity<Long> countStreets(StreetCriteria criteria) {
+        log.debug("REST request to count Streets by criteria: {}", criteria);
+        return ResponseEntity.ok().body(streetQueryService.countByCriteria(criteria));
     }
 
     /**

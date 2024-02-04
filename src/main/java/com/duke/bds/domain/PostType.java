@@ -23,6 +23,10 @@ public class PostType implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "icon")
+    private String icon;
+
+    @Lob
     @Column(name = "description")
     private String description;
 
@@ -52,6 +56,19 @@ public class PostType implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIcon() {
+        return this.icon;
+    }
+
+    public PostType icon(String icon) {
+        this.setIcon(icon);
+        return this;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getDescription() {
@@ -92,6 +109,7 @@ public class PostType implements Serializable {
         return "PostType{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", icon='" + getIcon() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

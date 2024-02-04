@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.WardRepository;
+import com.duke.bds.service.WardQueryService;
 import com.duke.bds.service.WardService;
+import com.duke.bds.service.criteria.WardCriteria;
 import com.duke.bds.service.dto.WardDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,12 @@ public class WardResource {
 
     private final WardRepository wardRepository;
 
-    public WardResource(WardService wardService, WardRepository wardRepository) {
+    private final WardQueryService wardQueryService;
+
+    public WardResource(WardService wardService, WardRepository wardRepository, WardQueryService wardQueryService) {
         this.wardService = wardService;
         this.wardRepository = wardRepository;
+        this.wardQueryService = wardQueryService;
     }
 
     /**
@@ -142,23 +146,30 @@ public class WardResource {
      * {@code GET  /wards} : get all the wards.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wards in body.
      */
     @GetMapping("/wards")
     public ResponseEntity<List<WardDTO>> getAllWards(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+        WardCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get a page of Wards");
-        Page<WardDTO> page;
-        if (eagerload) {
-            page = wardService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = wardService.findAll(pageable);
-        }
+        log.debug("REST request to get Wards by criteria: {}", criteria);
+        Page<WardDTO> page = wardQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /wards/count} : count all the wards.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/wards/count")
+    public ResponseEntity<Long> countWards(WardCriteria criteria) {
+        log.debug("REST request to count Wards by criteria: {}", criteria);
+        return ResponseEntity.ok().body(wardQueryService.countByCriteria(criteria));
     }
 
     /**

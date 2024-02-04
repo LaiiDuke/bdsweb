@@ -1,11 +1,14 @@
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Inject } from 'vue-property-decorator';
+
+import { mixins } from 'vue-class-component';
+import JhiDataUtils from '@/shared/data/data-utils.service';
 
 import { ICategory } from '@/shared/model/category.model';
 import CategoryService from './category.service';
 import AlertService from '@/shared/alert/alert.service';
 
 @Component
-export default class CategoryDetails extends Vue {
+export default class CategoryDetails extends mixins(JhiDataUtils) {
   @Inject('categoryService') private categoryService: () => CategoryService;
   @Inject('alertService') private alertService: () => AlertService;
 

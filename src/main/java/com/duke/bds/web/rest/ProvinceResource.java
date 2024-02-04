@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.ProvinceRepository;
+import com.duke.bds.service.ProvinceQueryService;
 import com.duke.bds.service.ProvinceService;
+import com.duke.bds.service.criteria.ProvinceCriteria;
 import com.duke.bds.service.dto.ProvinceDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,16 @@ public class ProvinceResource {
 
     private final ProvinceRepository provinceRepository;
 
-    public ProvinceResource(ProvinceService provinceService, ProvinceRepository provinceRepository) {
+    private final ProvinceQueryService provinceQueryService;
+
+    public ProvinceResource(
+        ProvinceService provinceService,
+        ProvinceRepository provinceRepository,
+        ProvinceQueryService provinceQueryService
+    ) {
         this.provinceService = provinceService;
         this.provinceRepository = provinceRepository;
+        this.provinceQueryService = provinceQueryService;
     }
 
     /**
@@ -142,14 +150,30 @@ public class ProvinceResource {
      * {@code GET  /provinces} : get all the provinces.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of provinces in body.
      */
     @GetMapping("/provinces")
-    public ResponseEntity<List<ProvinceDTO>> getAllProvinces(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Provinces");
-        Page<ProvinceDTO> page = provinceService.findAll(pageable);
+    public ResponseEntity<List<ProvinceDTO>> getAllProvinces(
+        ProvinceCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get Provinces by criteria: {}", criteria);
+        Page<ProvinceDTO> page = provinceQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /provinces/count} : count all the provinces.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/provinces/count")
+    public ResponseEntity<Long> countProvinces(ProvinceCriteria criteria) {
+        log.debug("REST request to count Provinces by criteria: {}", criteria);
+        return ResponseEntity.ok().body(provinceQueryService.countByCriteria(criteria));
     }
 
     /**

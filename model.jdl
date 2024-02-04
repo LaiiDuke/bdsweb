@@ -7,13 +7,15 @@ entity UserInfo {
 //loai bai dang
 entity PostType {
     name String required
-    description String
+    icon String
+    description TextBlob
 }
 
 // loai bat dong san
 entity Category {
     name String required
-    description String
+    icon String
+    description TextBlob
 }
 
 //status cua bai dang
@@ -111,3 +113,4 @@ dto * with mapstruct
 service all with serviceImpl
 
 // Set an angular suffix
+filter all

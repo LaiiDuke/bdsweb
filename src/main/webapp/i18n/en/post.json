@@ -23,6 +23,7 @@
       "price": "Price",
       "square": "Square",
       "address": "Address",
+      "phone": "Phone",
       "googleMapsLocation": "Google Maps Location",
       "width": "Width",
       "length": "Length",

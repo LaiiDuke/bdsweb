@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the Ward entity.
  */
 @Repository
-public interface WardRepository extends JpaRepository<Ward, Long> {
+public interface WardRepository extends JpaRepository<Ward, Long>, JpaSpecificationExecutor<Ward> {
     default Optional<Ward> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }

@@ -29,7 +29,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new PostTypeService();
-      elemDefault = new PostType(123, 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new PostType(123, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -82,6 +82,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
+            icon: 'BBBBBB',
             description: 'BBBBBB',
           },
           elemDefault
@@ -110,6 +111,7 @@ describe('Service Tests', () => {
         const patchObject = Object.assign(
           {
             name: 'BBBBBB',
+            icon: 'BBBBBB',
             description: 'BBBBBB',
           },
           new PostType()
@@ -139,6 +141,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
+            icon: 'BBBBBB',
             description: 'BBBBBB',
           },
           elemDefault

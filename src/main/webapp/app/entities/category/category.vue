@@ -36,6 +36,10 @@
               <span v-text="$t('bdswebApp.category.name')">Name</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
             </th>
+            <th scope="row" v-on:click="changeOrder('icon')">
+              <span v-text="$t('bdswebApp.category.icon')">Icon</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'icon'"></jhi-sort-indicator>
+            </th>
             <th scope="row" v-on:click="changeOrder('description')">
               <span v-text="$t('bdswebApp.category.description')">Description</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'description'"></jhi-sort-indicator>
@@ -49,6 +53,7 @@
               <router-link :to="{ name: 'CategoryView', params: { categoryId: category.id } }">{{ category.id }}</router-link>
             </td>
             <td>{{ category.name }}</td>
+            <td>{{ category.icon }}</td>
             <td>{{ category.description }}</td>
             <td class="text-right">
               <div class="btn-group">

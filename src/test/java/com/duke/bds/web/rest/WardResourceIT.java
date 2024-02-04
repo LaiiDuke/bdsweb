@@ -8,9 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.duke.bds.IntegrationTest;
 import com.duke.bds.domain.District;
+import com.duke.bds.domain.Street;
 import com.duke.bds.domain.Ward;
 import com.duke.bds.repository.WardRepository;
 import com.duke.bds.service.WardService;
+import com.duke.bds.service.criteria.WardCriteria;
 import com.duke.bds.service.dto.WardDTO;
 import com.duke.bds.service.mapper.WardMapper;
 import java.util.ArrayList;
@@ -217,6 +219,173 @@ class WardResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ward.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getWardsByIdFiltering() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        Long id = ward.getId();
+
+        defaultWardShouldBeFound("id.equals=" + id);
+        defaultWardShouldNotBeFound("id.notEquals=" + id);
+
+        defaultWardShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultWardShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultWardShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultWardShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllWardsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where name equals to DEFAULT_NAME
+        defaultWardShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the wardList where name equals to UPDATED_NAME
+        defaultWardShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllWardsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultWardShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the wardList where name equals to UPDATED_NAME
+        defaultWardShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllWardsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where name is not null
+        defaultWardShouldBeFound("name.specified=true");
+
+        // Get all the wardList where name is null
+        defaultWardShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllWardsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where name contains DEFAULT_NAME
+        defaultWardShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the wardList where name contains UPDATED_NAME
+        defaultWardShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllWardsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where name does not contain DEFAULT_NAME
+        defaultWardShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the wardList where name does not contain UPDATED_NAME
+        defaultWardShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllWardsByStreetsIsEqualToSomething() throws Exception {
+        Street streets;
+        if (TestUtil.findAll(em, Street.class).isEmpty()) {
+            wardRepository.saveAndFlush(ward);
+            streets = StreetResourceIT.createEntity(em);
+        } else {
+            streets = TestUtil.findAll(em, Street.class).get(0);
+        }
+        em.persist(streets);
+        em.flush();
+        ward.addStreets(streets);
+        wardRepository.saveAndFlush(ward);
+        Long streetsId = streets.getId();
+
+        // Get all the wardList where streets equals to streetsId
+        defaultWardShouldBeFound("streetsId.equals=" + streetsId);
+
+        // Get all the wardList where streets equals to (streetsId + 1)
+        defaultWardShouldNotBeFound("streetsId.equals=" + (streetsId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllWardsByDistrictIsEqualToSomething() throws Exception {
+        District district;
+        if (TestUtil.findAll(em, District.class).isEmpty()) {
+            wardRepository.saveAndFlush(ward);
+            district = DistrictResourceIT.createEntity(em);
+        } else {
+            district = TestUtil.findAll(em, District.class).get(0);
+        }
+        em.persist(district);
+        em.flush();
+        ward.setDistrict(district);
+        wardRepository.saveAndFlush(ward);
+        Long districtId = district.getId();
+
+        // Get all the wardList where district equals to districtId
+        defaultWardShouldBeFound("districtId.equals=" + districtId);
+
+        // Get all the wardList where district equals to (districtId + 1)
+        defaultWardShouldNotBeFound("districtId.equals=" + (districtId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultWardShouldBeFound(String filter) throws Exception {
+        restWardMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(ward.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restWardMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultWardShouldNotBeFound(String filter) throws Exception {
+        restWardMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restWardMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

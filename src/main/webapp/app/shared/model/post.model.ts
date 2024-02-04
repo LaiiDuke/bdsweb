@@ -42,7 +42,7 @@ export interface IPost {
   province?: IProvince;
   district?: IDistrict;
   ward?: IWard | null;
-  street?: IStreet | null;
+  street?: IStreet;
   imgUrl?: string | null;
 }
 
@@ -81,7 +81,7 @@ export class Post implements IPost {
     public province?: IProvince,
     public district?: IDistrict,
     public ward?: IWard | null,
-    public street?: IStreet | null,
+    public street?: IStreet,
     public imgUrl?: string | null
   ) {
     this.hasKitchen = this.hasKitchen ?? false;

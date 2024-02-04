@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the Post entity.
  */
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
     @Query("select post from Post post where post.user.login = ?#{principal.username}")
     List<Post> findByUserIsCurrentUser();
 

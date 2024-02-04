@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the District entity.
  */
 @Repository
-public interface DistrictRepository extends JpaRepository<District, Long> {
+public interface DistrictRepository extends JpaRepository<District, Long>, JpaSpecificationExecutor<District> {
     default Optional<District> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }

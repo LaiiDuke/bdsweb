@@ -9,8 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.duke.bds.IntegrationTest;
 import com.duke.bds.domain.District;
 import com.duke.bds.domain.Province;
+import com.duke.bds.domain.Street;
+import com.duke.bds.domain.Ward;
 import com.duke.bds.repository.DistrictRepository;
 import com.duke.bds.service.DistrictService;
+import com.duke.bds.service.criteria.DistrictCriteria;
 import com.duke.bds.service.dto.DistrictDTO;
 import com.duke.bds.service.mapper.DistrictMapper;
 import java.util.ArrayList;
@@ -217,6 +220,196 @@ class DistrictResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(district.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getDistrictsByIdFiltering() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        Long id = district.getId();
+
+        defaultDistrictShouldBeFound("id.equals=" + id);
+        defaultDistrictShouldNotBeFound("id.notEquals=" + id);
+
+        defaultDistrictShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultDistrictShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultDistrictShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultDistrictShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where name equals to DEFAULT_NAME
+        defaultDistrictShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the districtList where name equals to UPDATED_NAME
+        defaultDistrictShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultDistrictShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the districtList where name equals to UPDATED_NAME
+        defaultDistrictShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where name is not null
+        defaultDistrictShouldBeFound("name.specified=true");
+
+        // Get all the districtList where name is null
+        defaultDistrictShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where name contains DEFAULT_NAME
+        defaultDistrictShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the districtList where name contains UPDATED_NAME
+        defaultDistrictShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where name does not contain DEFAULT_NAME
+        defaultDistrictShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the districtList where name does not contain UPDATED_NAME
+        defaultDistrictShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByWardsIsEqualToSomething() throws Exception {
+        Ward wards;
+        if (TestUtil.findAll(em, Ward.class).isEmpty()) {
+            districtRepository.saveAndFlush(district);
+            wards = WardResourceIT.createEntity(em);
+        } else {
+            wards = TestUtil.findAll(em, Ward.class).get(0);
+        }
+        em.persist(wards);
+        em.flush();
+        district.addWards(wards);
+        districtRepository.saveAndFlush(district);
+        Long wardsId = wards.getId();
+
+        // Get all the districtList where wards equals to wardsId
+        defaultDistrictShouldBeFound("wardsId.equals=" + wardsId);
+
+        // Get all the districtList where wards equals to (wardsId + 1)
+        defaultDistrictShouldNotBeFound("wardsId.equals=" + (wardsId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByStreetsIsEqualToSomething() throws Exception {
+        Street streets;
+        if (TestUtil.findAll(em, Street.class).isEmpty()) {
+            districtRepository.saveAndFlush(district);
+            streets = StreetResourceIT.createEntity(em);
+        } else {
+            streets = TestUtil.findAll(em, Street.class).get(0);
+        }
+        em.persist(streets);
+        em.flush();
+        district.addStreets(streets);
+        districtRepository.saveAndFlush(district);
+        Long streetsId = streets.getId();
+
+        // Get all the districtList where streets equals to streetsId
+        defaultDistrictShouldBeFound("streetsId.equals=" + streetsId);
+
+        // Get all the districtList where streets equals to (streetsId + 1)
+        defaultDistrictShouldNotBeFound("streetsId.equals=" + (streetsId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllDistrictsByProvinceIsEqualToSomething() throws Exception {
+        Province province;
+        if (TestUtil.findAll(em, Province.class).isEmpty()) {
+            districtRepository.saveAndFlush(district);
+            province = ProvinceResourceIT.createEntity(em);
+        } else {
+            province = TestUtil.findAll(em, Province.class).get(0);
+        }
+        em.persist(province);
+        em.flush();
+        district.setProvince(province);
+        districtRepository.saveAndFlush(district);
+        Long provinceId = province.getId();
+
+        // Get all the districtList where province equals to provinceId
+        defaultDistrictShouldBeFound("provinceId.equals=" + provinceId);
+
+        // Get all the districtList where province equals to (provinceId + 1)
+        defaultDistrictShouldNotBeFound("provinceId.equals=" + (provinceId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultDistrictShouldBeFound(String filter) throws Exception {
+        restDistrictMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(district.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restDistrictMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultDistrictShouldNotBeFound(String filter) throws Exception {
+        restDistrictMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restDistrictMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

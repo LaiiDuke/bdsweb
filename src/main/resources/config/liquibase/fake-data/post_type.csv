@@ -1,11 +1,11 @@
-id;name;description
-1;Bacon Interactions mesh;compressing leverage
-2;Lead;Specialist
-3;Ergonomic;Car
-4;Garden mobile;primary pixel
-5;web-readiness Dollar;Branding Pataca
-6;Health;Zimbabwe Borders connecting
-7;payment Connecticut;Analyst
-8;systems;transmitter value-added Group
-9;24/365 quantify;Frozen
-10;Branding Unbranded system;rich invoice Pants
+id;name;icon;description
+1;Bacon Interactions mesh;compressing leverage;../fake-data/blob/hipster.txt
+2;Lead;Specialist;../fake-data/blob/hipster.txt
+3;Ergonomic;Car;../fake-data/blob/hipster.txt
+4;Garden mobile;primary pixel;../fake-data/blob/hipster.txt
+5;web-readiness Dollar;Branding Pataca;../fake-data/blob/hipster.txt
+6;Health;Zimbabwe Borders connecting;../fake-data/blob/hipster.txt
+7;payment Connecticut;Analyst;../fake-data/blob/hipster.txt
+8;systems;transmitter value-added Group;../fake-data/blob/hipster.txt
+9;24/365 quantify;Frozen;../fake-data/blob/hipster.txt
+10;Branding Unbranded system;rich invoice Pants;../fake-data/blob/hipster.txt

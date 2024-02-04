@@ -2,6 +2,7 @@ package com.duke.bds.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Lob;
 import javax.validation.constraints.*;
 
 /**
@@ -15,6 +16,9 @@ public class CategoryDTO implements Serializable {
     @NotNull
     private String name;
 
+    private String icon;
+
+    @Lob
     private String description;
 
     public Long getId() {
@@ -31,6 +35,14 @@ public class CategoryDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getDescription() {
@@ -68,6 +80,7 @@ public class CategoryDTO implements Serializable {
         return "CategoryDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", icon='" + getIcon() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.DistrictRepository;
+import com.duke.bds.service.DistrictQueryService;
 import com.duke.bds.service.DistrictService;
+import com.duke.bds.service.criteria.DistrictCriteria;
 import com.duke.bds.service.dto.DistrictDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,16 @@ public class DistrictResource {
 
     private final DistrictRepository districtRepository;
 
-    public DistrictResource(DistrictService districtService, DistrictRepository districtRepository) {
+    private final DistrictQueryService districtQueryService;
+
+    public DistrictResource(
+        DistrictService districtService,
+        DistrictRepository districtRepository,
+        DistrictQueryService districtQueryService
+    ) {
         this.districtService = districtService;
         this.districtRepository = districtRepository;
+        this.districtQueryService = districtQueryService;
     }
 
     /**
@@ -142,23 +150,30 @@ public class DistrictResource {
      * {@code GET  /districts} : get all the districts.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of districts in body.
      */
     @GetMapping("/districts")
     public ResponseEntity<List<DistrictDTO>> getAllDistricts(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+        DistrictCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get a page of Districts");
-        Page<DistrictDTO> page;
-        if (eagerload) {
-            page = districtService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = districtService.findAll(pageable);
-        }
+        log.debug("REST request to get Districts by criteria: {}", criteria);
+        Page<DistrictDTO> page = districtQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /districts/count} : count all the districts.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/districts/count")
+    public ResponseEntity<Long> countDistricts(DistrictCriteria criteria) {
+        log.debug("REST request to count Districts by criteria: {}", criteria);
+        return ResponseEntity.ok().body(districtQueryService.countByCriteria(criteria));
     }
 
     /**

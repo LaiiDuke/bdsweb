@@ -1,7 +1,9 @@
 package com.duke.bds.web.rest;
 
 import com.duke.bds.repository.PostTypeRepository;
+import com.duke.bds.service.PostTypeQueryService;
 import com.duke.bds.service.PostTypeService;
+import com.duke.bds.service.criteria.PostTypeCriteria;
 import com.duke.bds.service.dto.PostTypeDTO;
 import com.duke.bds.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,16 @@ public class PostTypeResource {
 
     private final PostTypeRepository postTypeRepository;
 
-    public PostTypeResource(PostTypeService postTypeService, PostTypeRepository postTypeRepository) {
+    private final PostTypeQueryService postTypeQueryService;
+
+    public PostTypeResource(
+        PostTypeService postTypeService,
+        PostTypeRepository postTypeRepository,
+        PostTypeQueryService postTypeQueryService
+    ) {
         this.postTypeService = postTypeService;
         this.postTypeRepository = postTypeRepository;
+        this.postTypeQueryService = postTypeQueryService;
     }
 
     /**
@@ -142,14 +150,30 @@ public class PostTypeResource {
      * {@code GET  /post-types} : get all the postTypes.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of postTypes in body.
      */
     @GetMapping("/post-types")
-    public ResponseEntity<List<PostTypeDTO>> getAllPostTypes(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of PostTypes");
-        Page<PostTypeDTO> page = postTypeService.findAll(pageable);
+    public ResponseEntity<List<PostTypeDTO>> getAllPostTypes(
+        PostTypeCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get PostTypes by criteria: {}", criteria);
+        Page<PostTypeDTO> page = postTypeQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /post-types/count} : count all the postTypes.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/post-types/count")
+    public ResponseEntity<Long> countPostTypes(PostTypeCriteria criteria) {
+        log.debug("REST request to count PostTypes by criteria: {}", criteria);
+        return ResponseEntity.ok().body(postTypeQueryService.countByCriteria(criteria));
     }
 
     /**

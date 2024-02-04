@@ -13,6 +13,12 @@
             <span>{{ postType.name }}</span>
           </dd>
           <dt>
+            <span v-text="$t('bdswebApp.postType.icon')">Icon</span>
+          </dt>
+          <dd>
+            <span>{{ postType.icon }}</span>
+          </dd>
+          <dt>
             <span v-text="$t('bdswebApp.postType.description')">Description</span>
           </dt>
           <dd>

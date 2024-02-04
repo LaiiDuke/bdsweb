@@ -16,7 +16,7 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "UserInfo",
   "pagination": "pagination",
   "readOnly": false,

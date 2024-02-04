@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ImageRepository extends JpaRepository<Image, Long> {
+public interface ImageRepository extends JpaRepository<Image, Long>, JpaSpecificationExecutor<Image> {
     List<Image> findAllByPostIn(List<Post> lstPost);
 
     @Query("select image from Image image where image.post.id = :postId")
