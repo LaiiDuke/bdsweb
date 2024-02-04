@@ -21,31 +21,39 @@
               <div class="grid">
                 <div class="row">
                   <div class="col-lg-3">
-                    <div class="menu">
-                      <div class="first-thumb active">
-                        <div class="thumb">
-                          <span class="icon"><img src="../../assets/images/search-icon-01.png" alt="" /></span>
-                          Apartments
-                        </div>
+                    <div class="list-product">
+                      <!--                      <div class="first-thumb active">-->
+                      <!--                        <div class="thumb">-->
+                      <!--                          <span class="icon"><img src="../../assets/images/search-icon-01.png" alt="" /></span>-->
+                      <!--                          Apartments-->
+                      <!--                        </div>-->
+                      <!--                      </div>-->
+                      <div v-for="(item, index) in lstType" :key="index" :class="checkActive(item.id) ? `active` : ''" :title="item.name">
+                        <router-link :to="{ name: 'ListProduct', params: { postTypeId: item.id } }">
+                          <div class="thumb">
+                            <span class="icon"><img src="../../assets/images/search-icon-02.png" alt="" /></span>
+                            {{ item.name }}
+                          </div>
+                        </router-link>
                       </div>
-                      <div>
-                        <div class="thumb">
-                          <span class="icon"><img src="../../assets/images/search-icon-02.png" alt="" /></span>
-                          Food &amp; Life
-                        </div>
-                      </div>
-                      <div>
-                        <div class="thumb">
-                          <span class="icon"><img src="../../assets/images/search-icon-03.png" alt="" /></span>
-                          Cars
-                        </div>
-                      </div>
-                      <div class="last-thumb">
-                        <div class="thumb">
-                          <span class="icon"><img src="../../assets/images/search-icon-04.png" alt="" /></span>
-                          Traveling
-                        </div>
-                      </div>
+                      <!--                      <div>-->
+                      <!--                        <div class="thumb">-->
+                      <!--                          <span class="icon"><img src="../../assets/images/search-icon-02.png" alt="" /></span>-->
+                      <!--                          Food &amp; Life-->
+                      <!--                        </div>-->
+                      <!--                      </div>-->
+                      <!--                      <div>-->
+                      <!--                        <div class="thumb">-->
+                      <!--                          <span class="icon"><img src="../../assets/images/search-icon-03.png" alt="" /></span>-->
+                      <!--                          Cars-->
+                      <!--                        </div>-->
+                      <!--                      </div>-->
+                      <!--                      <div class="last-thumb">-->
+                      <!--                        <div class="thumb">-->
+                      <!--                          <span class="icon"><img src="../../assets/images/search-icon-04.png" alt="" /></span>-->
+                      <!--                          Traveling-->
+                      <!--                        </div>-->
+                      <!--                      </div>-->
                     </div>
                   </div>
                   <div class="col-lg-9">
@@ -103,6 +111,7 @@ import PostComponent from '@/component/post/post.vue';
 import 'owl.carousel';
 import { inject } from 'vue';
 import PostService from '../../entities/post/post.service';
+import PostTypeService from '../../entities/post-type/post-type.service';
 export default {
   components: {
     PostComponent,
@@ -110,8 +119,11 @@ export default {
   data() {
     return {
       lstPost: [],
+      lstType: [],
       fetched: false,
+      postTypeId: this.$route.params.postTypeId,
       postService: new PostService(),
+      postTypeService: new PostTypeService(),
       page: 1,
       previousPage: 1,
       itemsPerPage: 3,
@@ -120,47 +132,59 @@ export default {
     };
   },
   created() {
-    jQuery(document).ready(function ($) {
-      // Acc
-      $(document).on('click', '.naccs .menu div', function () {
-        var numberIndex = $(this).index();
-        console.log('clicked');
-        if (!$(this).is('active')) {
-          $('.naccs .menu div').removeClass('active');
-          $('.naccs ul li').removeClass('active');
-
-          $(this).addClass('active');
-          $('.naccs ul')
-            .find('li:eq(' + numberIndex + ')')
-            .addClass('active');
-
-          var listItemHeight = $('.naccs ul')
-            .find('li:eq(' + numberIndex + ')')
-            .innerHeight();
-          $('.naccs ul').height(listItemHeight + 'px');
-        }
-      });
-
-      // Menu Dropdown Toggle
-      if ($('.menu-trigger').length) {
-        $('.menu-trigger').on('click', function () {
-          $(this).toggleClass('active');
-          $('.header-area .nav').slideToggle(200);
-        });
-      }
-
-      // Page loading animation
-      $(window).on('load', function () {
-        $('#js-preloader').addClass('loaded');
-      });
-    });
+    // jQuery(document).ready(function ($) {
+    //   // Acc
+    //   $(document).on('click', '.naccs .menu div', function () {
+    //     var numberIndex = $(this).index();
+    //     console.log('clicked');
+    //     if (!$(this).is('active')) {
+    //       $('.naccs .menu div').removeClass('active');
+    //       $('.naccs ul li').removeClass('active');
+    //
+    //       $(this).addClass('active');
+    //       $('.naccs ul')
+    //         .find('li:eq(' + numberIndex + ')')
+    //         .addClass('active');
+    //
+    //       var listItemHeight = $('.naccs ul')
+    //         .find('li:eq(' + numberIndex + ')')
+    //         .innerHeight();
+    //       $('.naccs ul').height(listItemHeight + 'px');
+    //     }
+    //   });
+    //
+    //   // Menu Dropdown Toggle
+    //   if ($('.menu-trigger').length) {
+    //     $('.menu-trigger').on('click', function () {
+    //       $(this).toggleClass('active');
+    //       $('.header-area .nav').slideToggle(200);
+    //     });
+    //   }
+    //
+    //   // Page loading animation
+    //   $(window).on('load', function () {
+    //     $('#js-preloader').addClass('loaded');
+    //   });
+    // });
   },
-  watch: {},
+  watch: {
+    '$route.params.postTypeId': {
+      handler: function (value) {
+        this.getPostType();
+        if (value) {
+          this.getPaginatePost(value);
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (to.params.postTypeId) {
-        vm.getPaginatePost(to.params.postTypeId);
-      }
+      // vm.getPostType();
+      // if (to.params.postTypeId) {
+      //   vm.getPaginatePost(to.params.postTypeId);
+      // }
     });
   },
   methods: {
@@ -183,6 +207,21 @@ export default {
         }
       );
     },
+    getPostType() {
+      // const paginationQuery = {
+      //   page: 0,
+      //   size: 4,
+      //   sort: this.sort(),
+      // };
+      this.postTypeService.retrieve().then(
+        res => {
+          this.lstType = res.data;
+        },
+        err => {
+          this.alertService().showHttpError(this, err.response);
+        }
+      );
+    },
     sort() {
       return ['postingTime,desc'];
     },
@@ -194,6 +233,9 @@ export default {
     },
     transition() {
       this.getPaginatePost();
+    },
+    checkActive(id) {
+      return id === +this.postTypeId;
     },
   },
 };

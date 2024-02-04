@@ -31,7 +31,14 @@
                     </router-link>
                   </b-dropdown-item>
                 </b-nav-item-dropdown>
-                <li class="nav-link"><a href="/list-product">Bài đăng</a></li>
+                <b-nav-item-dropdown id="postTypeDropdown" text="Bài đăng" v-if="lstType && Object.keys(lstType).length > 1">
+                  <!--                  <span class="no-bold">Category</span>-->
+                  <b-dropdown-item v-for="(item, index) in lstType" :key="index">
+                    <router-link :to="{ name: 'ListProduct', params: { postTypeId: item.id } }" custom v-slot="{ navigate }">
+                      <a @click="navigate">{{ item.name }} </a>
+                    </router-link>
+                  </b-dropdown-item>
+                </b-nav-item-dropdown>
                 <li class="nav-link"><a href="/contact">Liên hệ</a></li>
                 <li>
                   <div class="main-white-button">

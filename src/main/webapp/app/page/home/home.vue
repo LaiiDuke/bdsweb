@@ -100,160 +100,36 @@
                 <div class="row">
                   <div class="col-lg-3">
                     <div class="menu">
-                      <div class="first-thumb">
+                      <div v-for="(item, index) in lstType" :key="index" :class="index === 0 ? 'active' : ''">
                         <div class="thumb">
                           <span class="icon"><img src="../../assets/images/search-icon-01.png" alt="" /></span>
-                          Apartments
-                        </div>
-                      </div>
-                      <div>
-                        <div class="thumb">
-                          <span class="icon"><img src="../../assets/images/search-icon-02.png" alt="" /></span>
-                          Food &amp; Life
-                        </div>
-                      </div>
-                      <div>
-                        <div class="thumb active">
-                          <span class="icon"><img src="../../assets/images/search-icon-03.png" alt="" /></span>
-                          Cars
-                        </div>
-                      </div>
-                      <div>
-                        <div class="thumb">
-                          <span class="icon"><img src="../../assets/images/search-icon-04.png" alt="" /></span>
-                          Shopping
-                        </div>
-                      </div>
-                      <div class="last-thumb">
-                        <div class="thumb">
-                          <span class="icon"><img src="../../assets/images/search-icon-05.png" alt="" /></span>
-                          Traveling
+                          {{ item.name }}
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-lg-9 align-self-center">
                     <ul class="nacc">
-                      <li class="active">
+                      <li v-for="(item, index) in lstType" :key="index" :class="index === 0 ? 'active' : ''">
                         <div>
                           <div class="thumb">
                             <div class="row">
                               <div class="col-lg-5 align-self-center">
                                 <div class="left-text">
-                                  <h4>One Of The Most Trending Stuffs Right Now!</h4>
+                                  <h4>{{ item.name }}</h4>
                                   <p>
-                                    Plot Listing is a responsive Bootstrap 5 website template that included 4 different HTML pages. This
-                                    template is provided by TemplateMo website. You can apply this layout for your static or dynamic CMS
-                                    websites.
+                                    {{ item.description }}
                                   </p>
-                                  <div class="main-white-button">
-                                    <a href="#"><i class="fa fa-eye"></i> Discover More</a>
-                                  </div>
+                                  <router-link :to="{ name: 'ListProduct', params: { postTypeId: item.id } }" custom v-slot="{ navigate }">
+                                    <div class="main-white-button">
+                                      <a @click="navigate"><i class="fa fa-eye"></i>Xem ngay </a>
+                                    </div>
+                                  </router-link>
                                 </div>
                               </div>
                               <div class="col-lg-7 align-self-center">
                                 <div class="right-image">
                                   <img src="../../assets/images/tabs-image-01.jpg" alt="" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div>
-                          <div class="thumb">
-                            <div class="row">
-                              <div class="col-lg-5 align-self-center">
-                                <div class="left-text">
-                                  <h4>Food and Lifestyle category is here</h4>
-                                  <p>
-                                    You can feel free to download, edit and apply this template for your website. Please tell your friends
-                                    about TemplateMo website.
-                                  </p>
-                                  <div class="main-white-button">
-                                    <a href="#"><i class="fa fa-eye"></i> Explore More</a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-lg-7 align-self-center">
-                                <div class="right-image">
-                                  <img src="../../assets/images/tabs-image-02.jpg" alt="Foods on the table" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div>
-                          <div class="thumb">
-                            <div class="row">
-                              <div class="col-lg-5 align-self-center">
-                                <div class="left-text">
-                                  <h4>Best car rentals for your trips!</h4>
-                                  <p>
-                                    Did you know? You can get the best free HTML templates on Too CSS blog. Visit the blog pages and explore
-                                    fresh and latest website templates.
-                                  </p>
-                                  <div class="main-white-button">
-                                    <a href="#"><i class="fa fa-eye"></i> More Listing</a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-lg-7 align-self-center">
-                                <div class="right-image">
-                                  <img src="../../assets/images/tabs-image-03.jpg" alt="cars in the city" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div>
-                          <div class="thumb">
-                            <div class="row">
-                              <div class="col-lg-5 align-self-center">
-                                <div class="left-text">
-                                  <h4>Shopping List: Images from Unsplash</h4>
-                                  <p>
-                                    Image credits go to Unsplash website that provides free stock photos for anyone. Images used in this
-                                    Plot Listing template are from Unsplash.
-                                  </p>
-                                  <div class="main-white-button">
-                                    <a href="#"><i class="fa fa-eye"></i> Discover More</a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-lg-7 align-self-center">
-                                <div class="right-image">
-                                  <img src="../../assets/images/tabs-image-04.jpg" alt="Shopping Girl" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div>
-                          <div class="thumb">
-                            <div class="row">
-                              <div class="col-lg-5 align-self-center">
-                                <div class="left-text">
-                                  <h4>Information and Safety Tips for Traveling</h4>
-                                  <p>
-                                    You are allowed to use this template for your commercial websites. You are NOT allowed to redistribute
-                                    this template ZIP file on any Free CSS collection websites.
-                                  </p>
-                                  <div class="main-white-button">
-                                    <a rel="nofollow" href="https://templatemo.com/contact"><i class="fa fa-eye"></i> Read More</a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-lg-7 align-self-center">
-                                <div class="right-image">
-                                  <img src="../../assets/images/tabs-image-05.jpg" alt="Traveling Beach" />
                                 </div>
                               </div>
                             </div>
@@ -346,6 +222,7 @@ import PostComponent from '@/component/post/post.vue';
 import '../../assets/js/owl-carousel';
 import 'owl.carousel';
 import PostService from '../../entities/post/post.service';
+import PostTypeService from '../../entities/post-type/post-type.service';
 
 export default {
   components: {
@@ -358,7 +235,9 @@ export default {
       refresh: 0,
       numberOfSlide: 0,
       postService: new PostService(),
+      postTypeService: new PostTypeService(),
       lstPost: [],
+      lstType: [],
       page: 1,
       previousPage: 1,
       itemsPerPage: 3,
@@ -370,6 +249,7 @@ export default {
   created() {
     this.getPaginatePost();
     this.getVipPost();
+    this.getPostType();
     jQuery(document).ready(function ($) {
       // Acc
       $(document).on('click', '.naccs .menu div', function () {
@@ -467,6 +347,11 @@ export default {
           this.alertService().showHttpError(this, err.response);
         }
       );
+    },
+    getPostType() {
+      this.postTypeService.retrieve().then(res => {
+        this.lstType = res.data;
+      });
     },
     sort() {
       return ['postingTime,desc'];

@@ -11,6 +11,7 @@ import '@/shared/config/dayjs';
 import { Provide } from 'vue-property-decorator';
 import CategoryService from '@/entities/category/category.service';
 import PostService from '@/entities/post/post.service';
+import PostTypeService from '@/entities/post-type/post-type.service';
 
 @Component({
   components: {
@@ -25,4 +26,5 @@ import PostService from '@/entities/post/post.service';
 export default class App extends Vue {
   @Provide('categoryService') private categoryService = () => new CategoryService();
   @Provide('postService') private postService = () => new PostService();
+  @Provide('postTypeService') private postTypeService = () => new PostTypeService();
 }

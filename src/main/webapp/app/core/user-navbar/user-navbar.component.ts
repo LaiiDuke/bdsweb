@@ -3,6 +3,7 @@ import LoginService from '@/account/login.service';
 import AccountService from '@/account/account.service';
 import CategoryService from '@/entities/category/category.service';
 import jQuery from '../../vendor/jquery/jquery.min.js';
+import PostTypeService from '@/entities/post-type/post-type.service';
 
 @Component
 export default class UserNavbar extends Vue {
@@ -10,15 +11,19 @@ export default class UserNavbar extends Vue {
   private loginService: () => LoginService;
   @Inject('categoryService')
   private categoryService: () => CategoryService;
+  @Inject('postTypeService')
+  private postTypeService: () => PostTypeService;
   @Inject('accountService') private accountService: () => AccountService;
   public version = 'v' + VERSION;
   private currentLanguage = this.$store.getters.currentLanguage;
   private languages: any = this.$store.getters.languages;
   private categories = [];
+  private lstType = [];
   private hasAnyAuthorityValues = {};
 
   created() {
     this.getCategory();
+    this.getPostType();
     jQuery(document).ready(function ($) {
       $(window).scroll(function () {
         var scroll = $(window).scrollTop();
@@ -88,6 +93,14 @@ export default class UserNavbar extends Vue {
       .retrieve()
       .then(_res => {
         this.categories = _res.data;
+      });
+  }
+
+  public getPostType() {
+    this.postTypeService()
+      .retrieve()
+      .then(res => {
+        this.lstType = res.data;
       });
   }
 }
