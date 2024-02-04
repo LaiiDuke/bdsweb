@@ -47,6 +47,10 @@
               <span v-text="$t('bdswebApp.post.address')">Address</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'address'"></jhi-sort-indicator>
             </th>
+            <th scope="row" v-on:click="changeOrder('phone')">
+              <span v-text="$t('bdswebApp.post.phone')">Phone</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'phone'"></jhi-sort-indicator>
+            </th>
             <th scope="row" v-on:click="changeOrder('googleMapsLocation')">
               <span v-text="$t('bdswebApp.post.googleMapsLocation')">Google Maps Location</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'googleMapsLocation'"></jhi-sort-indicator>
@@ -123,33 +127,33 @@
               <span v-text="$t('bdswebApp.post.hash')">Hash</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'hash'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('type.id')">
+            <th scope="row" v-on:click="changeOrder('type.name')">
               <span v-text="$t('bdswebApp.post.type')">Type</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'type.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'type.name'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('category.id')">
+            <th scope="row" v-on:click="changeOrder('category.name')">
               <span v-text="$t('bdswebApp.post.category')">Category</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'category.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'category.name'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('user.id')">
               <span v-text="$t('bdswebApp.post.user')">User</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'user.id'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('province.id')">
+            <th scope="row" v-on:click="changeOrder('province.name')">
               <span v-text="$t('bdswebApp.post.province')">Province</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'province.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'province.name'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('district.id')">
+            <th scope="row" v-on:click="changeOrder('district.name')">
               <span v-text="$t('bdswebApp.post.district')">District</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'district.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'district.name'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('ward.id')">
+            <th scope="row" v-on:click="changeOrder('ward.name')">
               <span v-text="$t('bdswebApp.post.ward')">Ward</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'ward.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'ward.name'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('street.id')">
+            <th scope="row" v-on:click="changeOrder('street.name')">
               <span v-text="$t('bdswebApp.post.street')">Street</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'street.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'street.name'"></jhi-sort-indicator>
             </th>
             <th scope="row"></th>
           </tr>
@@ -164,6 +168,7 @@
             <td>{{ post.price }}</td>
             <td>{{ post.square }}</td>
             <td>{{ post.address }}</td>
+            <td>{{ post.phone }}</td>
             <td>{{ post.googleMapsLocation }}</td>
             <td>{{ post.width }}</td>
             <td>{{ post.length }}</td>
@@ -185,12 +190,12 @@
             <td>{{ post.hash }}</td>
             <td>
               <div v-if="post.type">
-                <router-link :to="{ name: 'PostTypeView', params: { postTypeId: post.type.id } }">{{ post.type.id }}</router-link>
+                <router-link :to="{ name: 'PostTypeView', params: { postTypeId: post.type.id } }">{{ post.type.name }}</router-link>
               </div>
             </td>
             <td>
               <div v-if="post.category">
-                <router-link :to="{ name: 'CategoryView', params: { categoryId: post.category.id } }">{{ post.category.id }}</router-link>
+                <router-link :to="{ name: 'CategoryView', params: { categoryId: post.category.id } }">{{ post.category.name }}</router-link>
               </div>
             </td>
             <td>
@@ -198,22 +203,22 @@
             </td>
             <td>
               <div v-if="post.province">
-                <router-link :to="{ name: 'ProvinceView', params: { provinceId: post.province.id } }">{{ post.province.id }}</router-link>
+                <router-link :to="{ name: 'ProvinceView', params: { provinceId: post.province.id } }">{{ post.province.name }}</router-link>
               </div>
             </td>
             <td>
               <div v-if="post.district">
-                <router-link :to="{ name: 'DistrictView', params: { districtId: post.district.id } }">{{ post.district.id }}</router-link>
+                <router-link :to="{ name: 'DistrictView', params: { districtId: post.district.id } }">{{ post.district.name }}</router-link>
               </div>
             </td>
             <td>
               <div v-if="post.ward">
-                <router-link :to="{ name: 'WardView', params: { wardId: post.ward.id } }">{{ post.ward.id }}</router-link>
+                <router-link :to="{ name: 'WardView', params: { wardId: post.ward.id } }">{{ post.ward.name }}</router-link>
               </div>
             </td>
             <td>
               <div v-if="post.street">
-                <router-link :to="{ name: 'StreetView', params: { streetId: post.street.id } }">{{ post.street.id }}</router-link>
+                <router-link :to="{ name: 'StreetView', params: { streetId: post.street.id } }">{{ post.street.name }}</router-link>
               </div>
             </td>
             <td class="text-right">

@@ -81,11 +81,15 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll(pageable).map(postMapper::toDto);
     }
 
+    public Page<PostDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return postRepository.findAllWithEagerRelationships(pageable).map(postMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<PostDTO> findOne(Long id) {
         log.debug("Request to get Post : {}", id);
-        return postRepository.findById(id).map(postMapper::toDto);
+        return postRepository.findOneWithEagerRelationships(id).map(postMapper::toDto);
     }
 
     @Override

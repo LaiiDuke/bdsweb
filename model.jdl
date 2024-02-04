@@ -28,6 +28,7 @@ entity Post {
     price Long required
     square Long
     address String
+    phone String
     googleMapsLocation String
     width Double
     length Double
@@ -83,21 +84,21 @@ relationship OneToOne {
 }
 
 relationship OneToMany {
-    Province{districts} to District{province required}
-    District{wards} to Ward{district required}
-    Ward{streets} to Street{ward}
-    District{streets} to Street{district required}
+    Province{districts} to District{province(name) required}
+    District{wards} to Ward{district(name) required}
+    Ward{streets} to Street{ward(name)}
+    District{streets} to Street{district(name) required}
     Post{images} to Image
 }
 
 relationship ManyToOne {
-    Post{type required} to PostType
-    Post{category required} to Category
+    Post{type(name) required} to PostType
+    Post{category(name) required} to Category
     Post{user required} to User
-    Post{province required} to Province
-    Post{district required} to District
-    Post{ward} to Ward
-    Post{street required} to Street
+    Post{province(name) required} to Province
+    Post{district(name) required} to District
+    Post{ward(name)} to Ward
+    Post{street(name) required} to Street
 }
 
 // Set pagination options

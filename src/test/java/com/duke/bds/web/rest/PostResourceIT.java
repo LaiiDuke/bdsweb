@@ -2,6 +2,7 @@ package com.duke.bds.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -15,18 +16,26 @@ import com.duke.bds.domain.Street;
 import com.duke.bds.domain.User;
 import com.duke.bds.domain.enumeration.PostStatus;
 import com.duke.bds.repository.PostRepository;
+import com.duke.bds.service.PostService;
 import com.duke.bds.service.dto.PostDTO;
 import com.duke.bds.service.mapper.PostMapper;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +46,7 @@ import org.springframework.util.Base64Utils;
  * Integration tests for the {@link PostResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class PostResourceIT {
@@ -55,6 +65,9 @@ class PostResourceIT {
 
     private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PHONE = "AAAAAAAAAA";
+    private static final String UPDATED_PHONE = "BBBBBBBBBB";
 
     private static final String DEFAULT_GOOGLE_MAPS_LOCATION = "AAAAAAAAAA";
     private static final String UPDATED_GOOGLE_MAPS_LOCATION = "BBBBBBBBBB";
@@ -122,8 +135,14 @@ class PostResourceIT {
     @Autowired
     private PostRepository postRepository;
 
+    @Mock
+    private PostRepository postRepositoryMock;
+
     @Autowired
     private PostMapper postMapper;
+
+    @Mock
+    private PostService postServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -146,6 +165,7 @@ class PostResourceIT {
             .price(DEFAULT_PRICE)
             .square(DEFAULT_SQUARE)
             .address(DEFAULT_ADDRESS)
+            .phone(DEFAULT_PHONE)
             .googleMapsLocation(DEFAULT_GOOGLE_MAPS_LOCATION)
             .width(DEFAULT_WIDTH)
             .length(DEFAULT_LENGTH)
@@ -236,6 +256,7 @@ class PostResourceIT {
             .price(UPDATED_PRICE)
             .square(UPDATED_SQUARE)
             .address(UPDATED_ADDRESS)
+            .phone(UPDATED_PHONE)
             .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
             .width(UPDATED_WIDTH)
             .length(UPDATED_LENGTH)
@@ -337,6 +358,7 @@ class PostResourceIT {
         assertThat(testPost.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(DEFAULT_SQUARE);
         assertThat(testPost.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testPost.getPhone()).isEqualTo(DEFAULT_PHONE);
         assertThat(testPost.getGoogleMapsLocation()).isEqualTo(DEFAULT_GOOGLE_MAPS_LOCATION);
         assertThat(testPost.getWidth()).isEqualTo(DEFAULT_WIDTH);
         assertThat(testPost.getLength()).isEqualTo(DEFAULT_LENGTH);
@@ -430,6 +452,7 @@ class PostResourceIT {
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.intValue())))
             .andExpect(jsonPath("$.[*].square").value(hasItem(DEFAULT_SQUARE.intValue())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
             .andExpect(jsonPath("$.[*].googleMapsLocation").value(hasItem(DEFAULT_GOOGLE_MAPS_LOCATION)))
             .andExpect(jsonPath("$.[*].width").value(hasItem(DEFAULT_WIDTH.doubleValue())))
             .andExpect(jsonPath("$.[*].length").value(hasItem(DEFAULT_LENGTH.doubleValue())))
@@ -451,6 +474,23 @@ class PostResourceIT {
             .andExpect(jsonPath("$.[*].hash").value(hasItem(DEFAULT_HASH)));
     }
 
+    @SuppressWarnings({ "unchecked" })
+    void getAllPostsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(postServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPostMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(postServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPostsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(postServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPostMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(postRepositoryMock, times(1)).findAll(any(Pageable.class));
+    }
+
     @Test
     @Transactional
     void getPost() throws Exception {
@@ -468,6 +508,7 @@ class PostResourceIT {
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.intValue()))
             .andExpect(jsonPath("$.square").value(DEFAULT_SQUARE.intValue()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
             .andExpect(jsonPath("$.googleMapsLocation").value(DEFAULT_GOOGLE_MAPS_LOCATION))
             .andExpect(jsonPath("$.width").value(DEFAULT_WIDTH.doubleValue()))
             .andExpect(jsonPath("$.length").value(DEFAULT_LENGTH.doubleValue()))
@@ -514,6 +555,7 @@ class PostResourceIT {
             .price(UPDATED_PRICE)
             .square(UPDATED_SQUARE)
             .address(UPDATED_ADDRESS)
+            .phone(UPDATED_PHONE)
             .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
             .width(UPDATED_WIDTH)
             .length(UPDATED_LENGTH)
@@ -552,6 +594,7 @@ class PostResourceIT {
         assertThat(testPost.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(UPDATED_SQUARE);
         assertThat(testPost.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testPost.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPost.getGoogleMapsLocation()).isEqualTo(UPDATED_GOOGLE_MAPS_LOCATION);
         assertThat(testPost.getWidth()).isEqualTo(UPDATED_WIDTH);
         assertThat(testPost.getLength()).isEqualTo(UPDATED_LENGTH);
@@ -652,13 +695,13 @@ class PostResourceIT {
 
         partialUpdatedPost
             .square(UPDATED_SQUARE)
+            .phone(UPDATED_PHONE)
             .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
             .width(UPDATED_WIDTH)
-            .length(UPDATED_LENGTH)
+            .hasKitchen(UPDATED_HAS_KITCHEN)
             .hasDinningRoom(UPDATED_HAS_DINNING_ROOM)
-            .hasRooftop(UPDATED_HAS_ROOFTOP)
-            .expiredTime(UPDATED_EXPIRED_TIME)
-            .star(UPDATED_STAR);
+            .postingTime(UPDATED_POSTING_TIME)
+            .status(UPDATED_STATUS);
 
         restPostMockMvc
             .perform(
@@ -677,24 +720,25 @@ class PostResourceIT {
         assertThat(testPost.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(UPDATED_SQUARE);
         assertThat(testPost.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testPost.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPost.getGoogleMapsLocation()).isEqualTo(UPDATED_GOOGLE_MAPS_LOCATION);
         assertThat(testPost.getWidth()).isEqualTo(UPDATED_WIDTH);
-        assertThat(testPost.getLength()).isEqualTo(UPDATED_LENGTH);
+        assertThat(testPost.getLength()).isEqualTo(DEFAULT_LENGTH);
         assertThat(testPost.getDirection()).isEqualTo(DEFAULT_DIRECTION);
         assertThat(testPost.getDistance()).isEqualTo(DEFAULT_DISTANCE);
         assertThat(testPost.getLegal()).isEqualTo(DEFAULT_LEGAL);
         assertThat(testPost.getNumberOfFloors()).isEqualTo(DEFAULT_NUMBER_OF_FLOORS);
         assertThat(testPost.getNumberOfBedroom()).isEqualTo(DEFAULT_NUMBER_OF_BEDROOM);
-        assertThat(testPost.getHasKitchen()).isEqualTo(DEFAULT_HAS_KITCHEN);
+        assertThat(testPost.getHasKitchen()).isEqualTo(UPDATED_HAS_KITCHEN);
         assertThat(testPost.getHasDinningRoom()).isEqualTo(UPDATED_HAS_DINNING_ROOM);
-        assertThat(testPost.getHasRooftop()).isEqualTo(UPDATED_HAS_ROOFTOP);
+        assertThat(testPost.getHasRooftop()).isEqualTo(DEFAULT_HAS_ROOFTOP);
         assertThat(testPost.getHasGarage()).isEqualTo(DEFAULT_HAS_GARAGE);
         assertThat(testPost.getIsVip()).isEqualTo(DEFAULT_IS_VIP);
-        assertThat(testPost.getPostingTime()).isEqualTo(DEFAULT_POSTING_TIME);
-        assertThat(testPost.getExpiredTime()).isEqualTo(UPDATED_EXPIRED_TIME);
+        assertThat(testPost.getPostingTime()).isEqualTo(UPDATED_POSTING_TIME);
+        assertThat(testPost.getExpiredTime()).isEqualTo(DEFAULT_EXPIRED_TIME);
         assertThat(testPost.getBrokerageFees()).isEqualTo(DEFAULT_BROKERAGE_FEES);
-        assertThat(testPost.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testPost.getStar()).isEqualTo(UPDATED_STAR);
+        assertThat(testPost.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPost.getStar()).isEqualTo(DEFAULT_STAR);
         assertThat(testPost.getHash()).isEqualTo(DEFAULT_HASH);
     }
 
@@ -716,6 +760,7 @@ class PostResourceIT {
             .price(UPDATED_PRICE)
             .square(UPDATED_SQUARE)
             .address(UPDATED_ADDRESS)
+            .phone(UPDATED_PHONE)
             .googleMapsLocation(UPDATED_GOOGLE_MAPS_LOCATION)
             .width(UPDATED_WIDTH)
             .length(UPDATED_LENGTH)
@@ -753,6 +798,7 @@ class PostResourceIT {
         assertThat(testPost.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testPost.getSquare()).isEqualTo(UPDATED_SQUARE);
         assertThat(testPost.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testPost.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPost.getGoogleMapsLocation()).isEqualTo(UPDATED_GOOGLE_MAPS_LOCATION);
         assertThat(testPost.getWidth()).isEqualTo(UPDATED_WIDTH);
         assertThat(testPost.getLength()).isEqualTo(UPDATED_LENGTH);

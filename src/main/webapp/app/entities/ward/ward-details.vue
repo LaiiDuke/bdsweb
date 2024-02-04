@@ -17,7 +17,7 @@
           </dt>
           <dd>
             <div v-if="ward.district">
-              <router-link :to="{ name: 'DistrictView', params: { districtId: ward.district.id } }">{{ ward.district.id }}</router-link>
+              <router-link :to="{ name: 'DistrictView', params: { districtId: ward.district.id } }">{{ ward.district.name }}</router-link>
             </div>
           </dd>
         </dl>

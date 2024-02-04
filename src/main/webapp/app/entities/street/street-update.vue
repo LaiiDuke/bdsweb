@@ -61,7 +61,7 @@
                 v-for="wardOption in wards"
                 :key="wardOption.id"
               >
-                {{ wardOption.id }}
+                {{ wardOption.name }}
               </option>
             </select>
           </div>
@@ -74,7 +74,7 @@
                 v-for="districtOption in districts"
                 :key="districtOption.id"
               >
-                {{ districtOption.id }}
+                {{ districtOption.name }}
               </option>
             </select>
           </div>

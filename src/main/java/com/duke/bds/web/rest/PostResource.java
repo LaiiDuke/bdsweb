@@ -142,12 +142,21 @@ public class PostResource {
      * {@code GET  /posts} : get all the posts.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of posts in body.
      */
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> getAllPosts(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<PostDTO>> getAllPosts(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
         log.debug("REST request to get a page of Posts");
-        Page<PostDTO> page = postService.findAll(pageable);
+        Page<PostDTO> page;
+        if (eagerload) {
+            page = postService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = postService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -47,6 +47,7 @@ const validations: any = {
     },
     square: {},
     address: {},
+    phone: {},
     googleMapsLocation: {},
     width: {},
     length: {},

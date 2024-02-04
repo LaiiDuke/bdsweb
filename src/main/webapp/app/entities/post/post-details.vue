@@ -37,6 +37,12 @@
             <span>{{ post.address }}</span>
           </dd>
           <dt>
+            <span v-text="$t('bdswebApp.post.phone')">Phone</span>
+          </dt>
+          <dd>
+            <span>{{ post.phone }}</span>
+          </dd>
+          <dt>
             <span v-text="$t('bdswebApp.post.googleMapsLocation')">Google Maps Location</span>
           </dt>
           <dd>
@@ -155,7 +161,7 @@
           </dt>
           <dd>
             <div v-if="post.type">
-              <router-link :to="{ name: 'PostTypeView', params: { postTypeId: post.type.id } }">{{ post.type.id }}</router-link>
+              <router-link :to="{ name: 'PostTypeView', params: { postTypeId: post.type.id } }">{{ post.type.name }}</router-link>
             </div>
           </dd>
           <dt>
@@ -163,7 +169,7 @@
           </dt>
           <dd>
             <div v-if="post.category">
-              <router-link :to="{ name: 'CategoryView', params: { categoryId: post.category.id } }">{{ post.category.id }}</router-link>
+              <router-link :to="{ name: 'CategoryView', params: { categoryId: post.category.id } }">{{ post.category.name }}</router-link>
             </div>
           </dd>
           <dt>
@@ -177,7 +183,7 @@
           </dt>
           <dd>
             <div v-if="post.province">
-              <router-link :to="{ name: 'ProvinceView', params: { provinceId: post.province.id } }">{{ post.province.id }}</router-link>
+              <router-link :to="{ name: 'ProvinceView', params: { provinceId: post.province.id } }">{{ post.province.name }}</router-link>
             </div>
           </dd>
           <dt>
@@ -185,7 +191,7 @@
           </dt>
           <dd>
             <div v-if="post.district">
-              <router-link :to="{ name: 'DistrictView', params: { districtId: post.district.id } }">{{ post.district.id }}</router-link>
+              <router-link :to="{ name: 'DistrictView', params: { districtId: post.district.id } }">{{ post.district.name }}</router-link>
             </div>
           </dd>
           <dt>
@@ -193,7 +199,7 @@
           </dt>
           <dd>
             <div v-if="post.ward">
-              <router-link :to="{ name: 'WardView', params: { wardId: post.ward.id } }">{{ post.ward.id }}</router-link>
+              <router-link :to="{ name: 'WardView', params: { wardId: post.ward.id } }">{{ post.ward.name }}</router-link>
             </div>
           </dd>
           <dt>
@@ -201,7 +207,7 @@
           </dt>
           <dd>
             <div v-if="post.street">
-              <router-link :to="{ name: 'StreetView', params: { streetId: post.street.id } }">{{ post.street.id }}</router-link>
+              <router-link :to="{ name: 'StreetView', params: { streetId: post.street.id } }">{{ post.street.name }}</router-link>
             </div>
           </dd>
         </dl>

@@ -42,6 +42,14 @@ public interface WardService {
     Page<WardDTO> findAll(Pageable pageable);
 
     /**
+     * Get all the wards with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<WardDTO> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" ward.
      *
      * @param id the id of the entity.

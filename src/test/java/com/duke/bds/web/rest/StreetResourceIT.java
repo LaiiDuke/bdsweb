@@ -2,6 +2,7 @@ package com.duke.bds.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -10,16 +11,24 @@ import com.duke.bds.domain.District;
 import com.duke.bds.domain.Street;
 import com.duke.bds.domain.enumeration.PostStatus;
 import com.duke.bds.repository.StreetRepository;
+import com.duke.bds.service.StreetService;
 import com.duke.bds.service.dto.StreetDTO;
 import com.duke.bds.service.mapper.StreetMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link StreetResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class StreetResourceIT {
@@ -48,8 +58,14 @@ class StreetResourceIT {
     @Autowired
     private StreetRepository streetRepository;
 
+    @Mock
+    private StreetRepository streetRepositoryMock;
+
     @Autowired
     private StreetMapper streetMapper;
+
+    @Mock
+    private StreetService streetServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -175,6 +191,23 @@ class StreetResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(street.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllStreetsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(streetServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restStreetMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(streetServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllStreetsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(streetServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restStreetMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(streetRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

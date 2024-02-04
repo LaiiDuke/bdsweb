@@ -43,6 +43,9 @@ public class Post implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "google_maps_location")
     private String googleMapsLocation;
 
@@ -214,6 +217,19 @@ public class Post implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public Post phone(String phone) {
+        this.setPhone(phone);
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getGoogleMapsLocation() {
@@ -614,6 +630,7 @@ public class Post implements Serializable {
             ", price=" + getPrice() +
             ", square=" + getSquare() +
             ", address='" + getAddress() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", googleMapsLocation='" + getGoogleMapsLocation() + "'" +
             ", width=" + getWidth() +
             ", length=" + getLength() +

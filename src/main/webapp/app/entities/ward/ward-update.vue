@@ -41,7 +41,7 @@
                 v-for="districtOption in districts"
                 :key="districtOption.id"
               >
-                {{ districtOption.id }}
+                {{ districtOption.name }}
               </option>
             </select>
           </div>

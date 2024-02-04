@@ -18,7 +18,7 @@
           <dd>
             <div v-if="district.province">
               <router-link :to="{ name: 'ProvinceView', params: { provinceId: district.province.id } }">{{
-                district.province.id
+                district.province.name
               }}</router-link>
             </div>
           </dd>

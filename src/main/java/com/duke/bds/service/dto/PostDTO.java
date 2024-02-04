@@ -29,6 +29,8 @@ public class PostDTO implements Serializable {
 
     private String address;
 
+    private String phone;
+
     private String googleMapsLocation;
 
     private Double width;
@@ -129,6 +131,14 @@ public class PostDTO implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getGoogleMapsLocation() {
@@ -378,6 +388,7 @@ public class PostDTO implements Serializable {
             ", price=" + getPrice() +
             ", square=" + getSquare() +
             ", address='" + getAddress() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", googleMapsLocation='" + getGoogleMapsLocation() + "'" +
             ", width=" + getWidth() +
             ", length=" + getLength() +

@@ -92,6 +92,18 @@
             />
           </div>
           <div class="form-group">
+            <label class="form-control-label" v-text="$t('bdswebApp.post.phone')" for="post-phone">Phone</label>
+            <input
+              type="text"
+              class="form-control"
+              name="phone"
+              id="post-phone"
+              data-cy="phone"
+              :class="{ valid: !$v.post.phone.$invalid, invalid: $v.post.phone.$invalid }"
+              v-model="$v.post.phone.$model"
+            />
+          </div>
+          <div class="form-group">
             <label class="form-control-label" v-text="$t('bdswebApp.post.googleMapsLocation')" for="post-googleMapsLocation"
               >Google Maps Location</label
             >
@@ -376,7 +388,7 @@
                 v-for="postTypeOption in postTypes"
                 :key="postTypeOption.id"
               >
-                {{ postTypeOption.id }}
+                {{ postTypeOption.name }}
               </option>
             </select>
           </div>
@@ -394,7 +406,7 @@
                 v-for="categoryOption in categories"
                 :key="categoryOption.id"
               >
-                {{ categoryOption.id }}
+                {{ categoryOption.name }}
               </option>
             </select>
           </div>
@@ -430,7 +442,7 @@
                 v-for="provinceOption in provinces"
                 :key="provinceOption.id"
               >
-                {{ provinceOption.id }}
+                {{ provinceOption.name }}
               </option>
             </select>
           </div>
@@ -448,7 +460,7 @@
                 v-for="districtOption in districts"
                 :key="districtOption.id"
               >
-                {{ districtOption.id }}
+                {{ districtOption.name }}
               </option>
             </select>
           </div>
@@ -466,7 +478,7 @@
                 v-for="wardOption in wards"
                 :key="wardOption.id"
               >
-                {{ wardOption.id }}
+                {{ wardOption.name }}
               </option>
             </select>
           </div>
@@ -479,7 +491,7 @@
                 v-for="streetOption in streets"
                 :key="streetOption.id"
               >
-                {{ streetOption.id }}
+                {{ streetOption.name }}
               </option>
             </select>
           </div>

@@ -15,6 +15,7 @@ export interface IPost {
   price?: number;
   square?: number | null;
   address?: string | null;
+  phone?: string | null;
   googleMapsLocation?: string | null;
   width?: number | null;
   length?: number | null;
@@ -53,6 +54,7 @@ export class Post implements IPost {
     public price?: number,
     public square?: number | null,
     public address?: string | null,
+    public phone?: string | null,
     public googleMapsLocation?: string | null,
     public width?: number | null,
     public length?: number | null,

@@ -24,6 +24,7 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "district",
       "otherEntityRelationshipName": "wards",
       "relationshipName": "district",

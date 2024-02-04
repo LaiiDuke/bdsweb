@@ -40,13 +40,13 @@
               <span v-text="$t('bdswebApp.street.status')">Status</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'status'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('ward.id')">
+            <th scope="row" v-on:click="changeOrder('ward.name')">
               <span v-text="$t('bdswebApp.street.ward')">Ward</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'ward.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'ward.name'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('district.id')">
+            <th scope="row" v-on:click="changeOrder('district.name')">
               <span v-text="$t('bdswebApp.street.district')">District</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'district.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'district.name'"></jhi-sort-indicator>
             </th>
             <th scope="row"></th>
           </tr>
@@ -60,13 +60,13 @@
             <td v-text="$t('bdswebApp.PostStatus.' + street.status)">{{ street.status }}</td>
             <td>
               <div v-if="street.ward">
-                <router-link :to="{ name: 'WardView', params: { wardId: street.ward.id } }">{{ street.ward.id }}</router-link>
+                <router-link :to="{ name: 'WardView', params: { wardId: street.ward.id } }">{{ street.ward.name }}</router-link>
               </div>
             </td>
             <td>
               <div v-if="street.district">
                 <router-link :to="{ name: 'DistrictView', params: { districtId: street.district.id } }">{{
-                  street.district.id
+                  street.district.name
                 }}</router-link>
               </div>
             </td>

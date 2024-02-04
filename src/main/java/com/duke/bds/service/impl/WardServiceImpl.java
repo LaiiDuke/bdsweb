@@ -69,11 +69,15 @@ public class WardServiceImpl implements WardService {
         return wardRepository.findAll(pageable).map(wardMapper::toDto);
     }
 
+    public Page<WardDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return wardRepository.findAllWithEagerRelationships(pageable).map(wardMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<WardDTO> findOne(Long id) {
         log.debug("Request to get Ward : {}", id);
-        return wardRepository.findById(id).map(wardMapper::toDto);
+        return wardRepository.findOneWithEagerRelationships(id).map(wardMapper::toDto);
     }
 
     @Override

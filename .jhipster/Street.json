@@ -23,12 +23,14 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "ward",
       "otherEntityRelationshipName": "streets",
       "relationshipName": "ward",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "district",
       "otherEntityRelationshipName": "streets",
       "relationshipName": "district",

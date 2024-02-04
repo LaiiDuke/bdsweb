@@ -42,6 +42,14 @@ public interface StreetService {
     Page<StreetDTO> findAll(Pageable pageable);
 
     /**
+     * Get all the streets with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<StreetDTO> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" street.
      *
      * @param id the id of the entity.

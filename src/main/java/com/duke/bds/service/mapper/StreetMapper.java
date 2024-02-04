@@ -13,17 +13,19 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface StreetMapper extends EntityMapper<StreetDTO, Street> {
-    @Mapping(target = "ward", source = "ward", qualifiedByName = "wardId")
-    @Mapping(target = "district", source = "district", qualifiedByName = "districtId")
+    @Mapping(target = "ward", source = "ward", qualifiedByName = "wardName")
+    @Mapping(target = "district", source = "district", qualifiedByName = "districtName")
     StreetDTO toDto(Street s);
 
-    @Named("wardId")
+    @Named("wardName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    WardDTO toDtoWardId(Ward ward);
+    @Mapping(target = "name", source = "name")
+    WardDTO toDtoWardName(Ward ward);
 
-    @Named("districtId")
+    @Named("districtName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    DistrictDTO toDtoDistrictId(District district);
+    @Mapping(target = "name", source = "name")
+    DistrictDTO toDtoDistrictName(District district);
 }

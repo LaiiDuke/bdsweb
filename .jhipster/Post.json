@@ -30,6 +30,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "phone",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "googleMapsLocation",
       "fieldType": "String"
     },
@@ -120,12 +124,14 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "postType",
       "relationshipName": "type",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "category",
       "relationshipName": "category",
       "relationshipType": "many-to-one",
@@ -138,23 +144,27 @@
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "province",
       "relationshipName": "province",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "district",
       "relationshipName": "district",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "ward",
       "relationshipName": "ward",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "street",
       "relationshipName": "street",
       "relationshipType": "many-to-one",

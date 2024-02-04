@@ -36,9 +36,9 @@
               <span v-text="$t('bdswebApp.district.name')">Name</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('province.id')">
+            <th scope="row" v-on:click="changeOrder('province.name')">
               <span v-text="$t('bdswebApp.district.province')">Province</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'province.id'"></jhi-sort-indicator>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'province.name'"></jhi-sort-indicator>
             </th>
             <th scope="row"></th>
           </tr>
@@ -52,7 +52,7 @@
             <td>
               <div v-if="district.province">
                 <router-link :to="{ name: 'ProvinceView', params: { provinceId: district.province.id } }">{{
-                  district.province.id
+                  district.province.name
                 }}</router-link>
               </div>
             </td>

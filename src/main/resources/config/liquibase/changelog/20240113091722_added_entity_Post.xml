@@ -29,6 +29,9 @@
             <column name="address" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="phone" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="google_maps_location" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -133,6 +136,7 @@
             <column name="price" type="numeric"/>
             <column name="square" type="numeric"/>
             <column name="address" type="string"/>
+            <column name="phone" type="string"/>
             <column name="google_maps_location" type="string"/>
             <column name="width" type="numeric"/>
             <column name="length" type="numeric"/>

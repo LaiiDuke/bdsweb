@@ -69,11 +69,15 @@ public class StreetServiceImpl implements StreetService {
         return streetRepository.findAll(pageable).map(streetMapper::toDto);
     }
 
+    public Page<StreetDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return streetRepository.findAllWithEagerRelationships(pageable).map(streetMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<StreetDTO> findOne(Long id) {
         log.debug("Request to get Street : {}", id);
-        return streetRepository.findById(id).map(streetMapper::toDto);
+        return streetRepository.findOneWithEagerRelationships(id).map(streetMapper::toDto);
     }
 
     @Override
