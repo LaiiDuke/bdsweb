@@ -38,8 +38,13 @@ const router = new Router({
       component: HomePage
     },
     {
-      path: '/list-product/:postTypeId',
+      path: '/list-product/:postTypeId/category/:categoryId',
       name: 'ListProduct',
+      component: ListProductPage
+    },
+    {
+      path: '/list-product/:postTypeId',
+      name: 'PostTypeList',
       component: ListProductPage
     },
     {

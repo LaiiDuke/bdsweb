@@ -63,4 +63,6 @@ public interface WardService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<WardDTO> findByProvinceId(Long provinceId, Pageable pageable);
 }

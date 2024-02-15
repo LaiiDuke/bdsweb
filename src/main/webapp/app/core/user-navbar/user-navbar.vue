@@ -23,22 +23,26 @@
               <!-- ***** Menu Start ***** -->
               <ul class="nav">
                 <li class="nav-link"><a href="/" class="active">Trang chủ</a></li>
-                <b-nav-item-dropdown id="categoryBarDropdown" text="Danh mục" v-if="categories && Object.keys(categories).length > 1">
-                  <!--                  <span class="no-bold">Category</span>-->
-                  <b-dropdown-item v-for="(item, index) in categories" :key="index">
-                    <router-link :to="{ name: 'CategoryPost', params: { categoryId: item.id } }" custom v-slot="{ navigate }">
-                      <a @click="navigate">{{ item.name }} </a>
+                <!--                <b-nav-item-dropdown id="categoryBarDropdown" text="Danh mục" v-if="categories && Object.keys(categories).length > 1">-->
+                <!--                  &lt;!&ndash;                  <span class="no-bold">Category</span>&ndash;&gt;-->
+                <!--                  <b-dropdown-item v-for="(item, index) in categories" :key="index">-->
+                <!--                    <router-link :to="{ name: 'CategoryPost', params: { categoryId: item.id } }" custom v-slot="{ navigate }">-->
+                <!--                      <a @click="navigate">{{ item.name }} </a>-->
+                <!--                    </router-link>-->
+                <!--                  </b-dropdown-item>-->
+                <!--                </b-nav-item-dropdown>-->
+                <b-nav-item-dropdown v-for="(item, index) in lstType" :key="index" :text="item.name" v-if="index < 2">
+                  <b-dropdown-item v-for="(category, index) in categories" :key="category.id">
+                    <router-link
+                      :to="{ name: 'ListProduct', params: { postTypeId: item.id, categoryId: category.id } }"
+                      custom
+                      v-slot="{ navigate }"
+                    >
+                      <a @click="navigate">{{ category.name }} </a>
                     </router-link>
                   </b-dropdown-item>
                 </b-nav-item-dropdown>
-                <b-nav-item-dropdown id="postTypeDropdown" text="Bài đăng" v-if="lstType && Object.keys(lstType).length > 1">
-                  <!--                  <span class="no-bold">Category</span>-->
-                  <b-dropdown-item v-for="(item, index) in lstType" :key="index">
-                    <router-link :to="{ name: 'ListProduct', params: { postTypeId: item.id } }" custom v-slot="{ navigate }">
-                      <a @click="navigate">{{ item.name }} </a>
-                    </router-link>
-                  </b-dropdown-item>
-                </b-nav-item-dropdown>
+
                 <li class="nav-link"><a href="/contact">Liên hệ</a></li>
                 <li>
                   <div class="main-white-button">

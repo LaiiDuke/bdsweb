@@ -37,4 +37,9 @@ public interface WardRepository extends JpaRepository<Ward, Long>, JpaSpecificat
 
     @Query("select ward from Ward ward left join fetch ward.district where ward.id =:id")
     Optional<Ward> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query(
+        "select ward from Ward ward inner join District district on ward.district.id = district.id where district.province.id = :provinceId"
+    )
+    Page<Ward> findByProvinceId(Pageable pageable, @Param("provinceId") Long provinceId);
 }

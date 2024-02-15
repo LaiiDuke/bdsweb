@@ -20,10 +20,12 @@ export default class DistrictService {
     });
   }
 
-  public retrieve(paginationQuery?: any): Promise<any> {
+  public retrieve(paginationQuery?: any, condition?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(baseApiUrl + `?${buildPaginationQueryOpts(paginationQuery)}`)
+        .get(baseApiUrl + `?${buildPaginationQueryOpts(paginationQuery)}`, {
+          params: condition,
+        })
         .then(res => {
           resolve(res);
         })

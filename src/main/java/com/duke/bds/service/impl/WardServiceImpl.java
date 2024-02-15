@@ -85,4 +85,9 @@ public class WardServiceImpl implements WardService {
         log.debug("Request to delete Ward : {}", id);
         wardRepository.deleteById(id);
     }
+
+    @Override
+    public Page<WardDTO> findByProvinceId(Long provinceId, Pageable pageable) {
+        return wardRepository.findByProvinceId(pageable, provinceId).map(wardMapper::toDto);
+    }
 }

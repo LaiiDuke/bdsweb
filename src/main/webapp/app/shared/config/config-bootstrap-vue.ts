@@ -27,6 +27,8 @@ import {
   BCarousel,
   BCarouselSlide,
   BImg,
+  BFormSelect,
+  BFormSelectOption,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -59,4 +61,6 @@ export function initBootstrapVue(vue) {
   vue.component('b-carousel', BCarousel);
   vue.component('b-carousel-slide', BCarouselSlide);
   vue.component('b-img', BImg);
+  vue.component('b-form-select', BFormSelect);
+  vue.component('b-form-select-option', BFormSelectOption);
 }

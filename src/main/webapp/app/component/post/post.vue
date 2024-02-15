@@ -2,10 +2,10 @@
   <div class="col-lg-12">
     <div class="listing-item">
       <div class="left-image">
-        <a href="#"><img src="../../assets/images/listing-01.jpg" alt="" /></a>
+        <a href="#"><img :src="'data:image/png;base64,' + postObj.image.data" alt="" /></a>
       </div>
       <div class="right-content align-self-center">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <a href="#"
             ><h4>{{ postObj.title }}</h4></a
           >
@@ -15,22 +15,27 @@
             {{ postObj.price }} tỷ
           </span>
           <span class="details"
-            >Details: <em>{{ postObj.square }} m2</em></span
+            >Diện tích: <em>{{ postObj.square }} m2</em></span
+          >
+          <span class="details"
+            >KT: <em>{{ postObj.length }}m x {{ postObj.width }}m</em></span
           >
           <ul class="info">
             <li><img src="../../assets/images/listing-icon-02.png" alt="" /> {{ postObj.numberOfBedroom }} Bedrooms</li>
             <li><img src="../../assets/images/listing-icon-03.png" alt="" /> {{ postObj.numberOfFloors }} Floors</li>
           </ul>
-          <span class="details">Địa chỉ: {{ postObj.address }}</span>
+          <span class="details"
+            >Địa chỉ: <em>{{ postObj.address }}</em></span
+          >
         </div>
 
         <ul class="rate">
           <li v-for="index in Math.min(postObj.star, 5)" :key="index"><i class="fa fa-star-o"></i></li>
           <li>(18) Reviews</li>
         </ul>
-        <ul class="size">
-          <li>KT: {{ postObj.length }}m x {{ postObj.width }}m</li>
-        </ul>
+        <!--        <ul class="size">-->
+        <!--          <li>KT: {{ postObj.length }}m x {{ postObj.width }}m</li>-->
+        <!--        </ul>-->
 
         <div class="main-white-button">
           <router-link :to="{ name: 'Detail', params: { postId: postObj.id } }" custom v-slot="{ navigate }">
@@ -51,7 +56,7 @@ import 'owl.carousel';
 export default {
   name: 'PostComponent',
   props: {
-    postObj: { type: Post, default: { title: 'zzz' } },
+    postObj: { type: Object, default: { title: 'zzz' } },
   },
 };
 </script>

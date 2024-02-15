@@ -9,78 +9,6 @@
               <h2>Find Nearby Places &amp; Things</h2>
             </div>
           </div>
-          <div class="col-lg-12">
-            <form id="search-form" name="gs" method="submit" role="search" action="#">
-              <div class="row">
-                <div class="col-lg-3 align-self-center">
-                  <fieldset>
-                    <select name="area" class="form-select" aria-label="Area" id="chooseCategory" onchange="this.form.click()">
-                      <option selected>All Areas</option>
-                      <option value="New Village">New Village</option>
-                      <option value="Old Town">Old Town</option>
-                      <option value="Modern City">Modern City</option>
-                    </select>
-                  </fieldset>
-                </div>
-                <div class="col-lg-3 align-self-center">
-                  <fieldset>
-                    <input type="address" name="address" class="searchText" placeholder="Enter a location" autocomplete="on" required />
-                  </fieldset>
-                </div>
-                <div class="col-lg-3 align-self-center">
-                  <fieldset>
-                    <select
-                      name="price"
-                      class="form-select"
-                      aria-label="Default select example"
-                      id="chooseCategory"
-                      onchange="this.form.click()"
-                    >
-                      <option selected>Price Range</option>
-                      <option value="$100 - $250">$100 - $250</option>
-                      <option value="$250 - $500">$250 - $500</option>
-                      <option value="$500 - $1000">$500 - $1,000</option>
-                      <option value="$1000+">$1,000 or more</option>
-                    </select>
-                  </fieldset>
-                </div>
-                <div class="col-lg-3">
-                  <fieldset>
-                    <button class="main-button"><i class="fa fa-search"></i> Search Now</button>
-                  </fieldset>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="col-lg-10 offset-lg-1">
-            <ul class="categories">
-              <li>
-                <a href="#"
-                  ><span class="icon"><img src="../../assets/images/search-icon-01.png" alt="Home" /></span> Apartments</a
-                >
-              </li>
-              <li>
-                <a href="/"
-                  ><span class="icon"><img src="../../assets/images/search-icon-02.png" alt="Food" /></span> Food &amp; Life</a
-                >
-              </li>
-              <li>
-                <a href="#"
-                  ><span class="icon"><img src="../../assets/images/search-icon-03.png" alt="Vehicle" /></span> Cars</a
-                >
-              </li>
-              <li>
-                <a href="#"
-                  ><span class="icon"><img src="../../assets/images/search-icon-04.png" alt="Shopping" /></span> Shopping</a
-                >
-              </li>
-              <li>
-                <a href="#"
-                  ><span class="icon"><img src="../../assets/images/search-icon-05.png" alt="Travel" /></span> Traveling</a
-                >
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
@@ -120,7 +48,7 @@
                                   <p>
                                     {{ item.description }}
                                   </p>
-                                  <router-link :to="{ name: 'ListProduct', params: { postTypeId: item.id } }" custom v-slot="{ navigate }">
+                                  <router-link :to="{ name: 'PostTypeList', params: { postTypeId: item.id } }" custom v-slot="{ navigate }">
                                     <div class="main-white-button">
                                       <a @click="navigate"><i class="fa fa-eye"></i>Xem ngay </a>
                                     </div>
@@ -223,6 +151,7 @@ import '../../assets/js/owl-carousel';
 import 'owl.carousel';
 import PostService from '../../entities/post/post.service';
 import PostTypeService from '../../entities/post-type/post-type.service';
+import CategoryService from '../../entities/category/category.service';
 
 export default {
   components: {
@@ -236,8 +165,11 @@ export default {
       numberOfSlide: 0,
       postService: new PostService(),
       postTypeService: new PostTypeService(),
+      categoryService: new CategoryService(),
       lstPost: [],
       lstType: [],
+      lstCategory: [],
+      searchObj: {},
       page: 1,
       previousPage: 1,
       itemsPerPage: 3,
@@ -250,6 +182,7 @@ export default {
     this.getPaginatePost();
     this.getVipPost();
     this.getPostType();
+    this.getCategory();
     jQuery(document).ready(function ($) {
       // Acc
       $(document).on('click', '.naccs .menu div', function () {
@@ -285,32 +218,7 @@ export default {
       });
     });
   },
-  watch: {
-    lstPost() {
-      $('.owl-listing').owlCarousel({
-        items: 1,
-        loop: true,
-        dots: true,
-        nav: false,
-        autoplay: true,
-        margin: 30,
-        responsive: {
-          0: {
-            items: 3,
-          },
-          600: {
-            items: 2,
-          },
-          1000: {
-            items: 1,
-          },
-          1600: {
-            items: 1,
-          },
-        },
-      });
-    },
-  },
+  watch: {},
   methods: {
     getVipPost() {
       const paginationQuery = {
@@ -353,6 +261,11 @@ export default {
         this.lstType = res.data;
       });
     },
+    getCategory() {
+      this.categoryService.retrieve().then(_res => {
+        this.lstCategory = _res.data;
+      });
+    },
     sort() {
       return ['postingTime,desc'];
     },
@@ -365,6 +278,7 @@ export default {
     transition() {
       this.getPaginatePost();
     },
+    search() {},
   },
 };
 </script>

@@ -200,4 +200,14 @@ public class WardResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/wards/province/{provinceId}")
+    public ResponseEntity<List<WardDTO>> getByProvince(
+        @PathVariable Long provinceId,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        Page<WardDTO> page = wardService.findByProvinceId(provinceId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

@@ -2,11 +2,16 @@ package com.duke.bds.service;
 
 import com.duke.bds.domain.*; // for static metamodels
 import com.duke.bds.domain.Post;
+import com.duke.bds.repository.ImageRepository;
 import com.duke.bds.repository.PostRepository;
 import com.duke.bds.service.criteria.PostCriteria;
+import com.duke.bds.service.dto.ImageDTO;
 import com.duke.bds.service.dto.PostDTO;
+import com.duke.bds.service.mapper.ImageMapper;
 import com.duke.bds.service.mapper.PostMapper;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +38,20 @@ public class PostQueryService extends QueryService<Post> {
 
     private final PostMapper postMapper;
 
-    public PostQueryService(PostRepository postRepository, PostMapper postMapper) {
+    private final ImageRepository imageRepository;
+
+    private final ImageMapper imageMapper;
+
+    public PostQueryService(
+        PostRepository postRepository,
+        PostMapper postMapper,
+        ImageRepository imageRepository,
+        ImageMapper imageMapper
+    ) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
+        this.imageRepository = imageRepository;
+        this.imageMapper = imageMapper;
     }
 
     /**
@@ -60,7 +76,24 @@ public class PostQueryService extends QueryService<Post> {
     public Page<PostDTO> findByCriteria(PostCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Post> specification = createSpecification(criteria);
-        return postRepository.findAll(specification, page).map(postMapper::toDto);
+
+        Page<Post> posts = postRepository.findAll(specification, page);
+        List<Post> lstPost = posts.getContent();
+
+        List<Image> lstImg = imageRepository.findAllByPostIn(lstPost);
+        List<ImageDTO> lstImgDto = lstImg.stream().map(imageMapper::toDto).collect(Collectors.toList());
+
+        Map<PostDTO, List<ImageDTO>> mapImagePost = lstImgDto.stream().collect(Collectors.groupingBy(ImageDTO::getPost));
+        Page<PostDTO> result = posts.map(postMapper::toDto);
+        result
+            .getContent()
+            .forEach(postDTO -> {
+                if (mapImagePost.get(postDTO) != null) {
+                    postDTO.setImage(mapImagePost.get(postDTO).get(0));
+                }
+            });
+        return result;
+        //        return postRepository.findAll(specification, page).map(postMapper::toDto);
     }
 
     /**
